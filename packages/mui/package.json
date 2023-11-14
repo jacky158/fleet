@@ -1,19 +1,24 @@
 {
-  "name": "fleet-core",
+  "name": "fleet-mui",
   "version": "0.0.1",
   "description": "fleet react kernel",
   "main": "src/index.ts",
   "repository": {
     "type": "github",
-    "directory": "packages/core",
+    "directory": "packages/mui",
     "url": "https://github.com/jacky158/fleet"
   },
+  "types": "src",
   "author": "nam.ngvan@gmail.com",
   "license": "MIT",
   "peerDependencies": {
     "react": "^18.2.0",
     "@types/react": "^18",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@mui/material": "^5",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "lodash": "^4"
   },
   "scripts": {
     "build": "npx tsc"

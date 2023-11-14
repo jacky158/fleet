@@ -10,6 +10,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@fleet/core": "workspace:^"
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.18",
+    "@types/lodash": "^4.14.201",
+    "fleet-core": "workspace:^",
+    "fleet-mui": "workspace:^",
+    "lodash": "^4.17.21"
   }
 }

@@ -154,6 +154,10 @@ export class Manager {
       this._addService(name, services[name]);
     });
   }
+
+  public static create(): AppManager {
+    return new Manager().bootstrap();
+  }
 }
 
 export default Manager;
