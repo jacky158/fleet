@@ -1,0 +1,17 @@
+{
+  "name": "fleet-core",
+  "version": "0.0.1",
+  "description": "fleet react kernel",
+  "main": "src/index.tsx",
+  "repository": "https://github.com/jacky158/fleet",
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@types/react": "^18",
+    "typescript": "^5"
+  },
+  "scripts": {
+    "build": "npx tsc"
+  }
+}
