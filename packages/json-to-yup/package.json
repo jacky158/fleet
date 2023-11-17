@@ -17,11 +17,11 @@
     "react-intl": "^6",
     "yup": "^1.3",
     "date-fns": "^2",
-    "@ikx/app": "workspace:^",
+    "@ikx/core": "workspace:^",
     "@ikx/when": "workspace:^"
   },
   "scripts": {
     "clean": "rm -rf ./dist",
-    "types:2": "npx tsc"
+    "types:1": "npx tsc"
   }
 }

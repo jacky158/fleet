@@ -1,4 +1,4 @@
-import useApp from "@ikx/app";
+import { useApp } from "@ikx/core";
 
 export default function FeedbackHandler() {
   const app = useApp();

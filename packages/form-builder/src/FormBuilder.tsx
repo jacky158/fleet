@@ -1,4 +1,3 @@
-import useApp from "@ikx/app";
 import { useEffect, useState } from "react";
 
 import Form from "./Form";
@@ -8,6 +7,7 @@ import {
   FormBuilderRemoteProps,
 } from "./types";
 import { RemoteDataSource } from "@ikx/types";
+import { useApp } from "@ikx/core";
 
 export default function RemoteForm({
   source,

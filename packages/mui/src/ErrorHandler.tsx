@@ -1,5 +1,6 @@
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import useApp from "@ikx/app";
+import { useApp } from "@ikx/core";
 import get from "lodash/get";
 import { useCallback, useEffect, useState } from "react";
 

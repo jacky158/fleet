@@ -15,7 +15,7 @@
     "@types/react": "^18",
     "typescript": "^5",
     "react-intl": "^6",
-    "@ikx/app": "workspace:^"
+    "@ikx/core": "workspace:^"
   },
   "scripts": {
     "clean": "rm -rf ./dist",

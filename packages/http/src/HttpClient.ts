@@ -4,7 +4,7 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
-import { App } from "@ikx/app";
+import { App } from "@ikx/core";
 import { FetchDataConfig, FetchDataResult } from "@ikx/types";
 
 export class HttpClient {

@@ -2,7 +2,7 @@
  * @type: service
  * @name: useFetch
  */
-import useApp from "@ikx/app";
+import { useApp } from "@ikx/core";
 import { FetchDataConfig, FetchDataResult } from "@ikx/types";
 import { useEffect, useState } from "react";
 

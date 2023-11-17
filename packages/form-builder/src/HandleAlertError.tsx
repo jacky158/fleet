@@ -1,4 +1,4 @@
-import useApp from "@ikx/app";
+import { useApp } from "@ikx/core";
 import { FormikProps, FormikValues } from "formik";
 import isArray from "lodash/isArray";
 import isString from "lodash/isString";

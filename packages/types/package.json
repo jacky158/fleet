@@ -16,10 +16,10 @@
     "typescript": "^5",
     "react-intl": "^6",
     "axios": "^1.6",
-    "@ikx/app": "workspace:^"
+    "@ikx/core": "workspace:^"
   },
   "scripts": {
     "clean": "rm -rf ./dist",
-    "types:0": "npx tsc || exit 0"
+    "types:0": "npx tsc"
   }
 }

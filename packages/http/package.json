@@ -16,7 +16,7 @@
     "typescript": "^5",
     "react-intl": "^6",
     "axios": "^1.6",
-    "@ikx/app": "workspace:^",
+    "@ikx/core": "workspace:^",
     "@ikx/types": "workspace:^"
   },
   "scripts": {

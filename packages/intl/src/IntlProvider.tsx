@@ -1,4 +1,4 @@
-import useApp from "@ikx/app";
+import { useApp } from "@ikx/core";
 import { ReactNode, useMemo } from "react";
 import {
   IntlShape,

@@ -1,6 +1,6 @@
 import { Link as RouterLink } from "react-router-dom";
 import { Link, Stack } from "@mui/material";
-import useApp from "@ikx/app";
+
 
 export const Middot = () => {
   return <span> - </span>;

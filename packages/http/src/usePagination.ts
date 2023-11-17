@@ -1,4 +1,4 @@
-import useApp from "@ikx/app";
+import { useApp } from "@ikx/core";
 import { Dispatch, useEffect, useReducer } from "react";
 
 interface Paging<R, Q> {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { App } from "@ikx/app";
+import { App } from "@ikx/core";
 
 export default class Meter {
   [key: string]: any;

@@ -1,5 +1,5 @@
 import { MenuProps } from "@mui/material/Menu";
-import useApp from "@ikx/app";
+import { useApp } from "@ikx/core";
 import { createElement, useCallback, useState } from "react";
 import { OpenMenuProps } from "./types";
 

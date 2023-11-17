@@ -2,7 +2,7 @@
  * @type: service
  * name: jsxBackend
  */
-import { App } from "@ikx/app";
+import { App } from "@ikx/core";
 import isString from "lodash/isString";
 import React, { ElementType, ReactNode } from "react";
 import { isValidElementType } from "react-is";

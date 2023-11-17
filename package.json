@@ -25,7 +25,7 @@
     "@ikx/acp": "workspace:^",
     "@ikx/chatbot": "workspace:^",
     "@ikx/composer": "workspace:^",
-    "@ikx/app": "workspace:^",
+    "@ikx/core": "workspace:^",
     "@ikx/http": "workspace:^",
     "@ikx/intl": "workspace:^",
     "@ikx/json-to-yup": "workspace:^",

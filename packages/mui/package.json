@@ -20,7 +20,8 @@
     "@emotion/styled": "^11",
     "stylis-plugin-rtl": "^2",
     "lodash": "^4",
-    "@ikx/app": "workspace:^",
+    "@ikx/types": "workspace:^",
+    "@ikx/core": "workspace:^",
     "@ikx/intl": "workspace:^"
   },
   "scripts": {

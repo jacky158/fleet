@@ -1,7 +1,7 @@
 import { createElement, useEffect, useState } from "react";
 import { Data } from "./types";
 import { Helmet } from "react-helmet-async";
-import useApp from "@ikx/app";
+import { useApp } from "@ikx/core";
 
 export function HelmetHandler() {
   const [data, setData] = useState<Data>([]);

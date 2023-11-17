@@ -176,5 +176,3 @@ export function Provider({ children, app }: { children: ReactNode; app: App }) {
 export function useApp(): App {
   return useContext(Context);
 }
-
-export default useApp;

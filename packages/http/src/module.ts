@@ -4,7 +4,7 @@ import HttpClient from "./HttpClient";
 import { useFetch } from "./useFetch";
 import { usePagination } from "./usePagination";
 
-declare module "@ikx/app" {
+declare module "@ikx/core" {
   export interface App {
     http: HttpClient;
     cache: MemStore;

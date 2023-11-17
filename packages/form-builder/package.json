@@ -20,7 +20,8 @@
     "lodash": "^4",
     "formik": "^2",
     "shallowequal": "^1.1.0",
-    "@ikx/app": "workspace:^",
+    "@ikx/mui": "workspace:^",
+    "@ikx/core": "workspace:^",
     "@ikx/when": "workspace:^",
     "@ikx/intl": "workspace:^",
     "@ikx/types": "workspace:^"

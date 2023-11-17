@@ -6,7 +6,7 @@ import type {
   ModalApi,
 } from "./types";
 
-declare module "@ikx/app" {
+declare module "@ikx/core" {
   export interface App {
     toast(data: ToastProps): void;
     alert(data: AlertProps): Promise<void>;

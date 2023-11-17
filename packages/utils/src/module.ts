@@ -2,7 +2,7 @@ import compactData from "./compactData";
 import compactUrl from "./compactUrl";
 import colorHash from "./colorHash";
 
-declare module "@ikx/app" {
+declare module "@ikx/core" {
   export interface App {
     compactUrl: typeof compactUrl;
     compactData: typeof compactData;

@@ -1,8 +1,8 @@
-import useApp from "@ikx/app";
 import when, { WhenProps } from "@ikx/when";
 import { useFormikContext } from "formik";
 import { createElement, useEffect, useState } from "react";
 import { BuilderFieldProps } from "./types";
+import { useApp } from "@ikx/core";
 
 export function Render({ config, formik }: BuilderFieldProps) {
   const app = useApp();

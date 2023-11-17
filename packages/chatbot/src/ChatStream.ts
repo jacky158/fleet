@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { App } from "@ikx/app";
+import { App } from "@ikx/core";
 import io, { Socket } from "socket.io-client";
 
 export default class ChatStream {

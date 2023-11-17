@@ -1,4 +1,4 @@
-import { createApp, Provider } from "@ikx/app";
+import { createApp, Provider } from "@ikx/core";
 import { IntlProvider } from "@ikx/intl";
 import {
   ThemeProvider,

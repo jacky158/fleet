@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2018",
-    "useDefineForClassFields": true,
+    // "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
@@ -10,7 +10,7 @@
     "moduleResolution": "Bundler",
     // "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "declaration": true,
     "noEmit": false,
     "jsx": "react-jsx",

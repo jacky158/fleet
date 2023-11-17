@@ -7,7 +7,7 @@ import {
   DialogProps,
   DialogTitle,
 } from "@mui/material";
-import useApp from "@ikx/app";
+import { useApp } from "@ikx/core";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ConfirmProps } from "./types";
 

@@ -1,5 +1,5 @@
 import { Alert, Snackbar } from "@mui/material";
-import useApp from "@ikx/app";
+import { useApp } from "@ikx/core";
 import { isString } from "lodash";
 import { useCallback, useEffect, useState } from "react";
 import { ToastProps } from "./types";

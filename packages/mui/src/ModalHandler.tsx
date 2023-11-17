@@ -1,8 +1,8 @@
-import useApp from "@ikx/app";
 import { last } from "lodash";
 import { useMemo, useReducer } from "react";
 import { ModalApi, OpenModalProps } from "./types";
 import { Backdrop } from "@mui/material";
+import { useApp } from "@ikx/core";
 
 export interface State {
   items: OpenModalProps[];

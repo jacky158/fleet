@@ -1,8 +1,8 @@
-import useApp from "@ikx/app";
 import { ConfirmProps } from "@ikx/mui";
 import { FormikProps, FormikValues } from "formik";
 import { useEffect } from "react";
 import { FormBuilderSchema } from "./types";
+import { useApp } from "@ikx/core";
 
 type Props = {
   schema: FormBuilderSchema;

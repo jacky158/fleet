@@ -1,6 +1,6 @@
 import JsxBackend from "./JsxBackend";
 
-declare module "@ikx/app" {
+declare module "@ikx/core" {
   export interface App {
     jsx: JsxBackend;
   }
