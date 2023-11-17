@@ -1,0 +1,31 @@
+{
+  "name": "@ikx/composer",
+  "version": "0.0.1",
+  "description": "compose wrapper kernel",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/composer",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@types/react": "^18",
+    "typescript": "^5",
+    "dayjs": "^1",
+    "@mui/x-date-pickers": "^6",
+    "universal-cookie": "^6",
+    "@ikx/helmet": "workspace:^",
+    "@ikx/intl": "workspace:^"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:3": "npx tsc",
+    "build": "npx tsc"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@ikx/json-to-yup",
+  "version": "0.0.1",
+  "description": "fleet react kernel",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/json-to-yup",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@types/react": "^18",
+    "typescript": "^5",
+    "react-intl": "^6",
+    "yup": "^1.3",
+    "date-fns": "^2",
+    "@ikx/app": "workspace:^",
+    "@ikx/when": "workspace:^"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:2": "npx tsc"
+  }
+}

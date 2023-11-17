@@ -1,0 +1,25 @@
+{
+  "name": "@ikx/app",
+  "version": "0.0.1",
+  "description": "app container",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/core",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@types/react": "^18",
+    "typescript": "^5"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:0": "npx tsc"
+  }
+}

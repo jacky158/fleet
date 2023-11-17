@@ -1,0 +1,32 @@
+{
+  "name": "@ikx/form-builder",
+  "version": "0.0.1",
+  "description": "ikx form builder",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/form-builder",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@types/react": "^18",
+    "typescript": "^5",
+    "@mui/material": "^5",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
+    "lodash": "^4",
+    "formik": "^2",
+    "shallowequal": "^1.1.0",
+    "@ikx/app": "workspace:^",
+    "@ikx/when": "workspace:^",
+    "@ikx/intl": "workspace:^",
+    "@ikx/types": "workspace:^"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:2": "npx tsc"
+  }
+}

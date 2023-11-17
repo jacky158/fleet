@@ -1,0 +1,30 @@
+{
+  "name": "@ikx/mui",
+  "version": "0.0.1",
+  "description": "ixk material ui integration",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/mui",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@types/react": "^18",
+    "typescript": "^5",
+    "@mui/material": "^5",
+    "@emotion/react": "^11",
+    "@emotion/cache": "^11",
+    "@emotion/styled": "^11",
+    "stylis-plugin-rtl": "^2",
+    "lodash": "^4",
+    "@ikx/app": "workspace:^",
+    "@ikx/intl": "workspace:^"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:2": "npx tsc"
+  }
+}

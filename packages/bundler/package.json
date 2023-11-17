@@ -1,0 +1,28 @@
+{
+  "name": "@ikx/chatbot",
+  "version": "0.0.1",
+  "description": "chatbot extension",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/chatbot",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@types/react": "^18",
+    "typescript": "^5",
+    "socket.io-client": "^4",
+    "glob": "^8",
+    "@types/node": "^18",
+    "@types/glob": "^8",
+    "path-to-regexp": "^6",
+    "lodash": "^4"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:1": "npx tsc"
+  }
+}

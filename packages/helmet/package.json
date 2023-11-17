@@ -1,0 +1,25 @@
+{
+  "name": "@ikx/helmet",
+  "version": "0.0.1",
+  "description": "ikx helmet integration",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/helmet",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@types/react": "^18",
+    "typescript": "^5",
+    "react-intl": "^6",
+    "react-helmet-async": "^1.3",
+    "@ikx/app": "workspace:^"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:1": "npx tsc"
+  }
+}

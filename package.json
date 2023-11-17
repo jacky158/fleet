@@ -1,0 +1,42 @@
+{
+  "name": "@ikx/project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "bootstrap": "pnpm i &&  yarn clean && yarn types",
+    "clean": "rm -rf ./dist && pnpm run -r clean",
+    "types": "pnpm run -r types:0 && pnpm run -r types:1 && pnpm run -r types:2 && pnpm run -r types:3",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "echo None",
+    "acp": "(cd packages/acp && yarn dev)",
+    "git:push": "git add . && git commit -m 'fix' && git push"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.18",
+    "@mui/material": "^5.14.18",
+    "axios": "^1.6.2",
+    "color-hash": "^2.0.2",
+    "@ikx/acp": "workspace:^",
+    "@ikx/chatbot": "workspace:^",
+    "@ikx/composer": "workspace:^",
+    "@ikx/app": "workspace:^",
+    "@ikx/http": "workspace:^",
+    "@ikx/intl": "workspace:^",
+    "@ikx/json-to-yup": "workspace:^",
+    "@ikx/jsx": "workspace:^",
+    "@ikx/mui": "workspace:^",
+    "lodash": "^4.17.21",
+    "query-string": "^8.1.0",
+    "react-intl": "^6.5.5"
+  },
+  "devDependencies": {
+    "@types/color-hash": "^1.0.4",
+    "@types/lodash": "^4.14.201"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "@ikx/jsx",
+  "version": "0.0.1",
+  "description": "ikx view extension",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/jsx",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18",
+    "@types/react": "^18",
+    "react-is": "^18",
+    "typescript": "^5",
+    "@types/react-is": "^18"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:1": "npx tsc"
+  }
+}

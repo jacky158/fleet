@@ -1,0 +1,25 @@
+{
+  "name": "@ikx/meter",
+  "version": "0.0.1",
+  "description": "ikx post message extension",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/meter",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@types/react": "^18",
+    "typescript": "^5"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:1": "npx tsc"
+  }
+}

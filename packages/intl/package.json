@@ -1,0 +1,24 @@
+{
+  "name": "@ikx/intl",
+  "version": "0.0.1",
+  "description": "fleet react kernel",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/intl",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@types/react": "^18",
+    "typescript": "^5",
+    "react-intl": "^6",
+    "@ikx/app": "workspace:^"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:1": "npx tsc"
+  }
+}

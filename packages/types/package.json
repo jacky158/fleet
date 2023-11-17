@@ -1,0 +1,25 @@
+{
+  "name": "@ikx/types",
+  "version": "0.0.1",
+  "description": "ikx typings",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/typings",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@types/react": "^18",
+    "typescript": "^5",
+    "react-intl": "^6",
+    "axios": "^1.6",
+    "@ikx/app": "workspace:^"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:0": "npx tsc || exit 0"
+  }
+}
