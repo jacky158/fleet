@@ -67,7 +67,7 @@ export function Content() {
   );
 }
 
-export default function Register() {
+export default function ForgotPassword() {
   return (
     <Layout name="layout.paper">
       <Content />

@@ -1,9 +1,10 @@
 import { Layout } from "@ikx/jsx";
+import { Typography } from "@mui/material";
 
 export default function Dashboard() {
   return (
     <Layout name="layout.master">
-      <div>this is master page</div>
+      <Typography variant="h4">Dash Board</Typography>
     </Layout>
   );
 }

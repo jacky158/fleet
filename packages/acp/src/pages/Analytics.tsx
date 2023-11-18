@@ -1,10 +1,10 @@
 import { Layout } from "@ikx/jsx";
 import { Typography } from "@mui/material";
 
-export default function Customer() {
+export default function Analytics() {
   return (
     <Layout name="layout.master">
-      <Typography variant="h4">Customer</Typography>
+      <Typography variant="h4">Dash Board</Typography>
     </Layout>
   );
 }

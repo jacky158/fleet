@@ -44,3 +44,13 @@ export interface ToastProps {
   duration?: number;
   severity?: "success" | "info" | "warning" | "error";
 }
+
+export interface MenuItemShape {
+  id: string;
+  label: string;
+  icon?: string;
+  url?: string;
+  selected?: boolean;
+  type?: "divider" | "header";
+  items?: MenuItemShape[];
+}

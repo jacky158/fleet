@@ -1,10 +1,4 @@
-export type MenuItemShape = {
-  label: string;
-  icon?: string;
-  url?: string;
-  type?: "divider" | "header";
-  items?: MenuItemShape[];
-};
+import { MenuItemShape } from "@ikx/types";
 
 const items: MenuItemShape[] = [
   { label: "Dashboard", icon: "dashboard", url: "/" },
