@@ -1,5 +1,0 @@
-[
-  { "label": "Dashboard", "icon": "", "url": "/" },
-  { "label": "Auth", "icon": "", "url": "/login" },
-  { "label": "Register", "icon": "", "url": "/register" }
-]

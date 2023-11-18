@@ -3,7 +3,8 @@ import MuiGlobalStyles from "@mui/material/GlobalStyles";
 
 const converted = (theme: Theme) => ({
   ":root": {
-    fontFamily: theme.typography.fontFamily,
+    fontFamily:
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,\n    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
     colorScheme: "light",
     textRendering: "optimizeLegibility",
     WebkitFontSmoothing: "antialiased",
@@ -11,6 +12,7 @@ const converted = (theme: Theme) => ({
     WebkitTextSizeAdjust: "100%",
     margin: 0,
     padding: 0,
+    "--primary-main": theme.palette.primary.main,
     "--aside-width": "280px",
     "--aside-bg": "#1C2536",
     "--aside-color": "#fff",

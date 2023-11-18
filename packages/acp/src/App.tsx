@@ -1,5 +1,3 @@
-import { Composer } from "@ikx/composer";
-
 import Content from "./pages/Content";
 import services from "./bundle/services";
 import views from "./bundle/views";
@@ -11,6 +9,9 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import { createApp } from "@ikx/core";
+import Customer from "./pages/Customer";
+import Account from "./pages/Account";
+import Composer from "./Composer";
 
 function App() {
   const app = createApp();
@@ -26,6 +27,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/customer" element={<Customer />} />
+          <Route path="/account" element={<Account />} />
+          <Route path="/customer/view" element={<Customer />} />
         </Routes>
       </BrowserRouter>
     </Composer>
