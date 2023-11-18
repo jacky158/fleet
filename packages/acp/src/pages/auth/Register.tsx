@@ -1,5 +1,5 @@
-import Master from "../../layouts/master";
+import Layout from "@ikx/acp/src/layouts/Layout";
 
 export default function Register() {
-  return <Master>This is login page</Master>;
+  return <Layout name="layout.paper">This is login page</Layout>;
 }

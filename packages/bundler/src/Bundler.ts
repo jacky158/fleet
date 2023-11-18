@@ -16,6 +16,7 @@ interface Item {
   from: string; // related import name, using to import
   source: string; // absolute filename
   exportName: string; // key to export name
+  importName: string;
   packageName: string; // package to use
   chunkName?: string;
   lazy?: boolean;
@@ -52,8 +53,23 @@ export class Bundler {
     return path.resolve(dir, "src", file);
   }
 
-  public mixFrom(packageName: string, file: string) {
-    return `${packageName}/dist/${file.replace(/.\w+$/, "")}`;
+  public mixFrom(packageName: string, file: string): string | undefined {
+    const candidates = [
+      `${packageName}/${file.replace(/.\w+$/, "")}`,
+      `${packageName}/dist/${file.replace(/.\w+$/, "")}`,
+      `${packageName}/src/${file.replace(/.\w+$/, "")}`,
+    ];
+
+    return candidates.find((x) => {
+      try {
+        return !!require.resolve(x);
+      } catch (err) {
+        // skip check
+      }
+      return false;
+    });
+
+    // return `${packageName}/dist/${file.replace(/.\w+$/, "")}`;
   }
 
   public parseJsFile(packageName: string, packageDir: string, file: string) {
@@ -129,10 +145,10 @@ export class Bundler {
           : "";
 
         if (lazy) {
-          return `const ${item.exportName} = loadable(() => import(${chunkSyntax} '${item.from}'));`;
+          return `const ${item.importName} = loadable(() => import(${chunkSyntax} '${item.from}'));`;
         }
 
-        return `import ${item.exportName} from '${item.from}';`;
+        return `import ${item.importName} from '${item.from}';`;
       })
       .join("\n");
   }
@@ -144,36 +160,35 @@ export class Bundler {
     return `/* eslint-disable */\n${content}`;
   }
 
-  private generateSource(
-    constName: string,
-    items: Item[],
-    getExportName: (x: Item) => string
-  ): string {
-    const transformed = uniqBy(
-      items.map((x) => {
-        return {
-          ...x,
-          exportName: getExportName(x),
-        };
-      }),
-      "exportName"
-    );
+  private generateSource(constName: string, input: Item[]): string {
+    const items: Item[] = uniqBy(input, "name");
+
     let data = JSON.stringify(
-      transformed.reduce((acc, x) => {
-        acc[`[${x.exportName}]`] = `[${x.exportName}]`;
+      items.reduce((acc, x) => {
+        acc[`[${x.exportName}]`] = `[${x.importName}]`;
         return acc;
       }, {} as Record<string, string>),
       null,
       "  "
     );
 
-    const imports = this.generateImports(transformed);
+    const imports = this.generateImports(items);
 
-    transformed.forEach((item) => {
-      data = data.replace(
-        `"[${item.exportName}]": "[${item.exportName}]"`,
-        `${item.exportName}`
-      );
+    items.forEach((item) => {
+      if (/^\w+$/.test(item.exportName)) {
+        if (item.importName == item.exportName) {
+          data = data.replace(
+            `"[${item.exportName}]": "[${item.importName}]"`,
+            `${item.exportName}`
+          );
+        } else {
+          data = data.replace(`"[${item.exportName}]"`, `${item.exportName}`);
+          data = data.replace(`"[${item.importName}]"`, `${item.importName}`);
+        }
+      } else {
+        data = data.replace(`"[${item.exportName}]"`, `"${item.exportName}"`);
+        data = data.replace(`"[${item.importName}]"`, `${item.importName}`);
+      }
     });
 
     return `${imports}\n\nexport const ${constName} = ${data};\nexport default ${constName};\n`;
@@ -191,19 +206,13 @@ export class Bundler {
 
     console.log(`Updated ${this.shortenFilename(filename)}`);
   }
-  public exportServices() {
-    const items = this.collects.filter((x) => x.type == "service");
-    const source = this.generateSource("services", items, (x) => `${x.name}`);
-
-    this.writeToFile("service.ts", source);
-  }
 
   private shortenFilename(file: string): string {
     return file.startsWith(this.root) ? file.replace(this.root, ".") : file;
   }
 
   public exportMessages() {
-    const items = this.collects.filter((x) => x.type === "messages");
+    const items = this.collects.filter((x) => x.type === "asset.message");
     const messages = items.reduce((acc, item) => {
       return { ...acc, ...this.readJson(item.source) };
     }, {} as Record<string, string>);
@@ -215,12 +224,27 @@ export class Bundler {
     this.writeToFile("manifest.json", this.manifest);
   }
 
+  public exportViews() {
+    const items = this.collects.filter((x) => x.type === "layout");
+    const source = this.generateSource("views", items);
+
+    this.writeToFile("views.ts", source);
+  }
+
+  public exportServices() {
+    const items = this.collects.filter((x) => x.type == "service");
+    const source = this.generateSource("services", items);
+
+    this.writeToFile("services.ts", source);
+  }
+
   public bundle() {
     const enablePackages = [
       "@ikx/acp",
       "@ikx/chatbot",
       "@ikx/mui",
       "@ikx/http",
+      "@ikx/jsx",
     ];
 
     if (!fs.existsSync(path.join(this.root, "src/bundle"))) {
@@ -231,6 +255,7 @@ export class Bundler {
 
     this.exportServices();
     this.exportMessages();
+    this.exportViews();
     this.exportManifest();
 
     // log(this.data);

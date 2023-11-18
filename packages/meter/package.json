@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "ikx post message extension",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "repository": {
     "type": "github",
     "directory": "packages/meter",

@@ -1,4 +1,6 @@
 import {
+  Box,
+  Divider,
   Drawer,
   List,
   ListItem,
@@ -15,6 +17,30 @@ const ItemIcon = styled("span")(() => ({
   fontSize: "small",
 }));
 
+function AsideAppBranch() {
+  return (
+    <>
+      <Box sx={{ px: 3, pt: 3, cursor: "pointer" }}>
+        <a href="/">
+          <img src="/logo.png" height="32" />
+        </a>
+      </Box>
+      <Box sx={{ display: "none" }}>
+        <Typography
+          variant="h6"
+          component="a"
+          href="/"
+          color="primary"
+          sx={{ cursor: "pointer" }}
+        >
+          phpFox
+        </Typography>
+      </Box>
+      <Divider sx={{ bg: "var(--aside-item-color)" }} />
+    </>
+  );
+}
+
 export default function Aside() {
   return (
     <Drawer
@@ -30,6 +56,7 @@ export default function Aside() {
         },
       }}
     >
+      <AsideAppBranch />
       <List>
         {items.map((x, index) => {
           return (

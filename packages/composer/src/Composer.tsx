@@ -1,17 +1,18 @@
-import { createApp, Provider } from "@ikx/core";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { App, Provider } from "@ikx/core";
+import HelmetHandler from "@ikx/helmet";
 import { IntlProvider } from "@ikx/intl";
 import {
-  ThemeProvider,
-  ToastHandler,
-  FeedbackHandler,
   AlertHandler,
   ConfirmHandler,
+  FeedbackHandler,
   MenuHandler,
+  ModalHandler,
+  ThemeProvider,
+  ToastHandler,
 } from "@ikx/mui";
-import HelmetHandler from "@ikx/helmet";
-import { ModalHandler } from "@ikx/mui";
-import { ReactNode } from "react";
 import "dayjs";
+import { ReactNode } from "react";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -20,19 +21,16 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 export default function Composer({
   children,
-  boot,
+  app,
   messages,
 }: {
   children: ReactNode;
-  boot: Record<string, unknown>;
-  messages: Record<string, string>;
+  app: App;
+  messages: unknown;
 }) {
-  const app = createApp();
-  app.extend(boot);
-
   return (
     <Provider app={app}>
-      <IntlProvider locale="en" messages={messages} defaultLocale="en">
+      <IntlProvider locale="en" messages={messages as any} defaultLocale="en">
         <ThemeProvider>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <HelmetHandler />

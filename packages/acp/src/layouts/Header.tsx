@@ -1,6 +1,6 @@
 import { AppBar, Box, Toolbar, Typography } from "@mui/material";
 
-function AppBranch() {
+export function AppBarBranch() {
   return (
     <>
       <Box sx={{ pr: 2, cursor: "pointer" }}>
@@ -34,7 +34,7 @@ export default function Header() {
       sx={{ left: "var(--aside-width)", zIndex: 1 }}
     >
       <Toolbar variant="dense">
-        <AppBranch />
+        <AppBarBranch />
       </Toolbar>
     </AppBar>
   );

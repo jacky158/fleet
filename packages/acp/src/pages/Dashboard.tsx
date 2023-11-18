@@ -1,9 +1,9 @@
-import Master from "../layouts/master";
+import Layout from "../layouts/Layout";
 
 export default function Dashboard() {
   return (
-    <Master>
+    <Layout name="layout.master">
       <div>this is master page</div>
-    </Master>
+    </Layout>
   );
 }

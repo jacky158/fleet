@@ -1,45 +1,45 @@
 export const AssetMaps = [
   {
     from: "**/assets/no-contents/*.json",
-    type: "assets.noContents",
+    type: "asset.noContent",
     to: "layout.noContents.origin.json",
     reg: /assets\/no-contents\//,
   },
   {
     from: `**/assets/pages/*.json`,
-    type: "layout",
+    type: "asset.page",
     to: "layout.pages.origin.json",
     deduce: true,
     reg: /assets\/pages\//,
   },
   {
     from: "**/assets/templates/*.json",
-    type: "template",
+    type: "asset.template",
     to: "layout.templates.origin.json",
     reg: /assets\/templates\//,
   },
   {
     from: "**/assets/items/*.json",
-    type: "assets.items",
+    type: "asset.item",
     to: "layout.items.origin.json",
     reg: /assets\/items\//,
   },
   {
     from: "**/assets/grids/*.json",
-    type: "assets.grids",
+    type: "asset.grid",
     to: "layout.grids.origin.json",
     reg: /assets\/grids\//,
   },
   {
     from: "**/assets/blocks/*.json",
-    type: "assets.blocks",
+    type: "asset.block",
     to: "layout.blocks.origin.json",
     reg: /assets\/blocks\//,
   },
   {
     from: "**/assets/messages.json",
     reg: /assets\/messages\.json/,
-    type: "messages",
+    type: "asset.message",
   },
 ];
 

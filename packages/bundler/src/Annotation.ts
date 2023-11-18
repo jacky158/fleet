@@ -1,6 +1,8 @@
 import fs from "fs";
 import { validTypes } from "./constants";
 
+let counter = 0;
+
 export class Annotation {
   private normalizeName(name: string) {
     return name.replace(/[^\w.-@]/g, "");
@@ -66,6 +68,15 @@ export class Annotation {
 
     if (!result["type"] || !validTypes.includes(result["type"] as string)) {
       return false;
+    }
+
+    result["importName"] = `$x${counter++}`;
+
+    if (result["name"]) {
+      result["exportName"] = result["name"];
+      if (/^\w+$/.test(result["exportName"] as string)) {
+        result["importName"] = result["exportName"];
+      }
     }
 
     return result;

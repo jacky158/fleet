@@ -1,9 +1,10 @@
 import { ElementType } from "react";
+import { ViewName } from "@ikx/types";
 
 export type ViewConfig = Record<string, ElementType>;
 
 export interface RenderItemShape {
-  component: string | React.ElementType;
+  component: ViewName;
   props?: Record<string, unknown>;
 
   [otherProps: string]: unknown;

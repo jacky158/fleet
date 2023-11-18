@@ -23,6 +23,10 @@ export default function IntlProvider({
       locale,
       defaultLocale,
       messages,
+      onError() {
+        // avoid error
+        // todo listen error to translate.
+      },
       ...props,
     });
     // append intl
@@ -30,7 +34,14 @@ export default function IntlProvider({
     return intl;
   }, [defaultLocale, app, locale, messages, props]);
 
-  app.extend({ intl });
+  app.extend({
+    intl,
+    formatMessage: intl.formatMessage,
+    t(id: string, values?: Record<string, unknown>) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return intl.formatMessage({ id }, values as any);
+    },
+  });
 
   return <RawIntlProvider value={intl}>{children}</RawIntlProvider>;
 }

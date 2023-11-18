@@ -22,7 +22,7 @@
     "outDir": "dist"
     /* */
   },
-  "include": ["src", "../**/dist/module.d.ts"],
+  "include": ["src", "../**/dist/module.d.ts", "../**/dist/index.d.ts"],
   "references": [
     {
       "path": "./tsconfig.node.json"

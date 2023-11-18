@@ -1,5 +1,13 @@
 import { ReactNode } from "react";
 
+export interface ViewComponents {}
+
+export type ViewName =
+  | string
+  | undefined
+  | React.ElementType
+  | keyof ViewComponents;
+
 export interface RemoteDataSource {
   apiUrl: string;
   apiMethod?: "get" | "post" | "put" | "patch" | "delete";

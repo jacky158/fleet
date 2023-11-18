@@ -1,3 +1,7 @@
+/**
+ * @type: layout
+ * @name: layout.paper
+ */
 import { Box, Container, styled } from "@mui/material";
 import { ReactNode } from "react";
 

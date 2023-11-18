@@ -20,6 +20,8 @@ export interface Config {
   [key: string]: unknown;
 }
 
+export class ViewComponents {}
+
 export class App {
   [key: string]: any;
 

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "ixk material ui integration",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "repository": {
     "type": "github",
     "directory": "packages/mui",

@@ -1,12 +1,13 @@
 /**
  * @type: service
- * name: jsxBackend
+ * name: jsx
  */
 import { App } from "@ikx/core";
 import isString from "lodash/isString";
 import React, { ElementType, ReactNode } from "react";
 import { isValidElementType } from "react-is";
 import { ViewConfig, RenderItemShape, RenderProps } from "./types";
+import { ViewName } from "@ikx/types";
 
 /**
  * JsxBackend provider virtual component map by name => element type
@@ -26,7 +27,7 @@ export default class JsxBackend {
    */
   private data: ViewConfig;
 
-  constructor(app: App, data: ViewConfig) {
+  constructor(app: App, data: ViewConfig = {}) {
     this.app = app;
     this.data = data;
     this.extend = this.extend.bind(this);
@@ -51,9 +52,7 @@ export default class JsxBackend {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  public get<T = any>(
-    tagName: string | undefined | React.ElementType
-  ): ElementType<T> {
+  public get<T = any>(tagName: ViewName): ElementType<T> {
     return (isString(tagName) && this.data[tagName]
       ? this.data[tagName]
       : undefined) as unknown as React.ElementType<T>;

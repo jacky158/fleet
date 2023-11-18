@@ -1,6 +1,6 @@
-import { Link as RouterLink } from "react-router-dom";
-import { Link, Stack } from "@mui/material";
-
+import { Stack } from "@mui/material";
+import { useApp } from "@ikx/core";
+import Link from "@ikx/acp/src/Link";
 
 export const Middot = () => {
   return <span> - </span>;
@@ -9,13 +9,9 @@ export const Middot = () => {
 export default function LinkList() {
   const app = useApp();
   return (
-    <Stack direction="row" spacing={2} divider={<Middot />}>
-      <Link component={RouterLink} to="/forgot-password">
-        {app.intl.formatMessage({ id: "auth.forgot_password_?" })}
-      </Link>
-      <Link component={RouterLink} to="/register">
-        {app.intl.formatMessage({ id: "auth.register_new_account" })}
-      </Link>
+    <Stack direction="row" spacing={2}>
+      <Link to="/forgot-password">{app.t("auth.forgot_password_?")}</Link>
+      <Link to="/register">{app.t("auth.register_new_account")}</Link>
     </Stack>
   );
 }

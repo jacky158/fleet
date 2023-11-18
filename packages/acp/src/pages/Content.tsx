@@ -12,7 +12,8 @@ import {
 import dayjs from "dayjs";
 
 import { useRef } from "react";
-import Master from "../layouts/master";
+import Master from "../layouts/MasterLayout";
+import { useApp } from "@ikx/core";
 //import "@ikx/mui/dist/module";
 
 const MyMenu = (props: MenuProps) => {
@@ -78,7 +79,7 @@ export default function Content() {
             })
           }
         >
-          {app.intl.formatMessage({ id: "core.confirm" })}
+          {app.t("core.confirm")}
         </button>
         <button onClick={() => app.modal.open({ modal: MyModal })}>
           Open Modal

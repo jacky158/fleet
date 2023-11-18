@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "fleet react kernel",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "repository": {
     "type": "github",
     "directory": "packages/intl",

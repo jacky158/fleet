@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "scripts": {
     "bootstrap": "pnpm i &&  yarn clean && yarn types",
     "clean": "rm -rf ./dist && pnpm run -r clean",
@@ -10,11 +13,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "echo None",
     "acp": "(cd packages/acp && yarn dev)",
-    "git:push": "git add . && git commit -m 'fix' && git push"
+    "git:push": "git add . && git commit -m 'fix' && git push",
+    "bundle": "(cd packages/bundler && ts-node src/test.ts)"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",

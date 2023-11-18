@@ -1,8 +1,9 @@
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 
 import { useFormik } from "formik";
-import PaperLayout from "../../layouts/PaperLayout";
 import LinkList from "./LinkList";
+import { useApp } from "@ikx/core";
+import Layout from "../../layouts/Layout";
 
 interface FormValues {
   email: string;
@@ -23,9 +24,7 @@ export function Content() {
     <form onSubmit={formik.handleSubmit}>
       <Paper sx={{ p: 3, width: { sm: 320, md: 400 } }} elevation={10}>
         <Box sx={{ pb: 2 }}>
-          <Typography>
-            {app.intl.formatMessage({ id: "auth.login" })}
-          </Typography>
+          <Typography>{app.t("auth.login")}</Typography>
         </Box>
         <Box sx={{ pb: 1 }}>
           <TextField
@@ -37,11 +36,9 @@ export function Content() {
             autoFocus
             tabIndex={0}
             value={formik.values.email}
-            label={app.intl.formatMessage({ id: "auth.email" })}
+            label={app.t("auth.email")}
             InputLabelProps={{ shrink: true }}
-            placeholder={app.intl.formatMessage({
-              id: "auth.enter_your_email",
-            })}
+            placeholder={app.t("auth.enter_your_email")}
           />
           <TextField
             name="password"
@@ -53,15 +50,13 @@ export function Content() {
             tabIndex={1}
             InputLabelProps={{ shrink: true }}
             value={formik.values.password}
-            label={app.intl.formatMessage({ id: "auth.password" })}
-            placeholder={app.intl.formatMessage({
-              id: "auth.enter_your_password",
-            })}
+            label={app.t("auth.password")}
+            placeholder={app.t("auth.enter_your_password")}
           />
         </Box>
         <Box>
-          <Button variant="contained" disableFocusRipple>
-            {app.intl.formatMessage({ id: "auth.login" })}
+          <Button variant="contained" fullWidth disableFocusRipple>
+            {app.t("auth.login")}
           </Button>
         </Box>
         <Box
@@ -81,8 +76,8 @@ export function Content() {
 
 export default function Login() {
   return (
-    <PaperLayout>
+    <Layout name="layout.paper">
       <Content />
-    </PaperLayout>
+    </Layout>
   );
 }
