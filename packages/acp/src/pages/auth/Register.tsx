@@ -1,8 +1,8 @@
-import Layout from "@ikx/acp/src/layouts/Layout";
 import { useApp } from "@ikx/core";
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import LinkList from "./LinkList";
+import { Layout } from "@ikx/jsx";
 
 interface FormValues {
   email: string;

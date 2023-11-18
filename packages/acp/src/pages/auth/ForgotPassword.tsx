@@ -1,4 +1,4 @@
-import Layout from "@ikx/acp/src/layouts/Layout";
+import { Layout } from "@ikx/jsx";
 import { useApp } from "@ikx/core";
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
@@ -26,7 +26,7 @@ export function Content() {
       <Paper sx={{ p: 3, width: { sm: 320, md: 400 } }} elevation={10}>
         <Box sx={{ pb: 2 }}>
           <Typography variant="h6" component="h1">
-            {app.t("auth.forgot_password")}
+            {app.t("auth.reset_password")}
           </Typography>
           <Typography paragraph variant="body2">
             Enter the email address or username you use to sign in.

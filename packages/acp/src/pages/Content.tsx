@@ -12,8 +12,8 @@ import {
 import dayjs from "dayjs";
 
 import { useRef } from "react";
-import Master from "../layouts/MasterLayout";
 import { useApp } from "@ikx/core";
+import { Layout } from "@ikx/jsx";
 //import "@ikx/mui/dist/module";
 
 const MyMenu = (props: MenuProps) => {
@@ -58,33 +58,39 @@ function MyModal(props: ModalProps) {
     </Dialog>
   );
 }
-export default function Content() {
+export function Content() {
   const app = useApp();
   const ref = useRef<HTMLButtonElement>(null);
   return (
     <div>
-      <Master>
-        <button onClick={() => app.alert({ message: "sample alert" })}>
-          alert
-        </button>
+      <button onClick={() => app.alert({ message: "sample alert" })}>
+        alert
+      </button>
 
-        <button onClick={() => app.toast({ message: "ok" })}>toast</button>
-        <button ref={ref} onClick={() => app.openMenu({ menu: MyMenu, ref })}>
-          Open Menu
-        </button>
-        <button
-          onClick={() =>
-            app.confirm({
-              message: "are you sure" + dayjs(Date.now()).format("LLL"),
-            })
-          }
-        >
-          {app.t("core.confirm")}
-        </button>
-        <button onClick={() => app.modal.open({ modal: MyModal })}>
-          Open Modal
-        </button>
-      </Master>
+      <button onClick={() => app.toast({ message: "ok" })}>toast</button>
+      <button ref={ref} onClick={() => app.openMenu({ menu: MyMenu, ref })}>
+        Open Menu
+      </button>
+      <button
+        onClick={() =>
+          app.confirm({
+            message: "are you sure" + dayjs(Date.now()).format("LLL"),
+          })
+        }
+      >
+        {app.t("core.confirm")}
+      </button>
+      <button onClick={() => app.modal.open({ modal: MyModal })}>
+        Open Modal
+      </button>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Layout name="layout.master">
+      <Content />
+    </Layout>
   );
 }

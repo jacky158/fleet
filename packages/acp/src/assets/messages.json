@@ -9,6 +9,7 @@
   "auth.enter_your_email": "Enter your email",
   "auth.enter_your_password": "Enter your password",
   "auth.forgot_password_?": "Forgot password?",
+  "auth.reset_password": "Reset password",
   "auth.register_new_account": "Create new account",
-  "auth:get_password_reset_link": "get password reset link"
+  "auth.get_password_reset_link": "get password reset link"
 }

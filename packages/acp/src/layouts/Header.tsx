@@ -33,9 +33,7 @@ export default function Header() {
       elevation={0}
       sx={{ left: "var(--aside-width)", zIndex: 1 }}
     >
-      <Toolbar variant="dense">
-        <AppBarBranch />
-      </Toolbar>
+      <Toolbar variant="dense"></Toolbar>
     </AppBar>
   );
 }

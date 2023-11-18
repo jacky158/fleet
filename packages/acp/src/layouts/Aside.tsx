@@ -20,7 +20,7 @@ const ItemIcon = styled("span")(() => ({
 function AsideAppBranch() {
   return (
     <>
-      <Box sx={{ px: 3, pt: 3, cursor: "pointer" }}>
+      <Box sx={{ px: 2.5, pt: 2, cursor: "pointer" }}>
         <a href="/">
           <img src="/logo.png" height="32" />
         </a>
