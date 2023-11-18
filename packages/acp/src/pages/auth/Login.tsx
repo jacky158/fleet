@@ -3,7 +3,7 @@ import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import LinkList from "./LinkList";
 import { useApp } from "@ikx/core";
-import Layout from "../../layouts/Layout";
+import Layout from "@ikx/acp/src/layouts/Layout";
 
 interface FormValues {
   email: string;
