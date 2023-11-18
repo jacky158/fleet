@@ -12,7 +12,15 @@ const items: MenuItemShape[] = [
     icon: "",
     items: [
       { label: "List", icon: "dashboard", url: "/customer" },
-      { label: "Detail", icon: "dashboard", url: "/customer/view" },
+      {
+        label: "Detail",
+        icon: "dashboard",
+        url: "/customer/view",
+        items: [
+          { label: "List 1", icon: "dashboard", url: "/customer/view/1" },
+          { label: "View 2", icon: "dashboard", url: "/customer/view/2" },
+        ],
+      },
     ],
   },
 ];

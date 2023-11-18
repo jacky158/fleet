@@ -12,7 +12,7 @@ import { useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import items from "./items";
 import { MenuItemShape } from "@ikx/types";
-import useActiveMenuUrl from "./useActiveMenu";
+import useMenuActivePath from "./useMenuActivePath";
 
 const ItemIcon = styled("span")(() => ({
   width: 28,
@@ -28,23 +28,31 @@ const ItemHeader = styled("li")({
 });
 
 const ItemText = styled("span")<{
-  level?: number;
+  level: number;
   flex?: number;
 }>(({ level, flex }) => ({
   color: "var(--aside-item-color)",
-  fontSize: "0.85em",
+  fontSize: "0.85rem",
   fontWeight: 600,
   flex,
-  ...(!level && {}),
+  ...(level == 0 && {
+    lineHeight: 1.6,
+  }),
   ...(level == 1 && {
-    textIndent: "28px",
+    textIndent: 28,
+  }),
+  ...(level == 2 && {
+    textIndent: 28,
+  }),
+  ...(level == 3 && {
+    textIndent: 28 + 12,
   }),
 }));
 
 function AsideAppBranch() {
   return (
     <>
-      <Box sx={{ px: 2.5, pt: 2, cursor: "pointer" }}>
+      <Box sx={{ px: 3.5, pt: 3, cursor: "pointer" }}>
         <a href="/">
           <img src="/logo.png" height="32" />
         </a>
@@ -94,54 +102,75 @@ const Animate90Deg = styled("span", {
 
 export interface SubMenuItemProps {
   item: MenuItemShape;
-  activeUrl?: string;
+  level: number;
+  selectedPath: string[];
 }
 
-function SubMenuItem({ item, activeUrl }: SubMenuItemProps) {
+function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
   if (item.type === "header") {
     return null;
   }
   if (item.type == "divider") {
     return <ItemDivider />;
   }
+
+  if (item.items?.length) {
+    return (
+      <SubMenu
+        level={level + 1}
+        item={item}
+        items={item.items}
+        selectedPath={selectedPath}
+      />
+    );
+  }
+
   return (
     <ListItemButton
-      selected={activeUrl == item.url}
+      selected={selectedPath.includes(item._xpath as string)}
       component={RouterLink}
       to={item.url as string}
       sx={{ color: "var(--aside-item-color)" }}
     >
-      <ItemText level={1}>{item.label}</ItemText>
+      <ItemText level={level}>
+        {item.label} - {level}
+      </ItemText>
     </ListItemButton>
   );
 }
 
 interface SubMenuProps {
   item: MenuItemShape;
-  children: MenuItemShape[];
-  activeUrl?: string;
+  items: MenuItemShape[];
+  selectedPath: string[];
+  level: number;
 }
 
-export function SubMenu({ item, activeUrl, children }: SubMenuProps) {
-  const [open, setOpen] = useState<boolean>(false);
+export function SubMenu({ item, selectedPath, items, level }: SubMenuProps) {
+  const [open, setOpen] = useState<boolean>(
+    selectedPath.includes(item._xpath as string)
+  );
 
   return (
     <>
       <ListItemButton onClick={() => setOpen(!open)}>
-        <ListItemIcon name="home" />
-        <ItemText flex={1}>{item.label}</ItemText>
+        {level == 0 ? <ListItemIcon name="home" /> : null}
+        <ItemText flex={1} level={level}>
+          {item.label}
+        </ItemText>
         <Animate90Deg open={open}>
           <MaterialIcon name="keyboard_arrow_right" />
         </Animate90Deg>
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List sx={{ fontSize: "0.9em", paddingTop: 0 }}>
-          {children.map((item, index) => {
+          {items.map((x, index) => {
             return (
               <SubMenuItem
-                item={item}
+                item={x}
+                level={level + 1}
                 key={index.toString()}
-                activeUrl={activeUrl}
+                selectedPath={selectedPath}
               />
             );
           })}
@@ -153,10 +182,10 @@ export function SubMenu({ item, activeUrl, children }: SubMenuProps) {
 
 interface ListItemProps {
   item: MenuItemShape;
-  activeUrl?: string;
+  selectedPath: string[];
 }
 
-function MenuItem({ item, activeUrl }: ListItemProps) {
+function MenuItem({ item, selectedPath }: ListItemProps) {
   if (item.type === "header") {
     return <ItemHeader>{item.label}</ItemHeader>;
   }
@@ -165,12 +194,19 @@ function MenuItem({ item, activeUrl }: ListItemProps) {
   }
 
   if (item.items?.length) {
-    return <SubMenu item={item} children={item.items} activeUrl={activeUrl} />;
+    return (
+      <SubMenu
+        level={0}
+        item={item}
+        items={item.items}
+        selectedPath={selectedPath}
+      />
+    );
   }
 
   return (
     <ListItemButton
-      selected={item.url == activeUrl}
+      selected={selectedPath?.includes(item._xpath as string)}
       component={RouterLink}
       to={item.url as string}
       sx={{ color: "var(--aside-item-color)" }}
@@ -183,9 +219,7 @@ function MenuItem({ item, activeUrl }: ListItemProps) {
 
 export default function Aside() {
   const { pathname } = useLocation();
-  const activeUrl = useActiveMenuUrl(items, pathname);
-
-  console.log({ activeUrl });
+  const selected = useMenuActivePath(items, pathname);
 
   return (
     <Drawer
@@ -201,11 +235,11 @@ export default function Aside() {
       }}
     >
       <AsideAppBranch />
-      <List sx={{ py: 3 }}>
+      <List sx={{ py: 3, px: 1.5 }}>
         {items.map((item, index) => {
           return (
             <MenuItem
-              activeUrl={activeUrl}
+              selectedPath={selected}
               item={item}
               key={index.toString()}
             />
