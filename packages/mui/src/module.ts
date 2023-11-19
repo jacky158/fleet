@@ -13,9 +13,9 @@ declare module "@ikx/core" {
     confirm(data: ConfirmProps): Promise<boolean>;
     handleError(error: unknown, formik: unknown): void;
     handleFeedback(res: unknown): void;
-    openMenu(evt: unknown, data: OpenPopoverProps): void;
     useLayoutPageSize(): string;
-    openPopover(evt: unknown, data: unknown): void;
+    openMenu(evt: unknown, data: OpenPopoverProps): void;
+    openPopover(evt: unknown, data: OpenPopoverProps): void;
     modal: ModalApi;
   }
 }

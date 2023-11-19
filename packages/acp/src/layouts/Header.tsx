@@ -44,46 +44,52 @@ export default function Header({
 }) {
   const app = useApp();
   return (
-    <AppBar
-      component="header"
-      variant="outlined"
-      position="fixed"
-      color="inherit"
-      elevation={0}
-      sx={{ left: cx, zIndex: 1 }}
-    >
-      <Toolbar>
-        <Button
-          onClick={toggleDrawer}
-          sx={{
-            width: 40,
-            minWidth: 40,
-            fontSize: "32px",
-            lineHeight: "32px",
-            padding: "0 0 0 0",
-          }}
-        >
-          <MuiIcon name="dehaze" />
-        </Button>
-        <Box flex={1}></Box>
-        <Stack direction="row" spacing={2}>
-          <Badge
-            badgeContent={"9k+"}
-            color="warning"
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
+    <>
+      <AppBar
+        component="header"
+        variant="outlined"
+        position="fixed"
+        color="inherit"
+        elevation={0}
+        sx={{ left: cx, zIndex: 1 }}
+      >
+        <Toolbar>
+          <Button
+            onClick={toggleDrawer}
+            sx={{
+              width: 40,
+              minWidth: 40,
+              fontSize: "32px",
+              lineHeight: "32px",
+              padding: "0 0 0 0",
             }}
           >
-            <IconButton size="small" onClick={(evt) => app.openPopover(evt)}>
-              <MuiIcon name="notifications" style={{ width: 32 }} />
+            <MuiIcon name="dehaze" />
+          </Button>
+          <Box flex={1}></Box>
+          <Stack direction="row" spacing={2}>
+            <Badge
+              badgeContent={"9k+"}
+              color="warning"
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+            >
+              <IconButton
+                size="small"
+                onClick={(evt) => app.openPopover(evt, { component: "" })}
+              >
+                <MuiIcon name="notifications" style={{ width: 32 }} />
+              </IconButton>
+            </Badge>
+            <IconButton size="small">
+              <Avatar sx={{ width: 32, height: 32 }}>N</Avatar>
             </IconButton>
-          </Badge>
-          <IconButton size="small">
-            <Avatar sx={{ width: 32, height: 32 }}>N</Avatar>
-          </IconButton>
-        </Stack>
-      </Toolbar>
-    </AppBar>
+          </Stack>
+        </Toolbar>
+      </AppBar>
+      <Box sx={{ height: 58 }}></Box>
+    </>
   );
 }
