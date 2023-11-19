@@ -318,7 +318,7 @@ export default function Aside({
       PaperProps={{
         sx: {
           width: "var(--aside-width)",
-          // background: "var(--aside-bg)",
+          background: "var(--aside-bg)",
           color: "var(--aside-item-color)",
           boxSizing: "border-box",
         },

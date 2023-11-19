@@ -3,7 +3,7 @@ import services from "./bundle/services";
 import views from "./bundle/views";
 
 import { createApp } from "@ikx/core";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, createBrowserRouter } from "react-router-dom";
 import Composer from "./Composer";
 import GlobalStyles from "./GlobalStyles";
 
@@ -18,12 +18,6 @@ function App() {
   return (
     <Composer app={app} messages={messages}>
       <GlobalStyles />
-      <Routes>
-        {routes.map(({ path, Component }, index) => (
-          <Route path={path} Component={Component} key={index.toString()} />
-        ))}
-        <Route path="*" Component={PageNotFound} />
-      </Routes>
     </Composer>
   );
 }

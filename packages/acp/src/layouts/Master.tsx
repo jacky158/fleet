@@ -24,10 +24,8 @@ export default function Layout({ children }: { children: ReactNode }) {
         onClose={() => setDrawerOpened(false)}
       />
       {/* <Box sx={{ width: drawerWidth }}></Box> */}
-      <Box sx={{ paddingLeft: cx, paddingTop: "50px" }}>
-        <Box component="main" sx={{ height: 2000 }}>
-          {children}
-        </Box>
+      <Box sx={{ paddingLeft: cx }}>
+        <Box component="main">{children}</Box>
       </Box>
       <Footer />
     </>
