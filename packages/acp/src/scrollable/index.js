@@ -83,7 +83,6 @@ export default class Scrollbars extends Component {
   }
 
   componentDidMountUniversal() {
-    // eslint-disable-line react/sort-comp
     const { universal } = this.props;
     if (!universal) return;
     this.setState({ didMountUniversal: true });
@@ -542,23 +541,14 @@ export default class Scrollbars extends Component {
     const scrollbarWidth = getScrollbarWidth();
     /* eslint-disable no-unused-vars */
     const {
-      onScroll,
-      onScrollFrame,
-      onScrollStart,
-      onScrollStop,
-      onUpdate,
       renderView,
       renderTrackHorizontal,
       renderTrackVertical,
       renderThumbHorizontal,
       renderThumbVertical,
       tagName,
-      hideTracksWhenNotNeeded,
       autoHide,
-      autoHideTimeout,
       autoHideDuration,
-      thumbSize,
-      thumbMinSize,
       universal,
       autoHeight,
       autoHeightMin,
