@@ -25,6 +25,7 @@ interface Item {
   packageName: string; // package to use
   chunkName?: string;
   lazy?: boolean;
+  path?: string;
 }
 
 export class Bundler {
@@ -150,7 +151,8 @@ export class Bundler {
           : "";
 
         if (lazy) {
-          return `const ${item.importName} = loadable(() => import(${chunkSyntax} '${item.from}'));`;
+          return `const ${item.importName} = lazy(() => import(${chunkSyntax} '${item.from}'));`;
+          // return `const ${item.importName} = loadable(() => import(${chunkSyntax} '${item.from}'));`;
         }
 
         return `import ${item.importName} from '${item.from}';`;
@@ -159,13 +161,16 @@ export class Bundler {
   }
 
   public filterChunkedOutput(content: string) {
-    if (content.indexOf("loadable(") > 0 || content.indexOf("React.lazy") > 0) {
+    if (content.indexOf("loadable(") > 0) {
       content = `import loadable from '@loadable/component';\n\n${content}`;
+    }
+    if (content.indexOf(" lazy(") > 0) {
+      content = `import { lazy } from 'react';\n\n${content}`;
     }
     return `/* eslint-disable */\n${content}`;
   }
 
-  private generateSource(constName: string, input: Item[]): string {
+  private createSourceAsObject(constName: string, input: Item[]): string {
     const items: Item[] = uniqBy(input, "name");
 
     let data = JSON.stringify(
@@ -202,6 +207,8 @@ export class Bundler {
   private writeToFile(file: string, source: unknown) {
     if (isPlainObject(source)) {
       source = JSON.stringify(source, null, " ");
+    } else {
+      source = this.filterChunkedOutput(source as string);
     }
     const filename = path.join(this.root, "src/bundle", file);
 
@@ -231,14 +238,63 @@ export class Bundler {
 
   public exportViews() {
     const items = this.collects.filter((x) => validViewTypes.includes(x.type));
-    const source = this.generateSource("views", items);
+    const source = this.createSourceAsObject("views", items);
 
     this.writeToFile("views.ts", source);
   }
 
+  public exportRoutes(): void {
+    const items = this.collects.filter((x) => x.type == "route");
+    const constName = "routes";
+
+    let content = JSON.stringify(
+      items.reduce((acc, x) => {
+        if (!x.path) return acc;
+
+        const ps = x.path
+          .split(",")
+          .map((x) => x.trim())
+          .filter(Boolean);
+
+        ps.forEach((p) => {
+          acc.push({
+            path: p,
+            Component: `[${x.importName}]`,
+          });
+        });
+
+        return acc;
+      }, [] as { path: string; Component: string }[]),
+      null,
+      "  "
+    );
+
+    const imports = this.generateImports(items);
+
+    items.forEach((item) => {
+      content = this.replaceAll(
+        content,
+        `"[${item.importName}]"`,
+        `${item.importName}`
+      );
+    });
+
+    const source = `${imports}\n\nexport const ${constName} = ${content};\nexport default ${constName};\n`;
+
+    this.writeToFile("routes.ts", source);
+  }
+
+  public replaceAll(content: string, from: string, to: string): string {
+    if (!content) return "";
+    while (content.includes(from)) {
+      content = content.replace(from, to);
+    }
+    return content;
+  }
+
   public exportServices() {
     const items = this.collects.filter((x) => x.type == "service");
-    const source = this.generateSource("services", items);
+    const source = this.createSourceAsObject("services", items);
 
     this.writeToFile("services.ts", source);
   }
@@ -261,6 +317,7 @@ export class Bundler {
     this.exportServices();
     this.exportMessages();
     this.exportViews();
+    this.exportRoutes();
     this.exportManifest();
 
     // log(this.data);

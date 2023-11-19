@@ -4,14 +4,7 @@
  * @name: popover.AccountMenu
  */
 import { RouterLink, MuiIcon } from "@ikx/mui";
-import {
-  Box,
-  Divider,
-  List,
-  Popover,
-  PopoverProps,
-  ListItemButton as Item,
-} from "@mui/material";
+import { Box, Divider, List, Popover, PopoverProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const Item = styled(RouterLink)(({ theme }) => ({

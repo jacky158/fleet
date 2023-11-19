@@ -84,7 +84,7 @@ export const loadableByTypeMap: Record<string, boolean> = {
   ui: true,
   embedView: true,
   formElement: true,
-  route: true,
+  route: false,
   modalRoute: false,
   siteDock: true,
   saga: false,
@@ -98,7 +98,7 @@ export const loadableByTypeMap: Record<string, boolean> = {
 
 export const chunkByTypeMap: Record<string, string> = {
   dialog: "dialogs",
-  route: "routes",
+  // route: "routes",
   siteDock: "boot",
   modalRoute: "modalRoutes",
 };

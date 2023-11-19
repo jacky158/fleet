@@ -1,3 +1,8 @@
+/**
+ * @type: route
+ * @name: analytics
+ * @path: /analytics
+ */
 import { Layout } from "@ikx/jsx";
 import { Typography } from "@mui/material";
 

@@ -1,3 +1,8 @@
+/**
+ * @type: route
+ * @name: forgot-password
+ * @path: /forgot-password
+ */
 import { Layout } from "@ikx/jsx";
 import { useApp } from "@ikx/core";
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";

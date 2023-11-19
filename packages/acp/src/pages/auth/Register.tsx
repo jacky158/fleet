@@ -1,3 +1,8 @@
+/**
+ * @type: route
+ * @name: register
+ * @path: /register
+ */
 import { useApp } from "@ikx/core";
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";

@@ -1,3 +1,8 @@
+/**
+ * @type: route
+ * @name: login
+ * @path: /login
+ */
 import { Box, Button, Paper, TextField, Typography } from "@mui/material";
 
 import { useFormik } from "formik";

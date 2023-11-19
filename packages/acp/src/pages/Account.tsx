@@ -1,3 +1,8 @@
+/**
+ * @type: route
+ * @name: account
+ * @path: /account
+ */
 import {
   Button,
   Dialog,

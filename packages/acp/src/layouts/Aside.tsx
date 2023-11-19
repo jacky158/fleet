@@ -13,6 +13,8 @@ import useMenuActivePath from "./useMenuActivePath";
 import { MuiIcon } from "@ikx/mui";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 
+import Scrollbars from "../scrollable";
+
 const name = "Aside";
 const seem = 32;
 
@@ -314,24 +316,26 @@ export default function Aside({
       PaperProps={{
         sx: {
           width: "var(--aside-width)",
-          background: "var(--aside-bg)",
+          // background: "var(--aside-bg)",
           color: "var(--aside-item-color)",
           boxSizing: "border-box",
         },
       }}
     >
       <AsideAppBranch />
-      <List root>
-        {items.map((item, index) => {
-          return (
-            <MenuItem
-              selectedPath={selected}
-              item={item}
-              key={index.toString()}
-            />
-          );
-        })}
-      </List>
+      <Scrollbars height={400}>
+        <List root>
+          {items.map((item, index) => {
+            return (
+              <MenuItem
+                selectedPath={selected}
+                item={item}
+                key={index.toString()}
+              />
+            );
+          })}
+        </List>
+      </Scrollbars>
     </Drawer>
   );
 }

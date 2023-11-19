@@ -1,3 +1,8 @@
+/**
+ * @type: route
+ * @name: e-commerce
+ * @path: /e-commerce
+ */
 import { Layout } from "@ikx/jsx";
 import { Typography } from "@mui/material";
 
