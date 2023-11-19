@@ -51,7 +51,12 @@ export default function Header({
         position="fixed"
         color="inherit"
         elevation={0}
-        sx={{ paddingLeft: cx, zIndex: 1 }}
+        sx={{
+          paddingLeft: cx,
+          zIndex: 1,
+          transitionProperty: "padding-left",
+          transitionDuration: "250ms",
+        }}
       >
         <Toolbar>
           <Box sx={{ flexGrow: 0 }}></Box>

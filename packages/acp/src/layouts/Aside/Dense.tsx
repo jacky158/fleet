@@ -1,13 +1,13 @@
 import { MenuItemShape } from "@ikx/types";
-import { Box, Collapse, Drawer, DrawerProps, Typography } from "@mui/material";
-import { useState } from "react";
-import items from "./items";
-import useMenuActivePath from "./useMenuActivePath";
-import { MuiIcon } from "@ikx/mui";
-import { Link, Link as RouterLink, useLocation } from "react-router-dom";
+import { Box, Popover, Tooltip, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useRef, useState } from "react";
+import { Link, Link as RouterLink, useLocation } from "react-router-dom";
+import items from "../items";
+import useMenuActivePath from "../useMenuActivePath";
 
-import Scrollbars from "../scrollable";
+import Scrollbars from "../../scrollable";
+import { MuiIcon } from "@ikx/mui";
 
 const name = "Aside";
 const seem = 32;
@@ -21,15 +21,40 @@ const List = styled("div", {
   shouldForwardProp(prop: string) {
     return prop != "root";
   },
-})<{ root?: boolean }>(({ theme, root }) => ({
+})(() => ({
   color: "var(--aside-item-color)",
   display: "block",
-  padding: root ? theme.spacing(1, 1, 25, 2) : theme.spacing(0),
+}));
+
+const SubList = styled("div", {
+  name,
+  slot: "subList",
+  overridesResolver(_, styles) {
+    return [styles.itemIcon];
+  },
+  shouldForwardProp(prop: string) {
+    return prop != "root";
+  },
+})(() => ({
+  display: "block",
+  padding: "8px",
 }));
 
 const Icon = styled("span", {
   name,
-  slot: "ItemIcon",
+  slot: "icon",
+  overridesResolver(_, styles) {
+    return [styles.icon];
+  },
+})(() => ({
+  fontSize: "1.4em",
+  flexGrow: 1,
+  textAlign: "center",
+}));
+
+const SubIcon = styled("span", {
+  name,
+  slot: "subIcon",
   overridesResolver(_, styles) {
     return [styles.itemIcon];
   },
@@ -63,27 +88,12 @@ const Text = styled("span", {
 })<{
   level: number;
   flex?: number;
-}>(({ level, flex }) => ({
+}>(({ flex }) => ({
   //color: "inherit",
   fontSize: "0.9rem",
   fontWeight: 500,
   letterSpacing: 0.2,
   flex,
-  ...(level == 0 && {
-    lineHeight: 1.6,
-  }),
-  ...(level == 1 && {
-    textIndent: seem,
-    fontSize: "0.8rem",
-  }),
-  ...(level == 2 && {
-    textIndent: seem,
-    fontSize: "0.8rem",
-  }),
-  ...(level == 3 && {
-    textIndent: seem + 12,
-    fontSize: "0.8rem",
-  }),
 }));
 
 const Item = styled(RouterLink, {
@@ -115,6 +125,37 @@ const Item = styled(RouterLink, {
   ...(selected && {
     color: "var(--aside-item-active-color)",
     backgroundColor: "var(--aside-item-active-bg)",
+  }),
+}));
+
+const SubItem = styled(RouterLink, {
+  name,
+  slot: "subItem",
+  overridesResolver(_, styles) {
+    return [styles.itemText, styles[`itemLevel${_.level}`]];
+  },
+  shouldForwardProp(name: string) {
+    return name != "selected" && name != "level";
+  },
+})<{ selected?: boolean; level?: number }>(({ selected, theme, level }) => ({
+  flexGrow: 1,
+  flex: 1,
+  display: "flex",
+  justifyItems: "center",
+  alignItems: "center",
+  textDecoration: "none",
+  minHeight: level ? 36 : 44,
+  boxSizing: "border-box",
+  borderRadius: 8,
+  padding: "0 8px",
+  marginBottom: 2,
+  fontSize: 16,
+  color: theme.palette.text.primary,
+  "&:hover": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  ...(selected && {
+    backgroundColor: theme.palette.action.selected,
   }),
 }));
 
@@ -213,14 +254,28 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
     );
   }
 
+  if (level == 0) {
+    return (
+      <Item
+        level={level}
+        selected={selectedPath.includes(item._xpath as string)}
+        to={item.url as string}
+      >
+        <MuiIcon name={item.icon} component={Icon} />
+        <Text level={level}>{item.label}</Text>
+      </Item>
+    );
+  }
+
   return (
-    <Item
+    <SubItem
       level={level}
       selected={selectedPath.includes(item._xpath as string)}
       to={item.url as string}
     >
+      <MuiIcon name={item.icon ?? "home"} component={SubIcon} />
       <Text level={level}>{item.label}</Text>
-    </Item>
+    </SubItem>
   );
 }
 
@@ -232,23 +287,34 @@ interface SubMenuProps {
 }
 
 export function SubMenu({ item, selectedPath, items, level }: SubMenuProps) {
-  const [open, setOpen] = useState<boolean>(
-    selectedPath.includes(item._xpath as string)
-  );
+  const [open, setOpen] = useState<boolean>(false);
+  const anchorRef = useRef(null);
 
   return (
     <>
-      <Item level={level} onClick={() => setOpen(!open)} to="/">
-        {level == 0 ? <ListItemIcon name={item.icon} /> : null}
-        <Text flex={1} level={level}>
-          {item.label}
-        </Text>
-        <Expand open={open}>
-          <MuiIcon name="keyboard_arrow_right" />
-        </Expand>
-      </Item>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List>
+      <Tooltip title={item.label} placement="right" arrow>
+        <Item
+          level={level}
+          onClick={() => setOpen(!open)}
+          to="/"
+          ref={anchorRef}
+        >
+          <MuiIcon name={item.icon} component={Icon} />
+        </Item>
+      </Tooltip>
+      <Popover
+        disableScrollLock
+        disableRestoreFocus
+        disablePortal
+        open={open}
+        anchorEl={anchorRef.current}
+        onClose={() => setOpen(false)}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <SubList>
           {items.map((x, index) => {
             return (
               <SubMenuItem
@@ -259,8 +325,8 @@ export function SubMenu({ item, selectedPath, items, level }: SubMenuProps) {
               />
             );
           })}
-        </List>
-      </Collapse>
+        </SubList>
+      </Popover>
     </>
   );
 }
@@ -272,7 +338,7 @@ interface ListItemProps {
 
 function MenuItem({ item, selectedPath }: ListItemProps) {
   if (item.type === "header") {
-    return <ItemHeader>{item.label}</ItemHeader>;
+    return null;
   }
   if (item.type == "divider") {
     return <ItemDivider />;
@@ -290,44 +356,28 @@ function MenuItem({ item, selectedPath }: ListItemProps) {
   }
 
   return (
-    <Item
-      level={0}
-      selected={selectedPath?.includes(item._xpath as string)}
-      to={item.url as string}
-    >
-      <ListItemIcon name={item.icon} />
-      <Text level={0}>{item.label}</Text>
-    </Item>
+    <Tooltip title={item.label} placement="right" arrow>
+      <Item
+        level={0}
+        selected={selectedPath?.includes(item._xpath as string)}
+        to={item.url as string}
+      >
+        <ListItemIcon name={item.icon} />
+        {/* <Text level={0}>{item.label}</Text> */}
+      </Item>
+    </Tooltip>
   );
 }
 
-export default function Aside({
-  variant,
-  onClose,
-  open,
-  cx,
-}: Pick<DrawerProps, "variant" | "open" | "onClose"> & { cx: string }) {
+export default function Dense() {
   const { pathname } = useLocation();
   const selected = useMenuActivePath(items, pathname);
 
   return (
-    <Drawer
-      anchor="left"
-      variant={variant}
-      open={open}
-      onClose={onClose}
-      PaperProps={{
-        sx: {
-          width: cx,
-          background: "var(--aside-bg)",
-          color: "var(--aside-item-color)",
-          boxSizing: "border-box",
-        },
-      }}
-    >
+    <>
       <AsideAppBranch />
       <Scrollbars height={400}>
-        <List root>
+        <List>
           {items.map((item, index) => {
             return (
               <MenuItem
@@ -339,6 +389,6 @@ export default function Aside({
           })}
         </List>
       </Scrollbars>
-    </Drawer>
+    </>
   );
 }

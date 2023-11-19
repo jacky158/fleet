@@ -37,7 +37,8 @@ export default function ThemeProvider({
   }, [direction]);
 
   const mode: PaletteMode = useMemo(() => {
-    if (_mode) return "light";
+    if (_mode == "light") return _mode;
+    if (_mode == "dark") return _mode;
     if (_mode == "auto") {
       return "light";
     }

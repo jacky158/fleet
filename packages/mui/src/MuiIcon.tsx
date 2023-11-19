@@ -1,16 +1,17 @@
-import { HTMLAttributes } from "react";
+import { ElementType, HTMLAttributes } from "react";
 
 export function MuiIcon({
   name,
+  component: Component = "span",
   ...props
-}: { name?: string } & Omit<
+}: { name?: string; component?: ElementType } & Omit<
   HTMLAttributes<HTMLSpanElement>,
   "children" | "className" | "name"
 >) {
   return (
-    <span className="icon material-symbols-outlined" {...props}>
+    <Component className="icon material-symbols-outlined" {...props}>
       {name ?? null}
-    </span>
+    </Component>
   );
 }
 
