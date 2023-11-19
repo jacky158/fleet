@@ -1,12 +1,12 @@
 {
-  "name": "@ikx/mui",
+  "name": "@ikx/router",
   "version": "0.0.1",
   "description": "ixk material ui integration",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "repository": {
     "type": "github",
-    "directory": "packages/mui",
+    "directory": "packages/router",
     "url": "https://github.com/jacky158/fleet"
   },
   "author": "nam.ngvan@gmail.com",

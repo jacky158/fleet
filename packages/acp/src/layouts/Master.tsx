@@ -12,13 +12,20 @@ import Aside from "./Aside";
 export default function Layout({ children }: { children: ReactNode }) {
   const theme = useTheme();
   const desktop = useMediaQuery(theme.breakpoints.up("lg"));
-  const cx = desktop ? "var(--aside-width)" : "0px";
+  const dense = true;
+  const cx = desktop
+    ? dense
+      ? "var(--aside-dense-width)"
+      : "var(--aside-width)"
+    : "0px";
   const [drawerOpened, setDrawerOpened] = useState<boolean>(false);
 
   return (
     <>
       <Header cx={cx} toggleDrawer={() => setDrawerOpened((prev) => !prev)} />
       <Aside
+        cx={cx}
+        dense={dense}
         variant={desktop ? "permanent" : "temporary"}
         open={drawerOpened}
         onClose={() => setDrawerOpened(false)}

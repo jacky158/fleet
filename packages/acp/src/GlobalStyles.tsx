@@ -14,6 +14,7 @@ const converted = (theme: Theme) => ({
     padding: 0,
     "--primary-main": theme.palette.primary.main,
     "--aside-width": "280px",
+    "--aside-dense-width": "64px",
     "--aside-bg": "#1C2536",
     "--aside-color": "#fff",
     "--aside-border-color": "transparent",

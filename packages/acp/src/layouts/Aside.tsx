@@ -305,7 +305,8 @@ export default function Aside({
   variant,
   onClose,
   open,
-}: Pick<DrawerProps, "variant" | "open" | "onClose">) {
+  cx,
+}: Pick<DrawerProps, "variant" | "open" | "onClose"> & { cx: string }) {
   const { pathname } = useLocation();
   const selected = useMenuActivePath(items, pathname);
 
@@ -317,7 +318,7 @@ export default function Aside({
       onClose={onClose}
       PaperProps={{
         sx: {
-          width: "var(--aside-width)",
+          width: cx,
           background: "var(--aside-bg)",
           color: "var(--aside-item-color)",
           boxSizing: "border-box",
