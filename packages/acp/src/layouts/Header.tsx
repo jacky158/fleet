@@ -79,13 +79,18 @@ export default function Header({
               <IconButton
                 size="small"
                 onClick={(evt) =>
-                  app.openPopover(evt, { component: "popover.notifications" })
+                  app.openPopover(evt, { component: "popover.Notifications" })
                 }
               >
                 <MuiIcon name="notifications" style={{ width: 32 }} />
               </IconButton>
             </Badge>
-            <IconButton size="small">
+            <IconButton
+              size="small"
+              onClick={(evt) =>
+                app.openPopover(evt, { component: "popover.AccountMenu" })
+              }
+            >
               <Avatar sx={{ width: 32, height: 32 }}>N</Avatar>
             </IconButton>
           </Stack>

@@ -1,11 +1,12 @@
 /**
  * @type: popover
- * @name: popover.notifications
+ * @name: popover.Notifications
  */
 import { useApp } from "@ikx/core";
 import {
   Avatar,
   Box,
+  Divider,
   IconButton,
   List,
   ListItem,
@@ -30,15 +31,25 @@ export default function Notifications({
       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       slotProps={{ paper: { sx: { minWidth: 320 } } }}
     >
-      <Stack
-        direction="row"
-        sx={{ px: 2, py: 2, justifyContent: "space-between" }}
+      <Box
+        sx={{
+          px: 2,
+          pt: 2,
+          pb: 1,
+          justifyContent: "space-between",
+          display: "flex",
+          flexGrow: 1,
+          alignItems: "center",
+        }}
       >
-        <Typography variant="h6">{app.t("notifications")}</Typography>
+        <Typography variant="subtitle1" component="span">
+          {app.t("notifications")}
+        </Typography>
         <IconButton size="small">
           <MuiIcon name="mail" />
         </IconButton>
-      </Stack>
+      </Box>
+      <Divider variant="middle" />
       <List>
         <ListItem>
           <ListItemAvatar>

@@ -60,7 +60,7 @@ function MyModal(props: ModalProps) {
 }
 export function Content() {
   const app = useApp();
-  const ref = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLButtonElement>(null);
   return (
     <div>
       <button onClick={() => app.alert({ message: "sample alert" })}>
@@ -69,8 +69,8 @@ export function Content() {
 
       <button onClick={() => app.toast({ message: "ok" })}>toast</button>
       <button
-        ref={ref}
-        onClick={(evt) => app.openMenu(evt, { component: MyMenu, ref })}
+        ref={menuRef}
+        onClick={(evt) => app.openMenu(evt, { component: MyMenu })}
       >
         Open Menu
       </button>
