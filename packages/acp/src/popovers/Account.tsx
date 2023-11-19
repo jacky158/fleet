@@ -3,7 +3,7 @@
  * @type: popover
  * @name: popover.AccountMenu
  */
-import { Link as RouterLink, MuiIcon } from "@ikx/mui";
+import { RouterLink, MuiIcon } from "@ikx/mui";
 import {
   Box,
   Divider,
@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-const Link = styled(RouterLink)(({ theme }) => ({
+const Item = styled(RouterLink)(({ theme }) => ({
   display: "flex",
   flexGrow: 1,
   flexDirection: "row",
@@ -53,15 +53,15 @@ export default function AccountMenu({
       </Box>
       <Divider variant="middle" />
       <List component="div">
-        <Item component={Link} to="/customer">
+        <Item to="/customer">
           <Icon name="person" />
           <Text>Profile</Text>
         </Item>
-        <Item component={Link} to="/analytics" underline="none" color="inherit">
+        <Item to="/analytics">
           <Icon name="settings" />
           <Text>Settings</Text>
         </Item>
-        <Item component={Link} to="/dashboard" underline="none" color="inherit">
+        <Item to="/logout">
           <Icon name="logout" />
           <Text>Logout</Text>
         </Item>

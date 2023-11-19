@@ -9,6 +9,7 @@ export { default as ModalHandler } from "./ModalHandler";
 export { default as PopoverHandler } from "./PopoverHandler";
 export { default as Link } from "./Link";
 export { default as MuiIcon } from "./MuiIcon";
+export { default as RouterLink } from "./RouterLink";
 export type {
   AlertProps,
   OpenPopoverProps as OpenMenuProps,
