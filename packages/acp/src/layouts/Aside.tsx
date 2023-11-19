@@ -232,7 +232,7 @@ export default function Aside({
       PaperProps={{
         sx: {
           width: "var(--aside-width)",
-          top: "var(--header-height)",
+          // top: "var(--header-height)",
           background: "var(--aside-bg)",
           color: "var(--aside-item-color)",
         },
