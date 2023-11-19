@@ -13,6 +13,7 @@ import ECommerce from "./pages/ECommerce";
 import ForgotPassword from "./pages/auth/ForgotPassword";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
+import GlobalStyles from "./GlobalStyles";
 
 function App() {
   const app = createApp();
@@ -21,6 +22,7 @@ function App() {
 
   return (
     <Composer app={app} messages={messages}>
+      <GlobalStyles />
       <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/dashboard" element={<Dashboard />} />

@@ -2,52 +2,123 @@ import { MenuItemShape } from "@ikx/types";
 import {
   Box,
   Collapse,
-  Divider,
   Drawer,
   DrawerProps,
-  List,
-  ListItemButton,
   Typography,
   styled,
 } from "@mui/material";
 import { useState } from "react";
 import items from "./items";
 import useMenuActivePath from "./useMenuActivePath";
-import { Link, MuiIcon } from "@ikx/mui";
-import { useLocation } from "react-router-dom";
+import { MuiIcon } from "@ikx/mui";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
-const ItemIcon = styled("span")(() => ({
-  width: 28,
-  fontSize: "1.15em",
+const name = "Aside";
+const seem = 32;
+
+const List = styled("div", {
+  name,
+  slot: "list",
+  overridesResolver(_, styles) {
+    return [styles.itemIcon];
+  },
+  shouldForwardProp(propName) {
+    return propName != "root";
+  },
+})<{ root?: boolean }>(({ theme, root }) => ({
+  color: "var(--aside-item-color)",
+  display: "block",
+  padding: root ? theme.spacing(1, 1, 0, 2) : theme.spacing(0),
 }));
 
-const ItemHeader = styled("li")({
-  color: "var(--aside-item-color)",
+const Icon = styled("span", {
+  name,
+  slot: "ItemIcon",
+  overridesResolver(_, styles) {
+    return [styles.itemIcon];
+  },
+})(() => ({
+  width: 28,
+  fontSize: "1.2em",
+}));
+
+const ItemHeader = styled("div", {
+  name,
+  slot: "itemHeader",
+  overridesResolver(_, styles) {
+    return [styles.itemHeader];
+  },
+})({
   fontSize: "0.8em",
   fontWeight: 700,
   textTransform: "uppercase",
   padding: "24px 16px 1em",
 });
 
-const ItemText = styled("span")<{
+const Text = styled("span", {
+  name,
+  slot: "itemText",
+  overridesResolver(_, styles) {
+    return [styles.itemText, styles[`itemTextLevel${_.level}`]];
+  },
+  shouldForwardProp(name: string) {
+    return name != "level" && name != "flex";
+  },
+})<{
   level: number;
   flex?: number;
 }>(({ level, flex }) => ({
-  color: "var(--aside-item-color)",
-  fontSize: "0.85rem",
-  fontWeight: 600,
+  //color: "inherit",
+  fontSize: "0.9rem",
+  fontWeight: 500,
+  letterSpacing: 0.2,
   flex,
   ...(level == 0 && {
     lineHeight: 1.6,
   }),
   ...(level == 1 && {
-    textIndent: 28,
+    textIndent: seem,
+    fontSize: "0.8rem",
   }),
   ...(level == 2 && {
-    textIndent: 28,
+    textIndent: seem,
+    fontSize: "0.8rem",
   }),
   ...(level == 3 && {
-    textIndent: 28 + 12,
+    textIndent: seem + 12,
+    fontSize: "0.8rem",
+  }),
+}));
+
+const Item = styled(RouterLink, {
+  name,
+  slot: "item",
+  overridesResolver(_, styles) {
+    return [styles.itemText, styles[`itemLevel${_.level}`]];
+  },
+  shouldForwardProp(name: string) {
+    return name != "selected" && name != "level";
+  },
+})<{ selected?: boolean; level?: number }>(({ selected, level }) => ({
+  flexGrow: 1,
+  flex: 1,
+  display: "flex",
+  justifyItems: "center",
+  alignItems: "center",
+  textDecoration: "none",
+  minHeight: level ? 36 : 44,
+  boxSizing: "border-box",
+  borderRadius: 8,
+  padding: "0 8px 0 12px",
+  marginBottom: 2,
+  fontSize: 16,
+  color: "var(--aside-item-color)",
+  "&:hover": {
+    backgroundColor: "var(--aside-item-hover-bg)",
+  },
+  ...(selected && {
+    color: "var(--aside-item-active-color)",
+    backgroundColor: "var(--aside-item-active-bg)",
   }),
 }));
 
@@ -70,32 +141,47 @@ function AsideAppBranch() {
           phpFox
         </Typography>
       </Box>
-      <Divider sx={{ bg: "var(--aside-item-color)" }} />
+      <ItemDivider />
     </>
   );
 }
 
 function ListItemIcon({ name }: { name?: string }) {
-  return (
-    <ItemIcon className="material-symbols-outlined">{name ?? null}</ItemIcon>
-  );
+  return <Icon className="material-symbols-outlined">{name ?? null}</Icon>;
 }
 
-export function ItemDivider() {
-  return <Divider />;
-}
+const ItemDivider = styled("div", {
+  name,
+  slot: "itemDivider",
+  overridesResolver(_, styles) {
+    return [styles.itemDivider];
+  },
+})({
+  height: 1,
+  margin: "0 28px 12px",
+  borderBottom: "1px solid rgba(0,0,0,0.1)",
+});
 
-const Animate90Deg = styled("span", {
+const Expand = styled("span", {
+  name,
+  slot: "expand",
+  overridesResolver(_, styles) {
+    return [styles.expand, _.open ? styles.expanded : undefined];
+  },
   shouldForwardProp(propName) {
     return propName != "open";
   },
 })<{ open: boolean }>(({ open }) => ({
+  fontSize: "small",
   transform: "rotate(0)",
   transitionDuration: "300ms",
   transformOrigin: "center",
   ...(open && {
     transform: "rotate(90deg)",
   }),
+  "& .icon": {
+    fontSize: 16,
+  },
 }));
 
 export interface SubMenuItemProps {
@@ -124,14 +210,13 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
   }
 
   return (
-    <ListItemButton
+    <Item
+      level={level}
       selected={selectedPath.includes(item._xpath as string)}
-      component={Link}
       to={item.url as string}
-      sx={{ color: "var(--aside-item-color)" }}
     >
-      <ItemText level={level}>{item.label}</ItemText>
-    </ListItemButton>
+      <Text level={level}>{item.label}</Text>
+    </Item>
   );
 }
 
@@ -149,17 +234,17 @@ export function SubMenu({ item, selectedPath, items, level }: SubMenuProps) {
 
   return (
     <>
-      <ListItemButton onClick={() => setOpen(!open)}>
+      <Item level={level} onClick={() => setOpen(!open)} to="/">
         {level == 0 ? <ListItemIcon name={item.icon} /> : null}
-        <ItemText flex={1} level={level}>
+        <Text flex={1} level={level}>
           {item.label}
-        </ItemText>
-        <Animate90Deg open={open}>
+        </Text>
+        <Expand open={open}>
           <MuiIcon name="keyboard_arrow_right" />
-        </Animate90Deg>
-      </ListItemButton>
+        </Expand>
+      </Item>
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <List sx={{ fontSize: "0.9em", paddingTop: 0 }}>
+        <List>
           {items.map((x, index) => {
             return (
               <SubMenuItem
@@ -201,15 +286,14 @@ function MenuItem({ item, selectedPath }: ListItemProps) {
   }
 
   return (
-    <ListItemButton
+    <Item
+      level={0}
       selected={selectedPath?.includes(item._xpath as string)}
-      component={Link}
       to={item.url as string}
-      sx={{ color: "var(--aside-item-color)" }}
     >
       <ListItemIcon name={item.icon} />
-      <ItemText level={0}>{item.label}</ItemText>
-    </ListItemButton>
+      <Text level={0}>{item.label}</Text>
+    </Item>
   );
 }
 
@@ -230,14 +314,14 @@ export default function Aside({
       PaperProps={{
         sx: {
           width: "var(--aside-width)",
-          // top: "var(--header-height)",
           background: "var(--aside-bg)",
           color: "var(--aside-item-color)",
+          boxSizing: "border-box",
         },
       }}
     >
       <AsideAppBranch />
-      <List sx={{ py: 3, px: 1.5 }}>
+      <List root>
         {items.map((item, index) => {
           return (
             <MenuItem

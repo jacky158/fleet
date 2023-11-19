@@ -51,9 +51,10 @@ export default function Header({
         position="fixed"
         color="inherit"
         elevation={0}
-        sx={{ left: cx, zIndex: 1 }}
+        sx={{ paddingLeft: cx, zIndex: 1 }}
       >
         <Toolbar>
+          <Box sx={{ flexGrow: 0 }}></Box>
           <Button
             onClick={toggleDrawer}
             sx={{
@@ -66,8 +67,8 @@ export default function Header({
           >
             <MuiIcon name="dehaze" />
           </Button>
-          <Box flex={1}></Box>
-          <Stack direction="row" spacing={2}>
+          <Box sx={{ flexGrow: 1 }}></Box>
+          <Stack direction="row" spacing={1}>
             <Badge
               badgeContent={"9k+"}
               color="warning"

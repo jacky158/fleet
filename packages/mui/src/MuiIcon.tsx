@@ -8,7 +8,7 @@ export function MuiIcon({
   "children" | "className" | "name"
 >) {
   return (
-    <span className="material-symbols-outlined" {...props}>
+    <span className="icon material-symbols-outlined" {...props}>
       {name ?? null}
     </span>
   );

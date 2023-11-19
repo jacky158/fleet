@@ -4,7 +4,7 @@ import MuiGlobalStyles from "@mui/material/GlobalStyles";
 const converted = (theme: Theme) => ({
   ":root": {
     fontFamily:
-      'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,\n    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+      'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
     colorScheme: "light",
     textRendering: "optimizeLegibility",
     WebkitFontSmoothing: "antialiased",

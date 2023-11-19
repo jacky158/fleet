@@ -1,11 +1,10 @@
+import createCache from "@emotion/cache";
+import { CacheProvider } from "@emotion/react";
+import { PaletteMode } from "@mui/material";
 import { ThemeOptions } from "@mui/material/styles";
 import MuiThemeProvider from "@mui/material/styles/ThemeProvider";
 import createTheme from "@mui/material/styles/createTheme";
 import { ReactNode, useMemo } from "react";
-import GlobalStyles from "./GlobalStyles";
-import { PaletteMode } from "@mui/material";
-import createCache from "@emotion/cache";
-import { CacheProvider } from "@emotion/react";
 import rtlPlugin from "stylis-plugin-rtl";
 
 const _themeOptions: Record<"light" | "dark", ThemeOptions> = {
@@ -32,7 +31,7 @@ export default function ThemeProvider({
 }) {
   const cache = useMemo(() => {
     return createCache({
-      key: "rtl",
+      key: direction ?? "ltr",
       stylisPlugins: direction == "rtl" ? [rtlPlugin] : [],
     });
   }, [direction]);
@@ -57,10 +56,7 @@ export default function ThemeProvider({
 
   return (
     <CacheProvider value={cache}>
-      <MuiThemeProvider theme={theme}>
-        <GlobalStyles />
-        {children}
-      </MuiThemeProvider>
+      <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
     </CacheProvider>
   );
 }
