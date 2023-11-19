@@ -1,4 +1,15 @@
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  IconButton,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { MuiIcon } from "./MuiIcon";
 
 export function AppBarBranch() {
   return (
@@ -23,7 +34,13 @@ export function AppBarBranch() {
   );
 }
 
-export default function Header() {
+export default function Header({
+  cx,
+  toggleDrawer,
+}: {
+  cx: string;
+  toggleDrawer: () => void;
+}) {
   return (
     <AppBar
       component="header"
@@ -31,9 +48,40 @@ export default function Header() {
       position="fixed"
       color="inherit"
       elevation={0}
-      sx={{ left: "var(--aside-width)", zIndex: 1 }}
+      sx={{ left: cx, zIndex: 1 }}
     >
-      <Toolbar variant="dense"></Toolbar>
+      <Toolbar>
+        <Button
+          onClick={toggleDrawer}
+          sx={{
+            width: 40,
+            minWidth: 40,
+            fontSize: "32px",
+            lineHeight: "32px",
+            padding: "0 0 0 0",
+          }}
+        >
+          <MuiIcon name="dehaze" />
+        </Button>
+        <Box flex={1}></Box>
+        <Stack direction="row" spacing={2}>
+          <Badge
+            badgeContent={"9k+"}
+            color="warning"
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "left",
+            }}
+          >
+            <IconButton size="small">
+              <MuiIcon name="notifications" style={{ width: 32 }} />
+            </IconButton>
+          </Badge>
+          <IconButton size="small">
+            <Avatar sx={{ width: 32, height: 32 }}>N</Avatar>
+          </IconButton>
+        </Stack>
+      </Toolbar>
     </AppBar>
   );
 }

@@ -1,8 +1,10 @@
+import { MenuItemShape } from "@ikx/types";
 import {
   Box,
   Collapse,
   Divider,
   Drawer,
+  DrawerProps,
   List,
   ListItemButton,
   Typography,
@@ -11,8 +13,8 @@ import {
 import { useState } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
 import items from "./items";
-import { MenuItemShape } from "@ikx/types";
 import useMenuActivePath from "./useMenuActivePath";
+import MuiIcon from "./MuiIcon";
 
 const ItemIcon = styled("span")(() => ({
   width: 28,
@@ -71,10 +73,6 @@ function AsideAppBranch() {
       <Divider sx={{ bg: "var(--aside-item-color)" }} />
     </>
   );
-}
-
-export function MaterialIcon({ name }: { name?: string }) {
-  return <span className="material-symbols-outlined">{name ?? null}</span>;
 }
 
 function ListItemIcon({ name }: { name?: string }) {
@@ -159,7 +157,7 @@ export function SubMenu({ item, selectedPath, items, level }: SubMenuProps) {
           {item.label}
         </ItemText>
         <Animate90Deg open={open}>
-          <MaterialIcon name="keyboard_arrow_right" />
+          <MuiIcon name="keyboard_arrow_right" />
         </Animate90Deg>
       </ListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -217,14 +215,20 @@ function MenuItem({ item, selectedPath }: ListItemProps) {
   );
 }
 
-export default function Aside() {
+export default function Aside({
+  variant,
+  onClose,
+  open,
+}: Pick<DrawerProps, "variant" | "open" | "onClose">) {
   const { pathname } = useLocation();
   const selected = useMenuActivePath(items, pathname);
 
   return (
     <Drawer
       anchor="left"
-      variant="permanent"
+      variant={variant}
+      open={open}
+      onClose={onClose}
       PaperProps={{
         sx: {
           width: "var(--aside-width)",
