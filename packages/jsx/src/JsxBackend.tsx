@@ -55,7 +55,7 @@ export default class JsxBackend {
   public get<T = any>(tagName: ViewName): ElementType<T> {
     return (isString(tagName) && this.data[tagName]
       ? this.data[tagName]
-      : undefined) as unknown as React.ElementType<T>;
+      : tagName) as unknown as React.ElementType<T>;
   }
 
   public find(fn: (key: string) => boolean): string[] {

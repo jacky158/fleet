@@ -11,10 +11,10 @@ import {
   styled,
 } from "@mui/material";
 import { useState } from "react";
-import { Link as RouterLink, useLocation } from "react-router-dom";
 import items from "./items";
 import useMenuActivePath from "./useMenuActivePath";
-import MuiIcon from "./MuiIcon";
+import { Link, MuiIcon } from "@ikx/mui";
+import { useLocation } from "react-router-dom";
 
 const ItemIcon = styled("span")(() => ({
   width: 28,
@@ -126,7 +126,7 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
   return (
     <ListItemButton
       selected={selectedPath.includes(item._xpath as string)}
-      component={RouterLink}
+      component={Link}
       to={item.url as string}
       sx={{ color: "var(--aside-item-color)" }}
     >
@@ -205,7 +205,7 @@ function MenuItem({ item, selectedPath }: ListItemProps) {
   return (
     <ListItemButton
       selected={selectedPath?.includes(item._xpath as string)}
-      component={RouterLink}
+      component={Link}
       to={item.url as string}
       sx={{ color: "var(--aside-item-color)" }}
     >

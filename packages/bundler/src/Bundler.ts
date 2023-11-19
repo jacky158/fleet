@@ -4,7 +4,12 @@ import path from "path";
 
 import { isPlainObject, uniqBy } from "lodash";
 import { Annotation } from "./Annotation";
-import { AssetMaps, chunkByTypeMap, loadableByTypeMap } from "./constants";
+import {
+  AssetMaps,
+  chunkByTypeMap,
+  loadableByTypeMap,
+  validViewTypes,
+} from "./constants";
 
 function log(...args: unknown[]) {
   console.log(...args);
@@ -225,7 +230,7 @@ export class Bundler {
   }
 
   public exportViews() {
-    const items = this.collects.filter((x) => x.type === "layout");
+    const items = this.collects.filter((x) => validViewTypes.includes(x.type));
     const source = this.generateSource("views", items);
 
     this.writeToFile("views.ts", source);

@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import { useApp } from "@ikx/core";
-import Link from "@ikx/acp/src/Link";
+import { Link } from "@ikx/mui";
 
 export const Middot = () => {
   return <span> - </span>;

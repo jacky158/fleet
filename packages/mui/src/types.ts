@@ -1,9 +1,10 @@
+import { ViewName } from "@ikx/types";
 import { DialogProps, MenuProps, ModalProps } from "@mui/material";
-import { FC, ReactNode, RefObject } from "react";
+import { ReactNode } from "react";
 
 export type OpenPopoverProps = {
-  component: FC<MenuProps>;
-  ref: RefObject<unknown>;
+  component: ViewName;
+  ref?: unknown;
 } & Omit<MenuProps, "anchorEl" | "open" | "children">;
 
 export interface ToastProps {

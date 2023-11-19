@@ -9,8 +9,8 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { MuiIcon } from "./MuiIcon";
 import { useApp } from "@ikx/core";
+import { MuiIcon } from "@ikx/mui";
 
 export function AppBarBranch() {
   return (
@@ -72,13 +72,15 @@ export default function Header({
               badgeContent={"9k+"}
               color="warning"
               anchorOrigin={{
-                vertical: "bottom",
+                vertical: "top",
                 horizontal: "left",
               }}
             >
               <IconButton
                 size="small"
-                onClick={(evt) => app.openPopover(evt, { component: "" })}
+                onClick={(evt) =>
+                  app.openPopover(evt, { component: "popover.notifications" })
+                }
               >
                 <MuiIcon name="notifications" style={{ width: 32 }} />
               </IconButton>

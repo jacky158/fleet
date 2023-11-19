@@ -6,6 +6,7 @@ import {
   ResolvedIntlConfig,
   createIntl,
 } from "react-intl";
+import dayjs from "dayjs";
 
 export default function IntlProvider({
   locale,
@@ -37,6 +38,9 @@ export default function IntlProvider({
   app.extend({
     intl,
     formatMessage: intl.formatMessage,
+    d: (value: unknown, format: string): string => {
+      return dayjs(value as any).format(format);
+    },
     t(id: string, values?: Record<string, unknown>) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return intl.formatMessage({ id }, values as any);

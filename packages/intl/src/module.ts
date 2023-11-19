@@ -4,6 +4,7 @@ declare module "@ikx/core" {
   export interface App {
     intl: IntlShape;
     t(id: string): string;
+    d(value: unknown, format: string): string;
     formatMessage: IntlShape["formatMessage"];
   }
 }

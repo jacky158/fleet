@@ -17,6 +17,7 @@ import { ReactNode } from "react";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { BrowserRouter } from "react-router-dom";
 // import localizedFormat from "dayjs/plugin/localizedFormat";
 // dayjs.extend(localizedFormat);
 
@@ -34,15 +35,17 @@ export default function Composer({
       <IntlProvider locale="en" messages={messages as any} defaultLocale="en">
         <ThemeProvider>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <HelmetHandler />
-            <PopoverHandler />
-            <ModalHandler />
-            <MenuHandler />
-            <ToastHandler />
-            <FeedbackHandler />
-            <AlertHandler />
-            <ConfirmHandler />
-            {children}
+            <BrowserRouter basename="/">
+              <HelmetHandler />
+              <PopoverHandler />
+              <ModalHandler />
+              <MenuHandler />
+              <ToastHandler />
+              <FeedbackHandler />
+              <AlertHandler />
+              <ConfirmHandler />
+              {children}
+            </BrowserRouter>
           </LocalizationProvider>
         </ThemeProvider>
       </IntlProvider>

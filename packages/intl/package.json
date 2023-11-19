@@ -16,6 +16,7 @@
     "@types/react": "^18",
     "typescript": "^5",
     "react-intl": "^6",
+    "dayjs": "^1",
     "@ikx/core": "workspace:^"
   },
   "scripts": {

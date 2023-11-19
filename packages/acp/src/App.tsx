@@ -3,7 +3,7 @@ import services from "./bundle/services";
 import views from "./bundle/views";
 
 import { createApp } from "@ikx/core";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Composer from "./Composer";
 import Account from "./pages/Account";
 import Analytics from "./pages/Analytics";
@@ -21,20 +21,18 @@ function App() {
 
   return (
     <Composer app={app} messages={messages}>
-      <BrowserRouter basename="/">
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/customer" element={<Customer />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/analytics" element={<Analytics />} />
-          <Route path="/e-commerce" element={<ECommerce />} />
-          <Route path="/customer/view" element={<Customer />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/customer" element={<Customer />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/analytics" element={<Analytics />} />
+        <Route path="/e-commerce" element={<ECommerce />} />
+        <Route path="/customer/view" element={<Customer />} />
+      </Routes>
     </Composer>
   );
 }

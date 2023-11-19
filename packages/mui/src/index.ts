@@ -7,6 +7,8 @@ export { default as ToastHandler } from "./ToastHandler";
 export { default as MenuHandler } from "./MenuHandler";
 export { default as ModalHandler } from "./ModalHandler";
 export { default as PopoverHandler } from "./PopoverHandler";
+export { default as Link } from "./Link";
+export { default as MuiIcon } from "./MuiIcon";
 export type {
   AlertProps,
   OpenPopoverProps as OpenMenuProps,
