@@ -26,7 +26,7 @@ const ItemHeader = styled("li")({
   fontSize: "0.8em",
   fontWeight: 700,
   textTransform: "uppercase",
-  padding: "1em 16px 1em",
+  padding: "24px 16px 1em",
 });
 
 const ItemText = styled("span")<{
@@ -130,9 +130,7 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
       to={item.url as string}
       sx={{ color: "var(--aside-item-color)" }}
     >
-      <ItemText level={level}>
-        {item.label} - {level}
-      </ItemText>
+      <ItemText level={level}>{item.label}</ItemText>
     </ListItemButton>
   );
 }
@@ -152,7 +150,7 @@ export function SubMenu({ item, selectedPath, items, level }: SubMenuProps) {
   return (
     <>
       <ListItemButton onClick={() => setOpen(!open)}>
-        {level == 0 ? <ListItemIcon name="home" /> : null}
+        {level == 0 ? <ListItemIcon name={item.icon} /> : null}
         <ItemText flex={1} level={level}>
           {item.label}
         </ItemText>
