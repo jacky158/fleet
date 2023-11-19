@@ -34,6 +34,13 @@ const converted = (theme: Theme) => ({
     margin: 0,
     padding: 0,
   },
+  ".noScrollBar": {
+    msOverflowStyle: "none",
+    scrollbarWidth: "none",
+    "::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
   a: {
     // color: theme.palette.primary.main,
     textDecoration: "none",

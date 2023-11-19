@@ -1,17 +1,11 @@
 import { MenuItemShape } from "@ikx/types";
-import {
-  Box,
-  Collapse,
-  Drawer,
-  DrawerProps,
-  Typography,
-  styled,
-} from "@mui/material";
+import { Box, Collapse, Drawer, DrawerProps, Typography } from "@mui/material";
 import { useState } from "react";
 import items from "./items";
 import useMenuActivePath from "./useMenuActivePath";
 import { MuiIcon } from "@ikx/mui";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link, Link as RouterLink, useLocation } from "react-router-dom";
+import { styled } from "@mui/material/styles";
 
 import Scrollbars from "../scrollable";
 
@@ -24,13 +18,13 @@ const List = styled("div", {
   overridesResolver(_, styles) {
     return [styles.itemIcon];
   },
-  shouldForwardProp(propName) {
-    return propName != "root";
+  shouldForwardProp(prop: string) {
+    return prop != "root";
   },
 })<{ root?: boolean }>(({ theme, root }) => ({
   color: "var(--aside-item-color)",
   display: "block",
-  padding: root ? theme.spacing(1, 1, 0, 2) : theme.spacing(0),
+  padding: root ? theme.spacing(1, 1, 25, 2) : theme.spacing(0),
 }));
 
 const Icon = styled("span", {
@@ -124,14 +118,23 @@ const Item = styled(RouterLink, {
   }),
 }));
 
+const BranchLogo = styled(Link)({
+  height: 64,
+  minHeight: 64,
+  paddingLeft: 24,
+  cursor: "pointer",
+  boxSizing: "border-box",
+  display: "flex",
+  flexGrow: 1,
+  alignItems: "center",
+});
+
 function AsideAppBranch() {
   return (
     <>
-      <Box sx={{ px: 3.5, pt: 3, cursor: "pointer" }}>
-        <a href="/">
-          <img src="/logo.png" height="32" />
-        </a>
-      </Box>
+      <BranchLogo to="/">
+        <img src="/logo.png" height="32" />
+      </BranchLogo>
       <Box sx={{ display: "none" }}>
         <Typography
           variant="h6"
@@ -143,7 +146,6 @@ function AsideAppBranch() {
           phpFox
         </Typography>
       </Box>
-      <ItemDivider />
     </>
   );
 }

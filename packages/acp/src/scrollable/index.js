@@ -33,6 +33,8 @@ import {
   renderThumbVerticalDefault,
 } from "./defaultRenderElements";
 
+const USE_NEV_MARGIN = false;
+
 export default class Scrollbars extends Component {
   constructor(props, ...rest) {
     super(props, ...rest);
@@ -541,6 +543,16 @@ export default class Scrollbars extends Component {
     const scrollbarWidth = getScrollbarWidth();
     /* eslint-disable no-unused-vars */
     const {
+      height,
+      onScroll,
+      onScrollFrame,
+      onScrollStart,
+      onScrollStop,
+      onUpdate,
+      hideTracksWhenNotNeeded,
+      autoHideTimeout,
+      thumbSize,
+      thumbMinSize,
       renderView,
       renderTrackHorizontal,
       renderTrackVertical,
@@ -557,6 +569,8 @@ export default class Scrollbars extends Component {
       children,
       ...props
     } = this.props;
+
+    console.log(props);
     /* eslint-enable no-unused-vars */
 
     const { didMountUniversal } = this.state;
@@ -574,8 +588,12 @@ export default class Scrollbars extends Component {
     const viewStyle = {
       ...viewStyleDefault,
       // Hide scrollbars by setting a negative margin
-      marginRight: scrollbarWidth ? -scrollbarWidth : 0,
-      marginBottom: scrollbarWidth ? -scrollbarWidth : 0,
+      ...(USE_NEV_MARGIN
+        ? {
+            marginRight: scrollbarWidth ? -scrollbarWidth : 0,
+            marginBottom: scrollbarWidth ? -scrollbarWidth : 0,
+          }
+        : {}),
       ...(autoHeight && {
         ...viewStyleAutoHeight,
         // Add scrollbarWidth to autoHeight in order to compensate negative margins
@@ -621,7 +639,7 @@ export default class Scrollbars extends Component {
     return createElement(
       tagName,
       {
-        ...props,
+        //...props,
         style: containerStyle,
         ref: (ref) => {
           this.container = ref;
@@ -629,7 +647,10 @@ export default class Scrollbars extends Component {
       },
       [
         cloneElement(
-          renderView({ style: viewStyle }),
+          renderView({
+            style: viewStyle,
+            className: USE_NEV_MARGIN ? "" : "noScrollBar",
+          }),
           {
             key: "view",
             ref: (ref) => {
