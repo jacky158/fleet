@@ -1,7 +1,8 @@
 import { DialogProps, MenuProps, ModalProps } from "@mui/material";
 import { FC, ReactNode, RefObject } from "react";
-export type OpenMenuProps = {
-  menu: FC<MenuProps>;
+
+export type OpenPopoverProps = {
+  component: FC<MenuProps>;
   ref: RefObject<unknown>;
 } & Omit<MenuProps, "anchorEl" | "open" | "children">;
 

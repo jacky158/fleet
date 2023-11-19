@@ -6,9 +6,10 @@ export { default as ThemeProvider } from "./ThemeProvider";
 export { default as ToastHandler } from "./ToastHandler";
 export { default as MenuHandler } from "./MenuHandler";
 export { default as ModalHandler } from "./ModalHandler";
+export { default as PopoverHandler } from "./PopoverHandler";
 export type {
   AlertProps,
-  OpenMenuProps,
+  OpenPopoverProps as OpenMenuProps,
   ConfirmProps,
   ToastProps,
 } from "./types";

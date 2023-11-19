@@ -3,21 +3,22 @@ import { useApp } from "@ikx/core";
 import { createElement, useCallback, useState } from "react";
 import { OpenPopoverProps } from "./types";
 
-export default function MenuHandler() {
+export function PopoverHandler() {
   const [open, setOpen] = useState<boolean>(false);
   const [state, setState] = useState<OpenPopoverProps>();
   const app = useApp();
 
-  const openMenu = useCallback((evt: unknown, data: OpenPopoverProps) => {
+  const openPopover = useCallback((evt: unknown, data: OpenPopoverProps) => {
     const e = evt as MouseEvent;
     if (e) {
       e.stopPropagation();
     }
+
     setOpen(true);
     setState(data);
   }, []);
 
-  app.extend({ openMenu });
+  app.extend({ openPopover });
 
   if (!state) return null;
 
@@ -29,3 +30,5 @@ export default function MenuHandler() {
     },
   });
 }
+
+export default PopoverHandler;

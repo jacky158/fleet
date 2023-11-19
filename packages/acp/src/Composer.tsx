@@ -8,6 +8,7 @@ import {
   FeedbackHandler,
   MenuHandler,
   ModalHandler,
+  PopoverHandler,
   ThemeProvider,
   ToastHandler,
 } from "@ikx/mui";
@@ -34,6 +35,7 @@ export default function Composer({
         <ThemeProvider>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <HelmetHandler />
+            <PopoverHandler />
             <ModalHandler />
             <MenuHandler />
             <ToastHandler />

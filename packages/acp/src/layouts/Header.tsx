@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { MuiIcon } from "./MuiIcon";
+import { useApp } from "@ikx/core";
 
 export function AppBarBranch() {
   return (
@@ -41,6 +42,7 @@ export default function Header({
   cx: string;
   toggleDrawer: () => void;
 }) {
+  const app = useApp();
   return (
     <AppBar
       component="header"
@@ -73,7 +75,7 @@ export default function Header({
               horizontal: "left",
             }}
           >
-            <IconButton size="small">
+            <IconButton size="small" onClick={(evt) => app.openPopover(evt)}>
               <MuiIcon name="notifications" style={{ width: 32 }} />
             </IconButton>
           </Badge>
