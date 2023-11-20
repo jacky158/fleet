@@ -15,10 +15,11 @@
     "react": "^18.2.0",
     "@types/react": "^18",
     "typescript": "^5",
-    "react-router-dom": "^6",
+    "path-to-regexp": "^6",
     "lodash": "^4",
     "@ikx/types": "workspace:^",
-    "@ikx/core": "workspace:^"
+    "@ikx/core": "workspace:^",
+    "@ikx/http": "workspace:^"
   },
   "scripts": {
     "clean": "rm -rf ./dist",

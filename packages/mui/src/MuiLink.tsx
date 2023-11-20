@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import MuiLinkBase, { LinkOwnProps } from "@mui/material/Link";
-import "react-router-dom";
 import { forwardRef } from "react";
 
 import { Link, LinkProps } from "@ikx/router";

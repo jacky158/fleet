@@ -16,12 +16,11 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import "dayjs";
 import { ReactNode } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import localizedFormat from "dayjs/plugin/localizedFormat";
 // dayjs.extend(localizedFormat);
 import routes from "./bundle/routes";
 import GlobalStyles from "./GlobalStyles";
-import PageNotFound from "./pages/PageNotFound";
+import { Provider as RouteProvider, Routes } from "@ikx/router";
 
 const Handlers = () => {
   return (
@@ -52,19 +51,10 @@ export default function Composer({
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <ThemeProvider>
             <GlobalStyles />
-            <BrowserRouter>
+            <RouteProvider routes={routes}>
               <Handlers />
-              <Routes>
-                {routes.map(({ path, Component }, index) => (
-                  <Route
-                    path={path}
-                    Component={Component}
-                    key={index.toString()}
-                  />
-                ))}
-                <Route path="*" Component={PageNotFound} />
-              </Routes>
-            </BrowserRouter>
+              <Routes group="root" />
+            </RouteProvider>
           </ThemeProvider>
         </LocalizationProvider>
       </IntlProvider>

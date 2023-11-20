@@ -258,13 +258,14 @@ export class Bundler {
 
         ps.forEach((p) => {
           acc.push({
+            name: x.name,
             path: p,
-            Component: `[${x.importName}]`,
+            component: `[${x.importName}]`,
           });
         });
 
         return acc;
-      }, [] as { path: string; Component: string }[]),
+      }, [] as { path: string; name: string; component: string }[]),
       null,
       "  "
     );

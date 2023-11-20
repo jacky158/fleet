@@ -1,27 +1,31 @@
 import { forwardRef } from "react";
-import {
-  Link as RouterLink,
-  LinkProps as RouteLinkProps,
-} from "react-router-dom";
-
-export type LinkProps = Omit<RouteLinkProps, "to"> & {
-  onClick?: unknown;
-  to?: RouteLinkProps["to"];
-};
+import { LinkProps as RouteLinkProps } from "./types";
+import { useApp } from "@ikx/core";
 
 export const Link = forwardRef(
-  ({ onClick, to, ...props }: LinkProps, ref: unknown) => {
-    if (to && !onClick) {
-      return <RouterLink {...props} to={to} ref={ref as never} />;
-    }
+  (
+    { onClick, component: Component = "a", to, ...props }: RouteLinkProps,
+    ref: unknown
+  ) => {
+    const app = useApp();
+    const handleClick = (evt: MouseEvent) => {
+      if (evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+      }
+      if (typeof onClick == "function") {
+        onClick(evt);
+      } else {
+        app.router.push(to);
+      }
+    };
 
     return (
-      <a
+      <Component
         {...props}
+        onClick={handleClick}
+        href={to ?? undefined}
         ref={ref as never}
-        role="button"
-        href="#"
-        onClick={onClick}
       />
     );
   }
