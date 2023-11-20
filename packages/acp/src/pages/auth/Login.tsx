@@ -44,8 +44,11 @@ export function Content() {
             label={app.t("auth.email")}
             InputLabelProps={{ shrink: true }}
             placeholder={app.t("auth.enter_your_email")}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
           <TextField
+            type="password"
             name="password"
             autoComplete="current-password"
             fullWidth
@@ -57,6 +60,8 @@ export function Content() {
             value={formik.values.password}
             label={app.t("auth.password")}
             placeholder={app.t("auth.enter_your_password")}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
         </Box>
         <Box>
@@ -64,16 +69,7 @@ export function Content() {
             {app.t("auth.login")}
           </Button>
         </Box>
-        <Box
-          sx={{
-            pt: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <LinkList />
-        </Box>
+        <LinkList />
       </Paper>
     </form>
   );

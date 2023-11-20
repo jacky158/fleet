@@ -16,6 +16,50 @@ const _themeOptions: Record<"light" | "dark", ThemeOptions> = {
   light: {
     palette: {
       mode: "light",
+      contrastThreshold: 4.5,
+    },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          text: {
+            textTransform: "none",
+          },
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          outlined: {
+            position: "relative",
+            transform: "none",
+            fontSize: "0.9em",
+            lineHeight: 1.5,
+            paddingBottom: "0.5em",
+            fontWeight: "medium",
+            color: "text",
+          },
+        },
+      },
+      MuiTextField: {
+        defaultProps: {
+          fullWidth: true,
+          size: "small",
+          margin: "dense",
+        },
+      },
+      MuiFormLabel: {
+        styleOverrides: {
+          root: {},
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          notchedOutline: {
+            "& legend": {
+              display: "none",
+            },
+          },
+        },
+      },
     },
   },
 };

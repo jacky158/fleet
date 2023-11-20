@@ -58,7 +58,7 @@ export default function Header({
           transitionDuration: "250ms",
         }}
       >
-        <Toolbar>
+        <Toolbar disableGutters sx={{ pl: 2, pr: 2 }}>
           <Box sx={{ flexGrow: 0 }}></Box>
           <Button
             onClick={toggleDrawer}

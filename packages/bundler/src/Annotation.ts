@@ -1,9 +1,19 @@
 import fs from "fs";
 import { validTypes } from "./constants";
 
-let counter = 0;
-
 export class Annotation {
+  private counter = 0;
+  private prefix: string = "a";
+
+  private getKey(): string {
+    this.counter += 1;
+    if (this.counter > 99) {
+      this.prefix = String.fromCharCode((this.prefix.codePointAt(0) ?? 66) + 1);
+      this.counter = 1;
+    }
+    return `${this.prefix}${this.counter}`;
+  }
+
   private normalizeName(name: string) {
     return name.replace(/[^\w.-@]/g, "");
   }
@@ -70,13 +80,13 @@ export class Annotation {
       return false;
     }
 
-    result["importName"] = `$x${counter++}`;
+    result["importName"] = this.getKey();
 
     if (result["name"]) {
       result["exportName"] = result["name"];
-      if (/^\w+$/.test(result["exportName"] as string)) {
-        result["importName"] = result["exportName"];
-      }
+      // if (/^\w+$/.test(result["exportName"] as string)) {
+      //   result["importName"] = result["exportName"];
+      // }
     }
 
     return result;

@@ -1,6 +1,7 @@
 import { ElementType, ReactNode } from "react";
 
 export interface LinkProps {
+  [key: string]: unknown;
   to?: string;
   as?: string;
   onClick?: unknown;

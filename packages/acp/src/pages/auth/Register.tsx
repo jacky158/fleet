@@ -36,45 +36,32 @@ export function Content() {
           <TextField
             name="email"
             autoComplete="current-email"
-            fullWidth
-            autoCorrect="off"
-            autoCapitalize="off"
             autoFocus
-            tabIndex={0}
             value={formik.values.email}
             label={app.t("auth.email")}
             InputLabelProps={{ shrink: true }}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
             placeholder={app.t("auth.enter_your_email")}
           />
           <TextField
             name="password"
             autoComplete="current-password"
-            fullWidth
-            margin="normal"
-            autoCorrect="off"
-            autoCapitalize="off"
-            tabIndex={1}
             InputLabelProps={{ shrink: true }}
             value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            type="password"
             label={app.t("auth.password")}
             placeholder={app.t("auth.enter_your_password")}
           />
         </Box>
-        <Box>
+        <Box pt={1}>
           <Button variant="contained" fullWidth disableFocusRipple>
             {app.t("auth.register")}
           </Button>
         </Box>
-        <Box
-          sx={{
-            pt: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <LinkList />
-        </Box>
+        <LinkList />
       </Paper>
     </form>
   );
@@ -86,4 +73,8 @@ export default function Register() {
       <Content />
     </Layout>
   );
+}
+
+export function getServerProps(props) {
+  return {};
 }

@@ -32,12 +32,12 @@ type Action =
     };
 
 function sizingClamp<T = string>(
-  ww: number,
+  width: number,
   choice: [unknown, unknown, unknown]
 ): T {
-  if (ww >= 1280) {
+  if (width >= 1280) {
     return choice[0] as T;
-  } else if (ww >= 960) {
+  } else if (width >= 960) {
     return choice[1] as T;
   } else {
     return choice[2] as T;

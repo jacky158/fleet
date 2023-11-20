@@ -1,19 +1,22 @@
 import { useApp } from "@ikx/core";
-import { ReactNode } from "react";
 import { ViewName } from "@ikx/types";
 
-export function Layout({
-  name,
-  children,
-}: {
+interface LayoutProps {
+  [key: string]: unknown;
   name: ViewName;
-  children?: ReactNode;
-}) {
+  alt?: ViewName;
+}
+
+export function Layout({ name, alt, ...props }: LayoutProps) {
   const app = useApp();
 
-  const Component = app.jsx.get(name);
+  let Component = app.jsx.get(name);
 
-  return <Component>{children}</Component>;
+  if (!Component && alt) {
+    Component = app.jsx.get(alt);
+  }
+
+  return <Component {...props} />;
 }
 
 export default Layout;

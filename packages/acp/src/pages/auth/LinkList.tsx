@@ -9,9 +9,13 @@ export const Middot = () => {
 export default function LinkList() {
   const app = useApp();
   return (
-    <Stack direction="row" spacing={2}>
-      <Link to="/forgot-password">{app.t("auth.forgot_password_?")}</Link>
-      <Link to="/register">{app.t("auth.register_new_account")}</Link>
+    <Stack direction="row" spacing={2} pt={3} flexGrow={1}>
+      <Link to="/forgot-password" color="inherit" underline="hover">
+        {app.t("auth.forgot_password_?")}
+      </Link>
+      <Link variant="text" to="/register" color="inherit" underline="hover">
+        {app.t("auth.register_new_account")}
+      </Link>
     </Stack>
   );
 }
