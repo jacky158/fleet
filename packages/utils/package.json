@@ -17,6 +17,7 @@
     "typescript": "^5",
     "react-intl": "^6",
     "axios": "^1.6",
+    "universal-cookie": "^6",
     "@ikx/core": "workspace:^",
     "@ikx/types": "workspace:^"
   },

@@ -1,11 +1,15 @@
 import compactData from "./compactData";
 import compactUrl from "./compactUrl";
 import colorHash from "./colorHash";
+import Cookies from "universal-cookie";
+import LocalStore from "./LocalStore";
 
 declare module "@ikx/core" {
   export interface App {
-    compactUrl: typeof compactUrl;
-    compactData: typeof compactData;
-    colorHash: typeof colorHash;
+    readonly compactUrl: typeof compactUrl;
+    readonly compactData: typeof compactData;
+    readonly colorHash: typeof colorHash;
+    readonly cookies: Cookies;
+    readonly localStore: LocalStore;
   }
 }

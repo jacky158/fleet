@@ -306,6 +306,7 @@ export class Bundler {
       "@ikx/mui",
       "@ikx/http",
       "@ikx/jsx",
+      "@ikx/utils",
     ];
 
     if (!fs.existsSync(path.join(this.root, "src/bundle"))) {

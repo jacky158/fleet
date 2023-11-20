@@ -96,7 +96,7 @@ const Text = styled("span", {
   flex,
 }));
 
-const Item = styled(RouterLink, {
+const MainItem = styled(RouterLink, {
   name,
   slot: "item",
   overridesResolver(_, styles) {
@@ -114,9 +114,7 @@ const Item = styled(RouterLink, {
   textDecoration: "none",
   minHeight: level ? 36 : 44,
   boxSizing: "border-box",
-  borderRadius: 8,
   padding: "0 8px 0 12px",
-  marginBottom: 2,
   fontSize: 16,
   color: "var(--aside-item-color)",
   "&:hover": {
@@ -162,19 +160,20 @@ const SubItem = styled(RouterLink, {
 const BranchLogo = styled(Link)({
   height: 64,
   minHeight: 64,
-  paddingLeft: 24,
   cursor: "pointer",
   boxSizing: "border-box",
   display: "flex",
   flexGrow: 1,
   alignItems: "center",
+  justifyContent: "center",
+  borderBottom: "1px solid var(--aside-item-active-bg)",
 });
 
 function AsideAppBranch() {
   return (
     <>
       <BranchLogo to="/">
-        <img src="/logo.png" height="32" />
+        <img src="/favicon.ico" height="32" />
       </BranchLogo>
       <Box sx={{ display: "none" }}>
         <Typography
@@ -189,10 +188,6 @@ function AsideAppBranch() {
       </Box>
     </>
   );
-}
-
-function ListItemIcon({ name }: { name?: string }) {
-  return <Icon className="material-symbols-outlined">{name ?? null}</Icon>;
 }
 
 const ItemDivider = styled("div", {
@@ -256,14 +251,14 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
 
   if (level == 0) {
     return (
-      <Item
+      <MainItem
         level={level}
         selected={selectedPath.includes(item._xpath as string)}
         to={item.url as string}
       >
         <MuiIcon name={item.icon} component={Icon} />
         <Text level={level}>{item.label}</Text>
-      </Item>
+      </MainItem>
     );
   }
 
@@ -293,14 +288,14 @@ export function SubMenu({ item, selectedPath, items, level }: SubMenuProps) {
   return (
     <>
       <Tooltip title={item.label} placement="right" arrow>
-        <Item
+        <MainItem
           level={level}
           onClick={() => setOpen(!open)}
           to="/"
           ref={anchorRef}
         >
           <MuiIcon name={item.icon} component={Icon} />
-        </Item>
+        </MainItem>
       </Tooltip>
       <Popover
         disableScrollLock
@@ -357,14 +352,14 @@ function MenuItem({ item, selectedPath }: ListItemProps) {
 
   return (
     <Tooltip title={item.label} placement="right" arrow>
-      <Item
+      <MainItem
         level={0}
         selected={selectedPath?.includes(item._xpath as string)}
         to={item.url as string}
       >
-        <ListItemIcon name={item.icon} />
+        <MuiIcon component={Icon} name={item.icon} />
         {/* <Text level={0}>{item.label}</Text> */}
-      </Item>
+      </MainItem>
     </Tooltip>
   );
 }

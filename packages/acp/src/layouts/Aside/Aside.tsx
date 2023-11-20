@@ -1,5 +1,5 @@
 import { Drawer, DrawerProps } from "@mui/material";
-import { lazy } from "react";
+import { Suspense, lazy } from "react";
 const Dense = lazy(() => import("./Dense"));
 const Full = lazy(() => import("./Full"));
 
@@ -8,7 +8,7 @@ export default function Aside({
   onClose,
   open,
   cx,
-  layout = "dense",
+  layout = "compact",
 }: Pick<DrawerProps, "variant" | "open" | "onClose"> & {
   cx: string;
   layout?: string;
@@ -21,7 +21,7 @@ export default function Aside({
       onClose={onClose}
       PaperProps={{
         sx: {
-          width: cx,
+          width: open ? cx : "0px",
           transitionProperty: "width",
           transitionDuration: "250ms",
           background: "var(--aside-bg)",
@@ -30,7 +30,13 @@ export default function Aside({
         },
       }}
     >
-      {layout == "dense" ? <Dense /> : <Full />}
+      {layout == "compact" ? (
+        <Suspense fallback="...">
+          <Dense />
+        </Suspense>
+      ) : (
+        <Full />
+      )}
     </Drawer>
   );
 }
