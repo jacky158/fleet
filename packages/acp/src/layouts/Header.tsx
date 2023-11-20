@@ -36,10 +36,10 @@ export function AppBarBranch() {
 }
 
 export default function Header({
-  cx,
+  dx,
   toggleDrawer,
 }: {
-  cx: string;
+  dx: string;
   toggleDrawer: () => void;
 }) {
   const app = useApp();
@@ -52,7 +52,7 @@ export default function Header({
         color="inherit"
         elevation={0}
         sx={{
-          paddingLeft: cx,
+          paddingLeft: dx,
           zIndex: 1,
           transitionProperty: "padding-left",
           transitionDuration: "250ms",

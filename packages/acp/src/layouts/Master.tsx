@@ -13,6 +13,7 @@ import { useApp } from "@ikx/core";
 const DRAWER_CLOSED = "drawerOpened";
 
 interface State {
+  dx: string;
   innerWidth: number;
   desktop: boolean;
   tablet: boolean;
@@ -44,11 +45,11 @@ function sizingClamp<T = string>(
 }
 
 const getInitialState = (ww: number, startClosed: boolean): State => {
-  return {
+  const draft = {
     innerWidth: ww,
     drawerVariant: sizingClamp<State["drawerVariant"]>(ww, [
       "permanent",
-      "temporary",
+      "permanent",
       "temporary",
     ]),
     desktop: sizingClamp<boolean>(ww, [true, false, false]),
@@ -65,6 +66,10 @@ const getInitialState = (ww: number, startClosed: boolean): State => {
       "full",
     ]),
   } as State;
+
+  draft.dx = draft.drawerVariant == "permanent" ? draft.drawerWidth : "0px";
+
+  return draft;
 };
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -86,10 +91,19 @@ export default function Layout({ children }: { children: ReactNode }) {
         } else {
           // draft.drawerVariant = "temporary";
           draft.drawerLayout = "full";
-          draft.drawerWidth = "var(--aside-dense-width)";
+          draft.drawerWidth = "var(--aside-width)";
         }
         break;
+      case "drawerClosed": {
+        draft.drawerOpened = false;
+        if (!draft.drawerOpened) {
+          draft.drawerWidth = "0px";
+        }
+
+        return { ...draft };
+      }
     }
+    draft.dx = draft.drawerVariant == "permanent" ? draft.drawerWidth : "0px";
     return { ...draft };
   }, getInitialState(ww, startClosed));
 
@@ -110,9 +124,9 @@ export default function Layout({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <Header cx={state.drawerWidth} toggleDrawer={handleDrawer} />
+      <Header dx={state.dx} toggleDrawer={handleDrawer} />
       <Aside
-        cx={state.drawerWidth}
+        width={state.drawerWidth}
         layout={state.drawerLayout}
         variant={state.drawerVariant}
         open={state.drawerOpened}
@@ -120,7 +134,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       />
       <Box
         sx={{
-          paddingLeft: state.drawerWidth,
+          paddingLeft: state.dx,
           transitionDuration: "250ms",
           transitionProperty: "padding-left",
         }}

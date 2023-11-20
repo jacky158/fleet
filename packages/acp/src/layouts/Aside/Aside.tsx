@@ -7,10 +7,10 @@ export default function Aside({
   variant,
   onClose,
   open,
-  cx,
+  width,
   layout = "compact",
 }: Pick<DrawerProps, "variant" | "open" | "onClose"> & {
-  cx: string;
+  width: string;
   layout?: string;
 }) {
   return (
@@ -21,7 +21,7 @@ export default function Aside({
       onClose={onClose}
       PaperProps={{
         sx: {
-          width: open ? cx : "0px",
+          width: open ? width : "0px",
           transitionProperty: "width",
           transitionDuration: "250ms",
           background: "var(--aside-bg)",
@@ -35,7 +35,9 @@ export default function Aside({
           <Dense />
         </Suspense>
       ) : (
-        <Full />
+        <Suspense fallback="...">
+          <Full />
+        </Suspense>
       )}
     </Drawer>
   );
