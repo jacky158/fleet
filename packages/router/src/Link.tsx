@@ -1,15 +1,30 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { forwardRef } from "react";
 import {
   Link as RouterLink,
-  LinkProps as RouterLinkProps,
+  LinkProps as RouteLinkProps,
 } from "react-router-dom";
-import MuiLink, { LinkOwnProps } from "@mui/material/Link";
-import { forwardRef } from "react";
 
-type Props = LinkOwnProps & RouterLinkProps;
+export type LinkProps = Omit<RouteLinkProps, "to"> & {
+  onClick?: unknown;
+  to?: RouteLinkProps["to"];
+};
 
-export const Link = forwardRef((props: Props, ref: unknown) => {
-  return <MuiLink component={RouterLink} {...props} ref={ref as any} />;
-});
+export const Link = forwardRef(
+  ({ onClick, to, ...props }: LinkProps, ref: unknown) => {
+    if (to && !onClick) {
+      return <RouterLink {...props} to={to} ref={ref as never} />;
+    }
+
+    return (
+      <a
+        {...props}
+        ref={ref as never}
+        role="button"
+        href="#"
+        onClick={onClick}
+      />
+    );
+  }
+);
 
 export default Link;

@@ -1,16 +1,15 @@
+import { Link, useLocation } from "@ikx/router";
 import { MenuItemShape } from "@ikx/types";
-import { Box, Popover, Tooltip, Typography } from "@mui/material";
+import { Box, Collapse, Popover, Tooltip, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useRef, useState } from "react";
-import { Link, Link as RouterLink, useLocation } from "@ikx/router";
-import items from "../items";
 import useMenuActivePath from "../useMenuActivePath";
+import items from "./items";
 
-import Scrollbars from "../../scrollable";
 import { MuiIcon } from "@ikx/mui";
+import Scrollbars from "../../scrollable";
 
 const name = "Aside";
-const seem = 32;
 
 const List = styled("div", {
   name,
@@ -96,7 +95,7 @@ const Text = styled("span", {
   flex,
 }));
 
-const MainItem = styled(RouterLink, {
+const MainLink = styled(Link, {
   name,
   slot: "item",
   overridesResolver(_, styles) {
@@ -105,14 +104,15 @@ const MainItem = styled(RouterLink, {
   shouldForwardProp(name: string) {
     return name != "selected" && name != "level";
   },
-})<{ selected?: boolean; level?: number }>(({ selected, level }) => ({
+})<{ selected?: boolean }>(({ selected }) => ({
   flexGrow: 1,
   flex: 1,
   display: "flex",
   justifyItems: "center",
   alignItems: "center",
   textDecoration: "none",
-  minHeight: level ? 36 : 44,
+  minHeight: 44,
+  height: 44,
   boxSizing: "border-box",
   padding: "0 8px 0 12px",
   fontSize: 16,
@@ -126,7 +126,7 @@ const MainItem = styled(RouterLink, {
   }),
 }));
 
-const SubItem = styled(RouterLink, {
+const SubItem = styled(Link, {
   name,
   slot: "subItem",
   overridesResolver(_, styles) {
@@ -166,7 +166,7 @@ const BranchLogo = styled(Link)({
   flexGrow: 1,
   alignItems: "center",
   justifyContent: "center",
-  borderBottom: "1px solid var(--aside-item-active-bg)",
+  borderBottom: "1px solid var(--aside-item-active-)",
 });
 
 function AsideAppBranch() {
@@ -240,7 +240,7 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
 
   if (item.items?.length) {
     return (
-      <SubMenu
+      <InterMenu
         level={level + 1}
         item={item}
         items={item.items}
@@ -251,14 +251,13 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
 
   if (level == 0) {
     return (
-      <MainItem
-        level={level}
+      <MainLink
         selected={selectedPath.includes(item._xpath as string)}
         to={item.url as string}
       >
-        <MuiIcon name={item.icon} component={Icon} />
+        <MuiIcon name={item.icon ?? "home"} component={Icon} />
         <Text level={level}>{item.label}</Text>
-      </MainItem>
+      </MainLink>
     );
   }
 
@@ -274,6 +273,40 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
   );
 }
 
+export function InterMenu({ item, selectedPath, items, level }: SubMenuProps) {
+  const [open, setOpen] = useState<boolean>(
+    selectedPath.includes(item._xpath as string)
+  );
+
+  return (
+    <>
+      <SubItem onClick={() => setOpen(!open)}>
+        <MuiIcon component={SubIcon} name={item.icon ?? "Home"} />
+        <Text flex={1} level={level}>
+          {item.label}
+        </Text>
+        <Expand open={open}>
+          <MuiIcon name="keyboard_arrow_right" />
+        </Expand>
+      </SubItem>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <SubList>
+          {items.map((x, index) => {
+            return (
+              <SubMenuItem
+                item={x}
+                level={level + 1}
+                key={index.toString()}
+                selectedPath={selectedPath}
+              />
+            );
+          })}
+        </SubList>
+      </Collapse>
+    </>
+  );
+}
+
 interface SubMenuProps {
   item: MenuItemShape;
   items: MenuItemShape[];
@@ -281,21 +314,16 @@ interface SubMenuProps {
   level: number;
 }
 
-export function SubMenu({ item, selectedPath, items, level }: SubMenuProps) {
+export function SecondMenu({ item, selectedPath, items, level }: SubMenuProps) {
   const [open, setOpen] = useState<boolean>(false);
   const anchorRef = useRef(null);
 
   return (
     <>
       <Tooltip title={item.label} placement="right" arrow>
-        <MainItem
-          level={level}
-          onClick={() => setOpen(!open)}
-          to="/"
-          ref={anchorRef}
-        >
+        <MainLink onClick={() => setOpen(!open)} ref={anchorRef}>
           <MuiIcon name={item.icon} component={Icon} />
-        </MainItem>
+        </MainLink>
       </Tooltip>
       <Popover
         disableScrollLock
@@ -304,6 +332,7 @@ export function SubMenu({ item, selectedPath, items, level }: SubMenuProps) {
         open={open}
         anchorEl={anchorRef.current}
         onClose={() => setOpen(false)}
+        slotProps={{ paper: { sx: { minWidth: 180 } } }}
         anchorOrigin={{
           vertical: "top",
           horizontal: "right",
@@ -331,7 +360,7 @@ interface ListItemProps {
   selectedPath: string[];
 }
 
-function MenuItem({ item, selectedPath }: ListItemProps) {
+function RootItem({ item, selectedPath }: ListItemProps) {
   if (item.type === "header") {
     return null;
   }
@@ -341,7 +370,7 @@ function MenuItem({ item, selectedPath }: ListItemProps) {
 
   if (item.items?.length) {
     return (
-      <SubMenu
+      <SecondMenu
         level={0}
         item={item}
         items={item.items}
@@ -352,14 +381,13 @@ function MenuItem({ item, selectedPath }: ListItemProps) {
 
   return (
     <Tooltip title={item.label} placement="right" arrow>
-      <MainItem
-        level={0}
+      <MainLink
         selected={selectedPath?.includes(item._xpath as string)}
         to={item.url as string}
       >
         <MuiIcon component={Icon} name={item.icon} />
         {/* <Text level={0}>{item.label}</Text> */}
-      </MainItem>
+      </MainLink>
     </Tooltip>
   );
 }
@@ -375,7 +403,7 @@ export default function Dense() {
         <List>
           {items.map((item, index) => {
             return (
-              <MenuItem
+              <RootItem
                 selectedPath={selected}
                 item={item}
                 key={index.toString()}

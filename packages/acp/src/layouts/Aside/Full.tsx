@@ -1,11 +1,11 @@
 import { MuiIcon } from "@ikx/mui";
+import { Link, useLocation } from "@ikx/router";
 import { MenuItemShape } from "@ikx/types";
 import { Box, Collapse, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
-import { RouterLink, Link, useLocation } from "@ikx/router";
-import items from "../items";
 import useMenuActivePath from "../useMenuActivePath";
+import items from "./items";
 
 import Scrollbars from "../../scrollable";
 
@@ -86,7 +86,7 @@ const Text = styled("span", {
   }),
 }));
 
-const Item = styled(RouterLink, {
+const Item = styled(Link, {
   name,
   slot: "item",
   overridesResolver(_, styles) {

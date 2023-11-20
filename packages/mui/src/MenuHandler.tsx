@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { OpenPopoverProps } from "./types";
-import { useLocation } from "../../router/dist";
+import { useLocation } from "@ikx/router";
 import { PopoverVirtualElement } from "@mui/material";
 
 export function MenuHandler() {

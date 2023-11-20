@@ -3,11 +3,12 @@
  * @type: popover
  * @name: popover.AccountMenu
  */
-import { RouterLink, MuiIcon } from "@ikx/mui";
+import { MuiIcon } from "@ikx/mui";
 import { Box, Divider, List, Popover, PopoverProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { Link } from "@ikx/router";
 
-const Item = styled(RouterLink)(({ theme }) => ({
+const Item = styled(Link)(({ theme }) => ({
   display: "flex",
   flexGrow: 1,
   flexDirection: "row",

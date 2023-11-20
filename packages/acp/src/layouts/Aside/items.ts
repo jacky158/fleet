@@ -78,11 +78,10 @@ const items: MenuItemShape[] = [
       { label: "Reset Password", url: "/forgot-password" },
     ],
   },
-  { label: "Analytics", icon: "analytics", url: "/analytics" },
   { label: "E-Commerce", icon: "assessment", url: "/e-commerce" },
   {
     label: "Customers",
-    icon: "",
+    icon: "dashboard",
     items: [
       { label: "List", icon: "dashboard", url: "/customer" },
       {
