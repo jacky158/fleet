@@ -26,13 +26,19 @@ export function PopoverHandler() {
 
       if (!state?.ref) {
         const node = (e.currentTarget ?? e.target) as HTMLElement;
+
         const rect: DOMRect = node?.getBoundingClientRect();
-        setAnchor({
-          nodeType: 1,
-          getBoundingClientRect() {
-            return rect;
-          },
-        });
+
+        if (rect) {
+          setAnchor({
+            nodeType: 1,
+            getBoundingClientRect() {
+              return rect;
+            },
+          });
+        } else {
+          setAnchor(undefined);
+        }
       }
     }
     setOpen(true);
@@ -46,14 +52,14 @@ export function PopoverHandler() {
 
   app.extend({ openPopover });
   const anchorEl =
-    anchor || (state?.ref as RefObject<PopoverVirtualElement>)?.current;
+    (state?.ref as RefObject<PopoverVirtualElement>)?.current || anchor;
 
   if (!state || !anchorEl) return null;
 
   return createElement(
     app.jsx.get(state?.component) as unknown as React.FC<MenuProps>,
     {
-      open: Boolean(open),
+      open: Boolean(open && anchorEl),
       anchorEl: anchorEl,
       onClose() {
         setOpen(false);

@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @type: popover
  * @name: popover.AccountMenu
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { MuiIcon } from "@ikx/mui";
 import { Box, Divider, List, Popover, PopoverProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
