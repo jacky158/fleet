@@ -24,7 +24,7 @@ const List = styled("div", {
 })<{ root?: boolean }>(({ theme, root }) => ({
   color: "var(--aside-item-color)",
   display: "block",
-  padding: root ? theme.spacing(1, 1, 25, 2) : theme.spacing(0),
+  padding: root ? theme.spacing(1, 1, 25, 1) : theme.spacing(0),
 }));
 
 const Icon = styled("span", {
