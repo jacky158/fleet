@@ -96,7 +96,7 @@ export class HttpClient {
     return this.axios.patchForm(url, data, config);
   }
 
-  public async fetch<T = unknown>({
+  public async load<T = unknown>({
     source,
     params,
     ttl,
