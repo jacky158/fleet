@@ -24,6 +24,7 @@
     "lodash": "^4",
     "@ikx/types": "workspace:^",
     "@ikx/core": "workspace:^",
+    "@ikx/router": "workspace:^",
     "@ikx/intl": "workspace:^"
   },
   "scripts": {

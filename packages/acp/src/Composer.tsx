@@ -50,7 +50,7 @@ export default function Composer({
     <Provider app={app}>
       <IntlProvider locale="en" messages={messages as any} defaultLocale="en">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <ThemeProvider mode="dark">
+          <ThemeProvider>
             <GlobalStyles />
             <BrowserRouter>
               <Handlers />

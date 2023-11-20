@@ -2,7 +2,7 @@ import { MenuItemShape } from "@ikx/types";
 import { Box, Popover, Tooltip, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useRef, useState } from "react";
-import { Link, Link as RouterLink, useLocation } from "react-router-dom";
+import { Link, Link as RouterLink, useLocation } from "@ikx/router";
 import items from "../items";
 import useMenuActivePath from "../useMenuActivePath";
 

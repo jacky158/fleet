@@ -1,3 +1,3 @@
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
-export default Link;
+export default RouterLink;

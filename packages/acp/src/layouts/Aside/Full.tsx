@@ -3,7 +3,7 @@ import { MenuItemShape } from "@ikx/types";
 import { Box, Collapse, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
-import { Link, Link as RouterLink, useLocation } from "react-router-dom";
+import { RouterLink, Link, useLocation } from "@ikx/router";
 import items from "../items";
 import useMenuActivePath from "../useMenuActivePath";
 
