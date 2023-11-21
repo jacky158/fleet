@@ -11,18 +11,23 @@ import { styled } from "@mui/material/styles";
 import { Link } from "@ikx/router";
 import Button from "@mui/material/Button";
 import { ReactNode } from "react";
+import Badge from "@mui/material/Badge";
+import { MenuItemShape } from "@ikx/types";
 
 export interface PageHeaderProps {
   title?: ReactNode;
   subtitle?: ReactNode;
   back?: boolean;
+  badge?: ReactNode;
+  breadcrumbs?: MenuItemShape[];
 }
 
 const Title = styled("span")({
-  fontSize: "1.25em",
+  fontSize: "1.4rem",
+  paddingRight: "1rem",
+  fontWeight: 600,
 });
 const Subtitle = styled("span")(({ theme }) => ({
-  paddingLeft: "1em",
   color: theme.palette.text.secondary,
   fontSize: "0.9em",
 }));
@@ -30,7 +35,7 @@ const Back = styled(Button)({
   width: 32,
   minWidth: 32,
   padding: "0 0 0 0",
-  marginRight: "1em",
+  marginRight: "1rem",
 });
 
 const Heading = styled(Box)({
@@ -40,14 +45,15 @@ const Heading = styled(Box)({
 });
 const Left = styled(Box)({
   display: "flex",
-  flexGrow: 1,
+  flexGrow: 0,
   flexDirection: "column",
 });
 const Right = styled(Box)({
   display: "flex",
   flexDirection: "row",
-  flexGrow: 0,
+  flexGrow: 1,
   alignItems: "center",
+  justifyContent: "flex-end",
 });
 const Root = styled(Box)({
   display: "flex",
@@ -57,27 +63,21 @@ const Root = styled(Box)({
 });
 
 export default function PageHeader(props: PageHeaderProps) {
-  // const breadcrumbs: MenuItemShape[] = [];
-
-  const { title, subtitle, back } = props;
+  const { title, subtitle, back, badge, breadcrumbs } = props;
 
   return (
     <Root>
       <Left>
-        <Breadcrumbs
-          aria-label="breadcrumb"
-          sx={{ fontSize: "0.925em", paddingBottom: 1 }}
-        >
-          <MuiLink underline="hover" to="/blog">
-            Home
-          </MuiLink>
-          <MuiLink underline="hover" to="/blog">
-            Settings
-          </MuiLink>
-          <MuiLink underline="hover" to="/blog">
-            Cache
-          </MuiLink>
-        </Breadcrumbs>
+        {breadcrumbs?.length ? (
+          <Breadcrumbs
+            aria-label="breadcrumb"
+            sx={{ fontSize: "0.925em", paddingBottom: 1 }}
+          >
+            {breadcrumbs.map((x) => (
+              <MuiLink underline="hover" to={x.to} children={x.label} />
+            ))}
+          </Breadcrumbs>
+        ) : null}
         <Heading>
           {back == true ? (
             <Link
@@ -92,6 +92,7 @@ export default function PageHeader(props: PageHeaderProps) {
           ) : null}
           <Title>{title}</Title>
           {subtitle ? <Subtitle>{subtitle}</Subtitle> : null}
+          {badge ? <Badge color="error" badgeContent={badge} /> : null}
         </Heading>
       </Left>
       <Right>

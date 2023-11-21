@@ -4,9 +4,9 @@
  */
 
 import { Box } from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { ReactNode, startTransition, useEffect, useReducer } from "react";
 import Aside from "./Aside/Aside";
-import Footer from "./Footer";
 import Header from "./Header";
 import { useApp } from "@ikx/core";
 
@@ -71,6 +71,10 @@ const getInitialState = (ww: number, startClosed: boolean): State => {
 
   return draft;
 };
+
+const Main = styled("main")({
+  minHeight: "calc(100vh - 100px)",
+});
 
 export default function Layout({ children }: { children: ReactNode }) {
   const app = useApp();
@@ -139,10 +143,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           transitionProperty: "padding-left",
         }}
       >
-        <Box component="main" sx={{ minHeight: "calc(100vh - 100px)" }}>
-          {children}
-        </Box>
-        <Footer />
+        <Main>{children}</Main>
       </Box>
     </>
   );

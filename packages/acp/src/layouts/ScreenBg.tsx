@@ -1,7 +1,7 @@
 import { CSSProperties, useEffect } from "react";
 
 interface Props {
-  image?: string;
+  bgImg?: string;
   color?: CSSProperties["backgroundColor"];
   repeat?: CSSProperties["backgroundRepeat"];
   size?: CSSProperties["backgroundSize"];
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function ScreenBg(props: Props) {
-  const { image, color, repeat, size, position } = props;
+  const { bgImg: image, color, repeat, size, position } = props;
   useEffect(() => {
     const body = document.body;
 
@@ -17,7 +17,7 @@ export function ScreenBg(props: Props) {
       const keepStyles: Props = {
         color: body.style.backgroundColor,
         repeat: body.style.backgroundRepeat,
-        image: body.style.backgroundImage,
+        bgImg: body.style.backgroundImage,
         size: body.style.backgroundSize,
       };
 
@@ -38,7 +38,7 @@ export function ScreenBg(props: Props) {
 
       return () => {
         if (body) {
-          body.style.backgroundImage = keepStyles.image as string;
+          body.style.backgroundImage = keepStyles.bgImg as string;
           body.style.backgroundRepeat = keepStyles.repeat as string;
           body.style.backgroundColor = keepStyles.color as string;
           body.style.backgroundSize = keepStyles.size as string;

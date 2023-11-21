@@ -4,13 +4,19 @@
  * @path: /dashboard, /
  */
 import { Layout } from "@ikx/jsx";
-import Typography from "@mui/material/Typography";
-import PageHeader from "../../ui/PageHeader";
+import PageHeader from "@ikx/acp/src/ui/PageHeader";
+import { MenuItemShape } from "@ikx/types";
+
+const breadcrumbs: MenuItemShape[] = [
+  { label: "Home", to: "/" },
+  { label: "Settings", to: "/settings" },
+  { label: "Blogs", to: "/settings/blog" },
+];
 
 export default function Dashboard() {
   return (
     <Layout name="layout.master">
-      <PageHeader title="Dashboard" subtitle="dashboard page" />
+      <PageHeader title="Dashboard" breadcrumbs={breadcrumbs} />
     </Layout>
   );
 }

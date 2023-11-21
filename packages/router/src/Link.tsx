@@ -23,8 +23,9 @@ export const Link = forwardRef(
     return (
       <Component
         {...props}
+        role="link"
         onClick={handleClick}
-        to={to ?? undefined}
+        href={to ?? "/"}
         ref={ref as never}
       />
     );

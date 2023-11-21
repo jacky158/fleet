@@ -10,7 +10,7 @@ import ScreenBg from "./ScreenBg";
 export default function PaperLayout({ children }: { children: ReactNode }) {
   return (
     <>
-      <ScreenBg image={"/signin-bg-pattern.webp"} />
+      <ScreenBg bgImg={"/signin-bg-pattern.webp"} />
       <ScreenCentered children={children} />
     </>
   );
