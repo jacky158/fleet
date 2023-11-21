@@ -139,7 +139,9 @@ export default function Layout({ children }: { children: ReactNode }) {
           transitionProperty: "padding-left",
         }}
       >
-        <Box component="main">{children}</Box>
+        <Box component="main" sx={{ minHeight: "calc(100vh - 100px)" }}>
+          {children}
+        </Box>
         <Footer />
       </Box>
     </>

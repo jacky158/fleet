@@ -14,7 +14,6 @@ import {
   ListItemSecondaryAction,
   Popover,
   PopoverProps,
-  Stack,
   Typography,
 } from "@mui/material";
 import { MuiIcon, Link } from "@ikx/mui";
@@ -57,7 +56,7 @@ export default function Notifications({
           </ListItemAvatar>
           <Box>
             <Typography variant="body2" component="span">
-              <Link to="/account">[This is long headline]</Link>
+              <Link href="/account">[This is long headline]</Link>
             </Typography>
             <Typography variant="body2">[This is long headline]</Typography>
             <small>{app.d(Date.now(), "LL")}</small>

@@ -5,11 +5,12 @@
  */
 import { Layout } from "@ikx/jsx";
 import Typography from "@mui/material/Typography";
+import PageHeader from "../../ui/PageHeader";
 
 export default function Dashboard() {
   return (
     <Layout name="layout.master">
-      <Typography variant="h4">Dashboard</Typography>
+      <PageHeader title="Dashboard" subtitle="dashboard page" />
     </Layout>
   );
 }

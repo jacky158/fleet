@@ -4,7 +4,7 @@ import { useApp } from "@ikx/core";
 
 export const Link = forwardRef(
   (
-    { onClick, component: Component = "a", to, ...props }: RouteLinkProps,
+    { onClick, component: Component = "a", href, ...props }: RouteLinkProps,
     ref: unknown
   ) => {
     const app = useApp();
@@ -16,7 +16,7 @@ export const Link = forwardRef(
       if (typeof onClick == "function") {
         onClick(evt);
       } else {
-        app.router.push(to);
+        app.router.push(href);
       }
     };
 
@@ -24,7 +24,7 @@ export const Link = forwardRef(
       <Component
         {...props}
         onClick={handleClick}
-        href={to ?? undefined}
+        href={href ?? undefined}
         ref={ref as never}
       />
     );

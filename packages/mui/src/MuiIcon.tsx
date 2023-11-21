@@ -9,7 +9,13 @@ export function MuiIcon({
   "children" | "className" | "name"
 >) {
   return (
-    <Component className="icon material-symbols-outlined" {...props}>
+    <Component
+      role="img"
+      aria-label={name}
+      draggable={false}
+      className="icon material-symbols-outlined"
+      {...props}
+    >
       {name ?? null}
     </Component>
   );

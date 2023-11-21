@@ -172,14 +172,13 @@ const BranchLogo = styled(Link)({
 function AsideAppBranch() {
   return (
     <>
-      <BranchLogo to="/">
+      <BranchLogo href="/">
         <img src="/favicon.ico" height="32" />
       </BranchLogo>
       <Box sx={{ display: "none" }}>
         <Typography
           variant="h6"
           component="a"
-          href="/"
           color="primary"
           sx={{ cursor: "pointer" }}
         >
@@ -253,7 +252,7 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
     return (
       <MainLink
         selected={selectedPath.includes(item._xpath as string)}
-        to={item.url as string}
+        href={item.href as string}
       >
         <MuiIcon name={item.icon ?? "home"} component={Icon} />
         <Text level={level}>{item.label}</Text>
@@ -265,7 +264,7 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
     <SubItem
       level={level}
       selected={selectedPath.includes(item._xpath as string)}
-      to={item.url as string}
+      href={item.href as string}
     >
       <MuiIcon name={item.icon ?? "home"} component={SubIcon} />
       <Text level={level}>{item.label}</Text>
@@ -383,7 +382,7 @@ function RootItem({ item, selectedPath }: ListItemProps) {
     <Tooltip title={item.label} placement="right" arrow>
       <MainLink
         selected={selectedPath?.includes(item._xpath as string)}
-        to={item.url as string}
+        href={item.href as string}
       >
         <MuiIcon component={Icon} name={item.icon} />
         {/* <Text level={0}>{item.label}</Text> */}

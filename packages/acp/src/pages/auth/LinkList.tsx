@@ -10,10 +10,10 @@ export default function LinkList() {
   const app = useApp();
   return (
     <Stack direction="row" spacing={2} pt={3} flexGrow={1}>
-      <Link to="/forgot-password" color="inherit" underline="hover">
+      <Link href="/forgot-password" color="inherit" underline="hover">
         {app.t("auth.forgot_password_?")}
       </Link>
-      <Link variant="text" to="/register" color="inherit" underline="hover">
+      <Link variant="text" href="/register" color="inherit" underline="hover">
         {app.t("auth.register_new_account")}
       </Link>
     </Stack>

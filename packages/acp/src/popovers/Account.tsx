@@ -47,15 +47,15 @@ export default function AccountMenu({
       </Box>
       <Divider variant="middle" />
       <List component="div">
-        <Item to="/customer">
+        <Item href="/customer">
           <Icon name="person" />
           <Text>Profile</Text>
         </Item>
-        <Item to="/analytics">
+        <Item href="/analytics">
           <Icon name="settings" />
           <Text>Settings</Text>
         </Item>
-        <Item to="/logout">
+        <Item href="/logout">
           <Icon name="logout" />
           <Text>Logout</Text>
         </Item>
