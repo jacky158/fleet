@@ -4,14 +4,14 @@
  * @path: /customer
  */
 import { Layout } from "@ikx/jsx";
-import { Typography } from "@mui/material";
+import PageHeader from "../../ui/PageHeader";
 
 export default function index(props: unknown) {
   console.log({ props });
   console.log(index.loader);
   return (
     <Layout name="layout.master">
-      <Typography variant="h4">Browse </Typography>
+      <PageHeader title="Customer" />
     </Layout>
   );
 }
