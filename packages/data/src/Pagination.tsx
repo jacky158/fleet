@@ -1,35 +1,25 @@
-import { useEffect, useState } from "react";
-import { GridProps } from "./types";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { ListingProps } from "./types";
 
-const createData = (n: number) => {
-  const ret = [];
-  for (let i = 0; i < n; ++i) {
-    ret.push({
-      id: i + 1,
-      name: `Nam Nguyen ${i}`,
-      email: `Nam Nguyen Van ${i}`,
-    });
-  }
-  return ret;
-};
-
-type ItemShape = {
-  id: number;
-  name: string;
-  email: string;
-};
-
-const loader = function (): Promise<ItemShape[]> {
-  return Promise.resolve(createData(50));
-};
-
-export function Pagination<T>(props: GridProps<T>) {
-  const { grid, filter: Filter, presenter: List } = props;
+export function Pagination<T>(props: ListingProps<T>) {
+  const { loader, grid, filter: Filter, presenter: List } = props;
   const [data, setData] = useState<T[]>([]);
+  const [mounted, setMounted] = useState<boolean>();
 
   useEffect(() => {
-    loader().then((data) => setData(data as unknown as T[]));
+    if (loader) {
+      loader().then((data) => setData(data as unknown as T[]));
+    }
+    // setMounted(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useLayoutEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <>
       {Filter ? <Filter value={{}} onSubmit={() => {}} /> : null}

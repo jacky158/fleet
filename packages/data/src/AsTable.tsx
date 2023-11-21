@@ -10,6 +10,7 @@ import { ReactNode } from "react";
 import get from "lodash/get";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
+import { styled } from "@mui/material";
 
 function renderHeaderCheck<T = unknown>(c: GridColumnDef<T>): ReactNode {
   return <Checkbox name={c.field} />;
@@ -36,19 +37,26 @@ function renderBodyCell<T>(c: GridCellParams<T>) {
     return c.column.renderCell(c);
   }
   const value = get(c.row, c.column.field) ?? null;
+
   switch (c.column.type) {
     case "string":
       return get(c.row, c.column.field);
     case "check":
       return renderCellCheck(c);
   }
-  return value ?? null;
+  return value ? value.toString() : null;
 }
 
+const Container = styled("div")(({ theme }) => ({
+  border: `1px solid ${theme.palette.divider}`,
+}));
+
 export default function AsTable<T>({ grid, data }: DataListProps<T>) {
+  if (!data?.length) return null;
+
   return (
-    <TableContainer component="div">
-      <Table>
+    <TableContainer component={Container}>
+      <Table size={grid.size}>
         <TableHead>
           <TableRow>
             {grid.columns.map((column) => {

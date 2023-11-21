@@ -1,12 +1,14 @@
 import { ReactNode } from "react";
 
-export interface ViewComponents {}
+export class ViewComponents {
+  "popover.Notifications": true;
+}
 
 export type ViewName =
+  | keyof ViewComponents
   | string
-  | undefined
   | React.ElementType
-  | keyof ViewComponents;
+  | undefined;
 
 export interface RemoteDataSource {
   apiUrl: string;

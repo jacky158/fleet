@@ -1,3 +1,5 @@
+import { useApp } from "@ikx/core";
+import { MuiIcon } from "@ikx/mui";
 import {
   AppBar,
   Avatar,
@@ -9,8 +11,6 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import { useApp } from "@ikx/core";
-import { MuiIcon } from "@ikx/mui";
 
 export function AppBarBranch() {
   return (
@@ -52,7 +52,7 @@ export default function Header({
         elevation={0}
         sx={{
           paddingLeft: dx,
-          zIndex: 1,
+          zIndex: 2,
           transitionProperty: "padding-left",
           transitionDuration: "250ms",
         }}

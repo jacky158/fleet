@@ -10,6 +10,8 @@ import { Button, Grid, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useFormik } from "formik";
 import PageHeader from "../ui/PageHeader";
+import { MuiIcon } from "@ikx/mui";
+import dayjs from "dayjs";
 
 const createData = (n: number) => {
   const ret = [];
@@ -18,6 +20,7 @@ const createData = (n: number) => {
       id: i + 1,
       name: `Nam Nguyen ${i}`,
       email: `Nam Nguyen Van ${i}`,
+      date: new Date(),
     });
   }
   return ret;
@@ -27,6 +30,7 @@ type ItemShape = {
   id: number;
   name: string;
   email: string;
+  date: Date;
 };
 
 export const loader = function (): Promise<ItemShape[]> {
@@ -42,7 +46,7 @@ export function GridFilter({ value, onSubmit }: FilterProps) {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form onSubmit={formik.handleSubmit} style={{ paddingBottom: 16 }}>
       <Grid container rowSpacing={1} columnSpacing={1}>
         <Grid item>
           <TextField
@@ -85,7 +89,13 @@ export function GridFilter({ value, onSubmit }: FilterProps) {
           />
         </Grid>
         <Grid item>
-          <Button size="medium" type="submit" variant="outlined">
+          <Button
+            size="medium"
+            type="submit"
+            variant="outlined"
+            color="primary"
+            startIcon={<MuiIcon name="search" />}
+          >
             Filter
           </Button>
         </Grid>
@@ -97,16 +107,34 @@ export function GridFilter({ value, onSubmit }: FilterProps) {
 export function Screen() {
   const grid: GridDef<ItemShape> = {
     columns: [
-      { field: "check", type: "check", width: "20px" },
       { field: "id", headerName: "ID", width: "100px" },
-      { field: "name", headerName: "Name", width: "auto" },
+      {
+        field: "name",
+        headerName: "Name",
+        width: "auto",
+      },
       { field: "email", headerName: "Email" },
+      {
+        field: "date",
+        headerName: "Date",
+        renderCell({ row }) {
+          return dayjs(row.date).format("LLL");
+        },
+      },
       { field: "actions", headerName: "Actions" },
     ],
+    size: "medium",
     rowsPerPageOptions: [20, 50, 100],
   };
 
-  return <Pagination grid={grid} presenter={AsTable} filter={GridFilter} />;
+  return (
+    <Pagination
+      grid={grid}
+      presenter={AsTable}
+      loader={loader}
+      filter={GridFilter}
+    />
+  );
 }
 
 export default function ECommerce() {

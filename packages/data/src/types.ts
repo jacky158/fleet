@@ -41,12 +41,14 @@ export interface FilterProps<T extends FilterValues = FilterValues> {
 export interface GridDef<T> {
   columns: GridColumnDef<T>[];
   rowsPerPageOptions: number[];
+  size: "small" | "medium";
 }
 
-export type GridProps<T> = {
+export type ListingProps<T> = {
   grid: GridDef<T>;
   filter?: FC<FilterProps>;
   presenter: FC<DataListProps<T>>;
+  loader?(): Promise<T[]>;
 };
 export interface DataListProps<T> {
   grid: GridDef<T>;
