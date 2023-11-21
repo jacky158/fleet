@@ -62,19 +62,6 @@ const SubIcon = styled("span", {
   fontSize: "1.2em",
 }));
 
-const ItemHeader = styled("div", {
-  name,
-  slot: "itemHeader",
-  overridesResolver(_, styles) {
-    return [styles.itemHeader];
-  },
-})({
-  fontSize: "0.8em",
-  fontWeight: 700,
-  textTransform: "uppercase",
-  padding: "24px 16px 1em",
-});
-
 const Text = styled("span", {
   name,
   slot: "itemText",
@@ -172,7 +159,7 @@ const BranchLogo = styled(Link)({
 function AsideAppBranch() {
   return (
     <>
-      <BranchLogo href="/">
+      <BranchLogo to="/">
         <img src="/favicon.ico" height="32" />
       </BranchLogo>
       <Box sx={{ display: "none" }}>
@@ -252,7 +239,7 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
     return (
       <MainLink
         selected={selectedPath.includes(item._xpath as string)}
-        href={item.href as string}
+        to={item.to as string}
       >
         <MuiIcon name={item.icon ?? "home"} component={Icon} />
         <Text level={level}>{item.label}</Text>
@@ -264,7 +251,7 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
     <SubItem
       level={level}
       selected={selectedPath.includes(item._xpath as string)}
-      href={item.href as string}
+      to={item.to as string}
     >
       <MuiIcon name={item.icon ?? "home"} component={SubIcon} />
       <Text level={level}>{item.label}</Text>
@@ -382,7 +369,7 @@ function RootItem({ item, selectedPath }: ListItemProps) {
     <Tooltip title={item.label} placement="right" arrow>
       <MainLink
         selected={selectedPath?.includes(item._xpath as string)}
-        href={item.href as string}
+        to={item.to as string}
       >
         <MuiIcon component={Icon} name={item.icon} />
         {/* <Text level={0}>{item.label}</Text> */}

@@ -132,14 +132,13 @@ const BranchLogo = styled(Link)({
 function AsideAppBranch() {
   return (
     <>
-      <BranchLogo href="/">
+      <BranchLogo to="/">
         <img src="/logo.png" height="32" />
       </BranchLogo>
       <Box sx={{ display: "none" }}>
         <Typography
           variant="h6"
           component="a"
-          href="/"
           color="primary"
           sx={{ cursor: "pointer" }}
         >
@@ -213,7 +212,7 @@ function SubMenuItem({ item, selectedPath, level }: SubMenuItemProps) {
     <Item
       level={level}
       selected={selectedPath.includes(item._xpath as string)}
-      href={item.href as string}
+      to={item.to as string}
     >
       <Text level={level}>{item.label}</Text>
     </Item>
@@ -234,7 +233,7 @@ export function SubMenu({ item, selectedPath, items, level }: SubMenuProps) {
 
   return (
     <>
-      <Item level={level} onClick={() => setOpen(!open)} href="/">
+      <Item level={level} onClick={() => setOpen(!open)} to="/">
         {level == 0 ? <MuiIcon component={Icon} name={item.icon} /> : null}
         <Text flex={1} level={level}>
           {item.label}
@@ -289,7 +288,7 @@ function MenuItem({ item, selectedPath }: ListItemProps) {
     <Item
       level={0}
       selected={selectedPath?.includes(item._xpath as string)}
-      href={item.href as string}
+      to={item.to as string}
     >
       <MuiIcon name={item.icon} component={Icon} />
       <Text level={0}>{item.label}</Text>

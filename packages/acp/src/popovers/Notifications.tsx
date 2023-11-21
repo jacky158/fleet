@@ -56,7 +56,7 @@ export default function Notifications({
           </ListItemAvatar>
           <Box>
             <Typography variant="body2" component="span">
-              <Link href="/account">[This is long headline]</Link>
+              <Link to="/account">[This is long headline]</Link>
             </Typography>
             <Typography variant="body2">[This is long headline]</Typography>
             <small>{app.d(Date.now(), "LL")}</small>

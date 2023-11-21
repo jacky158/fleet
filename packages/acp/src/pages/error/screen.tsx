@@ -80,7 +80,7 @@ export default function Screen(props: Props) {
           startIcon={<MuiIcon name="arrow_back" />}
           variant="text"
           color="primary"
-          href="/"
+          to="/"
         >
           Back to Home
         </Button>

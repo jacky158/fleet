@@ -16,9 +16,9 @@ function getIndicateUrls(url: string): string[] {
 
 function createMap(items: Item[], result: Record<string, string>) {
   items.forEach((x: Item) => {
-    if (x.href && x._xpath) {
-      result[x.href] = x._xpath;
-      getIndicateUrls(x.href).forEach((str) => {
+    if (x.to && x._xpath) {
+      result[x.to] = x._xpath;
+      getIndicateUrls(x.to).forEach((str) => {
         if (result[str]) return;
         result[str] = x._xpath as string;
       });

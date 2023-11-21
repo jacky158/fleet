@@ -48,7 +48,7 @@ export interface ToastProps {
 export interface MenuItemShape {
   label: string;
   icon?: string;
-  href?: string;
+  to?: string;
   selected?: boolean;
   type?: "divider" | "header";
   items?: MenuItemShape[];

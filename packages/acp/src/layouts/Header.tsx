@@ -16,7 +16,7 @@ export function AppBarBranch() {
   return (
     <>
       <Box sx={{ pr: 2, cursor: "pointer" }}>
-        <a href="/">
+        <a to="/">
           <img src="/logo.png" height="32" />
         </a>
       </Box>
@@ -24,7 +24,6 @@ export function AppBarBranch() {
         <Typography
           variant="h6"
           component="a"
-          href="/"
           color="primary"
           sx={{ cursor: "pointer" }}
         >

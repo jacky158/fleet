@@ -68,13 +68,13 @@ export default function PageHeader(props: PageHeaderProps) {
           aria-label="breadcrumb"
           sx={{ fontSize: "0.925em", paddingBottom: 1 }}
         >
-          <MuiLink underline="hover" href="/blog">
+          <MuiLink underline="hover" to="/blog">
             Home
           </MuiLink>
-          <MuiLink underline="hover" href="/blog">
+          <MuiLink underline="hover" to="/blog">
             Settings
           </MuiLink>
-          <MuiLink underline="hover" href="/blog">
+          <MuiLink underline="hover" to="/blog">
             Cache
           </MuiLink>
         </Breadcrumbs>
@@ -86,7 +86,6 @@ export default function PageHeader(props: PageHeaderProps) {
               color="inherit"
               disableRipple
               disableFocusRipple
-              href="../"
             >
               <MuiIcon name={"arrow_back"} />
             </Link>
@@ -96,13 +95,13 @@ export default function PageHeader(props: PageHeaderProps) {
         </Heading>
       </Left>
       <Right>
-        <Button component={Link} href="/">
+        <Button component={Link} to="/">
           Operation 1
         </Button>
-        <Button component={Link} href="/">
+        <Button component={Link} to="/">
           Operation 2
         </Button>
-        <Button component={Link} href="/">
+        <Button component={Link} to="/">
           Operation 3
         </Button>
       </Right>
