@@ -1,0 +1,28 @@
+{
+  "name": "@ikx/data",
+  "version": "0.0.1",
+  "description": "ikx helmet integration",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/data",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@types/react": "^18",
+    "typescript": "^5",
+    "react-intl": "^6",
+    "formik": "^2",
+    "@ikx/core": "workspace:^",
+    "@ikx/types": "workspace:^",
+    "@ikx/http": "workspace:^"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:1": "npx tsc"
+  }
+}
