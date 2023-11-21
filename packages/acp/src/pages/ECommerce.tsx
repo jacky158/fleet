@@ -4,7 +4,7 @@
  * @path: /e-commerce
  */
 
-import { Listing, AsTable, FilterProps, GridDef } from "@ikx/data";
+import { Pagination, AsTable, FilterProps, GridDef } from "@ikx/data";
 import { Layout } from "@ikx/jsx";
 import { Button, Grid, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -103,9 +103,10 @@ export function Screen() {
       { field: "email", headerName: "Email" },
       { field: "actions", headerName: "Actions" },
     ],
+    rowsPerPageOptions: [20, 50, 100],
   };
 
-  return <Listing grid={grid} presenter={AsTable} />;
+  return <Pagination grid={grid} presenter={AsTable} filter={GridFilter} />;
 }
 
 export default function ECommerce() {

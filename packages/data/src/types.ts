@@ -40,6 +40,7 @@ export interface FilterProps<T extends FilterValues = FilterValues> {
 
 export interface GridDef<T> {
   columns: GridColumnDef<T>[];
+  rowsPerPageOptions: number[];
 }
 
 export type GridProps<T> = {

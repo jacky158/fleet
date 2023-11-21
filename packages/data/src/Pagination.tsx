@@ -23,7 +23,7 @@ const loader = function (): Promise<ItemShape[]> {
   return Promise.resolve(createData(50));
 };
 
-export function Listing<T>(props: GridProps<T>) {
+export function Pagination<T>(props: GridProps<T>) {
   const { grid, filter: Filter, presenter: List } = props;
   const [data, setData] = useState<T[]>([]);
 
@@ -38,4 +38,4 @@ export function Listing<T>(props: GridProps<T>) {
   );
 }
 
-export default Listing;
+export default Pagination;

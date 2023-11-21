@@ -92,7 +92,7 @@ export default function AsTable<T>({ grid, data }: DataListProps<T>) {
               colSpan={grid.columns.length}
               count={data?.length}
               rowsPerPage={20}
-              rowsPerPageOptions={[10, 20, 30]}
+              rowsPerPageOptions={grid.rowsPerPageOptions}
               onPageChange={() => {}}
               onRowsPerPageChange={() => {}}
             />
