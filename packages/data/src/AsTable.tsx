@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useApp } from "@ikx/core";
 import { MuiIcon } from "@ikx/mui";
-import { ViewName } from "@ikx/types";
 import { IconButton, styled } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Table from "@mui/material/Table";
@@ -54,13 +53,16 @@ function renderCellCheck<T>(c: GridCellParams<T>): ReactNode {
   );
 }
 
-function Actions<T>(c: GridCellParams<T>): ReactNode {
+function Actions<T>(passProps: GridCellParams<T>): ReactNode {
   const app = useApp();
   return (
     <IconButton
       size="small"
       onClick={(e) =>
-        app.openPopover(e, { component: "popover.TableActions" as ViewName, c })
+        app.openPopover(e, {
+          component: passProps.column.actions ?? "popover.TableActions",
+          passProps,
+        })
       }
     >
       <MuiIcon name="settings" />

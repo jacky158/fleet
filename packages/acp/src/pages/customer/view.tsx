@@ -1,20 +1,18 @@
 /**
  * @type: route
- * @name: customer
- * @path: /customer/view/:id
+ * @name: customer.view
+ * @path: /customer/:customer_id
  */
-import { Layout } from "@ikx/jsx";
-import { Typography } from "@mui/material";
 
-export default function page(props: unknown) {
-  page.loader().then((data) => console.log(props, data));
+import { Layout } from "@ikx/jsx";
+import PageHeader from "../../ui/PageHeader";
+
+export default function route(props: { customer_id: string }) {
+  console.log(props);
+
   return (
     <Layout name="layout.master">
-      <Typography variant="h4">View Customer</Typography>
+      <PageHeader title="Customer" />
     </Layout>
   );
 }
-
-page.loader = function () {
-  return Promise.resolve({ name: "Nam Nguyen", Photo: "234" });
-};

@@ -1,5 +1,7 @@
-import { MenuProps } from "@mui/material/Menu";
 import { useApp } from "@ikx/core";
+import { useLocation } from "@ikx/router";
+import { OpenPopoverProps } from "@ikx/types";
+import { PopoverVirtualElement } from "@mui/material";
 import {
   RefObject,
   createElement,
@@ -7,9 +9,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { OpenPopoverProps } from "@ikx/types";
-import { useLocation } from "@ikx/router";
-import { PopoverVirtualElement } from "@mui/material";
 
 export function PopoverHandler() {
   const [open, setOpen] = useState<boolean>(false);
@@ -56,16 +55,19 @@ export function PopoverHandler() {
 
   if (!state || !anchorEl) return null;
 
-  return createElement(
-    app.jsx.get(state?.component) as unknown as React.FC<MenuProps>,
-    {
-      open: Boolean(open && anchorEl),
-      anchorEl: anchorEl,
-      onClose() {
-        setOpen(false);
-      },
-    }
-  );
+  const { component, ...props } = state;
+
+  return createElement(app.jsx.get(component), {
+    ...props,
+    open: Boolean(open && anchorEl),
+    anchorEl: anchorEl,
+    onClick() {
+      setOpen(false);
+    },
+    onClose() {
+      setOpen(false);
+    },
+  });
 }
 
 export default PopoverHandler;

@@ -88,7 +88,6 @@ const items: MenuItemShape[] = [
       { label: "500", to: "/error/500" },
     ],
   },
-  { label: "E-Commerce", icon: "assessment", to: "/e-commerce" },
   {
     label: "Customers",
     icon: "dashboard",

@@ -1,6 +1,6 @@
-import { LoadResult, PagingState } from "@ikx/types";
+import { LoadResult, PagingState, ViewName } from "@ikx/types";
 import { FormikConfig, FormikValues } from "formik";
-import { FC, CSSProperties, ReactNode } from "react";
+import { CSSProperties, FC, ReactNode } from "react";
 
 export type FilterValues = FormikValues;
 
@@ -25,6 +25,7 @@ export interface GridColumnDef<T> {
   width?: string | number;
   headerName?: string;
   headerAlign?: GridColumnAlign;
+  actions?: ViewName;
   valueGetter?(row: T): unknown;
   valueFormatter?(row: T): unknown;
   renderCell?(params: GridCellParams<T>): ReactNode;
