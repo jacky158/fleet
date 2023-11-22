@@ -13,16 +13,18 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import get from "lodash/get";
-import { ReactNode } from "react";
-import { DataListProps, GridCellParams } from "./types";
+import { ReactNode, useMemo } from "react";
+import { DataListProps, GridCellParams, GridColumnDef } from "./types";
 
 function renderHeaderCheck<T>(c: GridCellParams<T>): ReactNode {
   return (
     <Checkbox
+      disableRipple
+      size="small"
       name={c.column.field}
-      onClick={(evt) =>
-        c.paging.api.selectAll(!!(evt.target as HTMLInputElement)?.checked)
-      }
+      indeterminate={c.paging.selectStatus == "indeterminate"}
+      checked={c.paging.selectStatus == "all"}
+      onClick={() => c.paging.api.selectAll()}
     />
   );
 }
@@ -43,6 +45,8 @@ function renderCellCheck<T>(c: GridCellParams<T>): ReactNode {
   const value = (c.row as any)?.id;
   return (
     <Checkbox
+      disableRipple
+      size="small"
       name={c.column.field}
       checked={c.selected.includes(value)}
       onChange={(_, checked) => c.paging.api.select(value, checked)}
@@ -86,6 +90,20 @@ const Container = styled("div")(({ theme }) => ({
 }));
 
 export default function AsTable<T>({ grid, paging }: DataListProps<T>) {
+  const columns: GridColumnDef<T>[] = useMemo(() => {
+    return grid.columns.map((x) => {
+      switch (x.type) {
+        case "actions":
+          x.style = { padding: "0 8px 0 8px" };
+          break;
+        case "selection":
+          x.style = { padding: "0 0 0 0" };
+          break;
+      }
+      return x;
+    });
+  }, [grid.columns]);
+
   if (!paging?.items?.length) return null;
 
   const data = paging.items;
@@ -95,12 +113,13 @@ export default function AsTable<T>({ grid, paging }: DataListProps<T>) {
       <Table size={grid.size}>
         <TableHead>
           <TableRow>
-            {grid.columns.map((column) => {
+            {columns.map((column) => {
               return (
                 <TableCell
                   width={column.width}
                   align={column.headerAlign ?? column.align}
                   key={column.field}
+                  style={column.style}
                 >
                   <HeaderCell<T>
                     row={undefined}
@@ -122,12 +141,13 @@ export default function AsTable<T>({ grid, paging }: DataListProps<T>) {
                   key={index.toString()}
                   className={index % 2 ? "odd" : "even"}
                 >
-                  {grid.columns.map((column) => {
+                  {columns.map((column) => {
                     return (
                       <TableCell
                         align={column.align}
                         width={column.width}
                         key={column.field}
+                        style={column.style}
                       >
                         <BodyCell<T>
                           row={row}

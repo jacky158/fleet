@@ -81,8 +81,7 @@ export type PagingAction<R, Q> =
   | { type: "setResult"; payload: LoadResult<R[]> }
   | { type: "removeItem"; payload: unknown }
   | { type: "select"; id: unknown; checked?: boolean }
-  | { type: "toggleSelect"; payload: unknown }
-  | { type: "selectAll"; payload: boolean }
+  | { type: "selectAll"; payload?: boolean }
   | { type: "refresh" }
   | { type: "load" }
   | { type: "setError" }
@@ -98,12 +97,13 @@ export interface PagingApi<_R, Q> {
   setQuery(query: Q): void;
   refresh(): void;
   select(id: unknown, checked?: boolean): void;
-  selectAll(select: boolean): void;
+  selectAll(select?: boolean): void;
   load(q?: unknown): void;
 }
 
 export interface PagingState<R, Q = Record<string, unknown>> {
   loadingMore: boolean;
+  selectStatus: "none" | "all" | "indeterminate";
   loading: boolean;
   url: string;
   rev: number;

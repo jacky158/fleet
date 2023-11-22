@@ -1,6 +1,6 @@
 import { LoadResult, PagingState } from "@ikx/types";
 import { FormikConfig, FormikValues } from "formik";
-import { FC, ReactNode } from "react";
+import { FC, CSSProperties, ReactNode } from "react";
 
 export type FilterValues = FormikValues;
 
@@ -17,6 +17,7 @@ export type GridColumnAlign = "left" | "right" | "center";
 export type RowId = string;
 
 export interface GridColumnDef<T> {
+  style?: CSSProperties;
   field: string;
   type?: GridColumnType;
   align?: GridColumnAlign;

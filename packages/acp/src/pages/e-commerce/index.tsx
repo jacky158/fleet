@@ -33,7 +33,7 @@ type ItemShape = {
 };
 
 export const loader = function (): Promise<LoadResult<ItemShape[]>> {
-  return Promise.resolve({ data: createData(50) });
+  return Promise.resolve({ data: createData(5) });
 };
 
 export function Screen() {

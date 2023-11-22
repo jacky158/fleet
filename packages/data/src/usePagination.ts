@@ -118,7 +118,6 @@ export function usePagination<R, Q = Record<string, unknown>>({
             draft.limit = meta.pagination.limit;
             draft.count = meta.pagination.count;
           }
-
           break;
         }
         case "select":
@@ -136,10 +135,13 @@ export function usePagination<R, Q = Record<string, unknown>>({
           }
           break;
         case "selectAll":
-          if (action.payload) {
-            draft.selected = draft.items.map((x: any) => x.id);
-          } else {
-            draft.selected = [];
+          {
+            const checked = action.payload ?? draft.selectStatus != "none";
+            if (!checked) {
+              draft.selected = draft.items.map((x: any) => x.id);
+            } else {
+              draft.selected = [];
+            }
           }
           break;
         case "load": {
@@ -159,6 +161,14 @@ export function usePagination<R, Q = Record<string, unknown>>({
             });
         }
       }
+      if (!draft.selected.length) {
+        draft.selectStatus = "none";
+      } else if (draft.selected.length == draft.items.length) {
+        draft.selectStatus = "all";
+      } else {
+        draft.selectStatus = "indeterminate";
+      }
+
       return { ...draft };
     },
     {
@@ -171,6 +181,7 @@ export function usePagination<R, Q = Record<string, unknown>>({
       limit: limit ?? 20,
       query: query ?? ({} as Q),
       perPageOptions: perPageOptions ?? [20, 50],
+      selectStatus: "none",
       items: [],
       selected: [],
       loadingMore: false,
