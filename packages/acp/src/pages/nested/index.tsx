@@ -1,7 +1,7 @@
 /**
  * @type: route
  * @name: nested
- * @path: /nested
+ * @path: /nested/:tab?
  */
 
 import { Layout } from "@ikx/jsx";
