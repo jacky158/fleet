@@ -1,6 +1,19 @@
 import debounce from "lodash/debounce";
 import { RefObject, useEffect } from "react";
 
+function getDocHeight() {
+  const x = document;
+
+  return Math.max(
+    x.body.scrollHeight,
+    x.documentElement.scrollHeight,
+    x.body.offsetHeight,
+    x.documentElement.offsetHeight,
+    x.body.clientHeight,
+    x.documentElement.clientHeight
+  );
+}
+
 export function useScrollEnd(
   cb?: () => void,
   scrollRef?: RefObject<HTMLElement | null>,
@@ -24,7 +37,7 @@ export function useScrollEnd(
           }
         }
       : () => {
-          if (window.scrollY + window.innerHeight * 2 > window.innerHeight) {
+          if (window.scrollY + window.innerHeight * 2 > getDocHeight()) {
             cb();
           }
         };
