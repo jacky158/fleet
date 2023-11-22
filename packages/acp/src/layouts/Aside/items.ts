@@ -69,6 +69,11 @@ const items: MenuItemShape[] = [
   },
   { label: "Pages", type: "header" },
   {
+    label: "Nested",
+    icon: "manage_accounts",
+    to: "/nested",
+  },
+  {
     label: "Auth",
     icon: "manage_accounts",
     items: [

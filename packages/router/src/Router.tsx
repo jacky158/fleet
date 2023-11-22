@@ -56,23 +56,16 @@ export class Router {
 
   private matchLocal(
     url: string,
-    group: string,
-    fallback?: string
+    base: string
   ): Promise<MatchResult | undefined> {
     const urlObj = new URL(url, "http://locahost");
     const { pathname } = urlObj;
 
-    let item = this.rules.find((x) => {
+    const item = this.rules.find((x) => {
       return (
-        x.groups.includes(group) && (x.match(pathname) || x.match(pathname))
+        x.groups.includes(base) && (x.match(pathname) || x.match(pathname))
       );
     });
-
-    if (!item && fallback) {
-      item = this.rules.find((x) => {
-        return x.groups.includes(group) && x.match(fallback);
-      });
-    }
 
     if (!item) {
       return Promise.resolve(undefined);
@@ -93,7 +86,7 @@ export class Router {
 
   private async matchRemote(
     url: string,
-    group: string
+    base: string
   ): Promise<MatchResult | undefined> {
     const { cache: enableCache, apiUrl, pageNotFound } = this.config;
 
@@ -104,7 +97,7 @@ export class Router {
     this.setLoading(true);
 
     return this.app.http
-      .get(apiUrl, { params: { url, group } })
+      .get(apiUrl, { params: { url, group: base } })
       .then((res) => {
         const returnUrl = (res.data?.data?.path as string) ?? pageNotFound;
         this.cached[url] = returnUrl;
@@ -112,7 +105,7 @@ export class Router {
         return returnUrl;
       })
       .then((url) => {
-        return this.matchLocal(url, group);
+        return this.matchLocal(url, base);
       })
       .finally(() => {
         this.setLoading(false);
@@ -127,16 +120,16 @@ export class Router {
 
   public async match(
     url: string,
-    group: string = "root"
+    base: string = "root"
   ): Promise<MatchResult | undefined> {
-    let result = await this.matchLocal(url, group);
+    let result = await this.matchLocal(url, base);
 
     if (!result && this.config.apiUrl) {
-      result = await this.matchRemote(url, group);
+      result = await this.matchRemote(url, base);
     }
 
     if (!result) {
-      result = await this.matchLocal("/error/404", group);
+      result = await this.matchLocal("/error/404", base);
     }
 
     if (result) {

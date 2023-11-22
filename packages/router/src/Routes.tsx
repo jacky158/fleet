@@ -4,7 +4,7 @@ import React, { createElement, useState } from "react";
 import { MatchResult } from "./types";
 import { useLocation } from "./useLocation";
 
-export function Routes({ group }: { group: string }) {
+export function Routes({ base }: { base: string }) {
   const app = useApp();
   const { pathname } = useLocation();
 
@@ -13,7 +13,7 @@ export function Routes({ group }: { group: string }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // test if can map
   React.useEffect(() => {
-    app.router.match(pathname, group).then(setPage);
+    app.router.match(pathname, base).then(setPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
