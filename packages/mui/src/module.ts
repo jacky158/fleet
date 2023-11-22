@@ -23,7 +23,6 @@ declare module "@ikx/core" {
     handleError(error: unknown, formik: unknown): void;
     handleFeedback(res: unknown): void;
     useLayoutPageSize(): string;
-    openMenu(evt: unknown, data: OpenPopoverProps): void;
     openPopover(evt: unknown, data: OpenPopoverProps): void;
     modal: ModalApi;
   }

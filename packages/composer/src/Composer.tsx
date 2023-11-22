@@ -6,7 +6,6 @@ import {
   AlertHandler,
   ConfirmHandler,
   FeedbackHandler,
-  MenuHandler,
   ModalHandler,
   ThemeProvider,
   ToastHandler,
@@ -35,7 +34,6 @@ export default function Composer({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <HelmetHandler />
             <ModalHandler />
-            <MenuHandler />
             <ToastHandler />
             <FeedbackHandler />
             <AlertHandler />

@@ -70,7 +70,7 @@ export function Content() {
       <button onClick={() => app.toast({ message: "ok" })}>toast</button>
       <button
         ref={ref}
-        onClick={(evt) => app.openMenu(evt, { component: MyMenu })}
+        onClick={(evt) => app.openPopover(evt, { component: MyMenu })}
       >
         Open Menu
       </button>

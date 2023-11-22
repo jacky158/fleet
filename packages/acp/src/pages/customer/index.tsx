@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import dayjs from "dayjs";
 import GridFilter from "./Filter";
 import { LoadResult } from "@ikx/types";
-import { Menu, MenuItem, Popover, PopoverProps } from "@mui/material";
+import { Menu, MenuItem, PopoverProps } from "@mui/material";
 import { Link } from "@ikx/router";
 
 const createData = (n: number) => {
@@ -35,7 +35,7 @@ type ItemShape = {
 };
 
 export const loader = function (): Promise<LoadResult<ItemShape[]>> {
-  return Promise.resolve({ data: createData(5) });
+  return Promise.resolve({ data: createData(50) });
 };
 
 function Actions({

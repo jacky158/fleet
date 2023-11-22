@@ -6,7 +6,6 @@ import {
   AlertHandler,
   ConfirmHandler,
   FeedbackHandler,
-  MenuHandler,
   ModalHandler,
   PopoverHandler,
   ThemeProvider,
@@ -28,7 +27,6 @@ const Handlers = () => {
       <HelmetHandler />
       <PopoverHandler />
       <ModalHandler />
-      <MenuHandler />
       <ToastHandler />
       <FeedbackHandler />
       <AlertHandler />
