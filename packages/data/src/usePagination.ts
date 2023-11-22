@@ -1,9 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Dispatch, useEffect, useReducer, useRef } from "react";
-import { LoadResult, PagingState, PagingApi, PagingAction } from "@ikx/types";
+import {
+  LoadResult,
+  PagingState,
+  PagingApi,
+  PagingAction,
+  RowValues,
+} from "@ikx/types";
 
-export class Api<R, Q> implements PagingApi<R, Q> {
+export class Api<R extends RowValues, Q> implements PagingApi<R, Q> {
   public dispatch?: Dispatch<PagingAction<R, Q>>;
 
   d(action: PagingAction<R, Q>) {
@@ -30,7 +36,7 @@ export class Api<R, Q> implements PagingApi<R, Q> {
   loadMore() {
     this.d({ type: "loadMore" });
   }
-  removeItem(id: string | number) {
+  removeItem(id: unknown) {
     this.d({ type: "removeItem", payload: id });
   }
   select(id: unknown, checked?: boolean) {
@@ -44,7 +50,10 @@ export class Api<R, Q> implements PagingApi<R, Q> {
   }
 }
 
-export function usePagination<R, Q = Record<string, unknown>>({
+export function usePagination<
+  R extends RowValues,
+  Q = Record<string, unknown>
+>({
   url,
   limit,
   page,
@@ -113,10 +122,19 @@ export function usePagination<R, Q = Record<string, unknown>>({
             draft.items = data;
           }
           if (meta?.pagination) {
-            draft.page = meta.pagination.page;
-            draft.pages = meta.pagination.pages;
-            draft.limit = meta.pagination.limit;
-            draft.count = meta.pagination.count;
+            const p = meta.pagination;
+            if (p.page) {
+              draft.page = p.page;
+            }
+            if (p.pages) {
+              draft.pages = p.pages;
+            }
+            if (p.limit) {
+              draft.limit = p.limit;
+            }
+            if (p.count) {
+              draft.count = p.count;
+            }
           }
           break;
         }
@@ -175,9 +193,9 @@ export function usePagination<R, Q = Record<string, unknown>>({
       url,
       loading: true,
       rev: 0,
-      page: page ?? 1,
+      page: page ?? 0,
       pages: 0,
-      count: 0,
+      count: undefined,
       limit: limit ?? 20,
       query: query ?? ({} as Q),
       perPageOptions: perPageOptions ?? [20, 50],

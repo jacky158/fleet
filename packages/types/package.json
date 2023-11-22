@@ -17,6 +17,7 @@
     "typescript": "^5",
     "react-intl": "^6",
     "axios": "^1.6",
+    "formik": "^2",
     "@ikx/core": "workspace:^"
   },
   "scripts": {

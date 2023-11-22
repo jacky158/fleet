@@ -13,9 +13,16 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import get from "lodash/get";
 import { ReactNode, useMemo } from "react";
-import { DataListProps, GridCellParams, GridColumnDef } from "./types";
+import {
+  DataListProps,
+  GridCellParams,
+  GridColumnDef,
+  RowValues,
+} from "@ikx/types";
 
-function renderHeaderCheck<T>(c: GridCellParams<T>): ReactNode {
+function renderHeaderCheck<T extends RowValues>(
+  c: GridCellParams<T>
+): ReactNode {
   return (
     <Checkbox
       disableRipple
@@ -28,7 +35,7 @@ function renderHeaderCheck<T>(c: GridCellParams<T>): ReactNode {
   );
 }
 
-function HeaderCell<T>(c: GridCellParams<T>) {
+function HeaderCell<T extends RowValues>(c: GridCellParams<T>) {
   if (c.column.renderHeader) {
     return c.column.renderHeader(c.column);
   }
@@ -40,7 +47,7 @@ function HeaderCell<T>(c: GridCellParams<T>) {
   return <b>{c.column.headerName ?? c.column.field}</b>;
 }
 
-function renderCellCheck<T>(c: GridCellParams<T>): ReactNode {
+function renderCellCheck<T extends RowValues>(c: GridCellParams<T>): ReactNode {
   const value = (c.row as any)?.id;
   return (
     <Checkbox
@@ -53,7 +60,7 @@ function renderCellCheck<T>(c: GridCellParams<T>): ReactNode {
   );
 }
 
-function Actions<T>(passProps: GridCellParams<T>): ReactNode {
+function Actions<T extends RowValues>(passProps: GridCellParams<T>): ReactNode {
   const app = useApp();
   return (
     <IconButton
@@ -70,7 +77,7 @@ function Actions<T>(passProps: GridCellParams<T>): ReactNode {
   );
 }
 
-function BodyCell<T>(c: GridCellParams<T>) {
+function BodyCell<T extends RowValues>(c: GridCellParams<T>) {
   if (c.column.renderCell) {
     return c.column.renderCell(c);
   }
@@ -91,7 +98,10 @@ const Container = styled("div")(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
 }));
 
-export default function AsTable<T>({ grid, paging }: DataListProps<T>) {
+export default function AsTable<T extends RowValues>({
+  grid,
+  paging,
+}: DataListProps<T>) {
   const columns: GridColumnDef<T>[] = useMemo(() => {
     return grid.columns.map((x) => {
       switch (x.type) {
@@ -168,13 +178,15 @@ export default function AsTable<T>({ grid, paging }: DataListProps<T>) {
         <TableFooter>
           <TableRow>
             <TablePagination
-              page={0}
+              page={paging.page}
               colSpan={grid.columns.length}
-              count={data?.length}
-              rowsPerPage={20}
+              count={paging.count ?? data?.length}
+              rowsPerPage={paging.limit}
               rowsPerPageOptions={grid.rowsPerPageOptions}
-              onPageChange={() => {}}
-              onRowsPerPageChange={() => {}}
+              onPageChange={(_e, value) => paging.api.setPage(value)}
+              onRowsPerPageChange={(limit) =>
+                paging.api.setLimit(limit.target.value as unknown as number)
+              }
             />
           </TableRow>
         </TableFooter>

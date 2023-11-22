@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @type: route
  * @name: customer
@@ -5,20 +6,21 @@
  */
 
 import PageHeader from "@ikx/acp/src/ui/PageHeader";
-import { AsTable, GridCellParams, GridDef, Pagination } from "@ikx/data";
+import { AsTable, Pagination } from "@ikx/data";
+import { GridCellParams, GridDef } from "@ikx/types";
 import { Layout } from "@ikx/jsx";
+import { Link } from "@ikx/router";
+import { LoadResult } from "@ikx/types";
+import { Menu, MenuItem, PopoverProps } from "@mui/material";
 import Box from "@mui/material/Box";
 import dayjs from "dayjs";
 import GridFilter from "./Filter";
-import { LoadResult } from "@ikx/types";
-import { Menu, MenuItem, PopoverProps } from "@mui/material";
-import { Link } from "@ikx/router";
 
-const createData = (n: number) => {
+const createData = (p: number = 0, n: number) => {
   const ret = [];
-  for (let i = 0; i < n; ++i) {
+  for (let i = 1; i < n; ++i) {
     ret.push({
-      id: i + 1,
+      id: p * n + i + 1,
       name: `Nam Nguyen ${i}`,
       email: `Nam Nguyen Van ${i}`,
       date: new Date(),
@@ -34,8 +36,20 @@ type ItemShape = {
   date: Date;
 };
 
-export const loader = function (): Promise<LoadResult<ItemShape[]>> {
-  return Promise.resolve({ data: createData(50) });
+export const loader = function ({
+  limit = 20,
+  page = 1,
+}): Promise<LoadResult<ItemShape[]>> {
+  return Promise.resolve({
+    data: createData(page, limit),
+    meta: {
+      pagination: {
+        limit,
+        page,
+        count: 100,
+      },
+    },
+  });
 };
 
 function Actions({

@@ -1,14 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Dispatch, ReactNode } from "react";
-import { ModalProps } from "@mui/material/Modal";
-import { PopoverProps } from "@mui/material";
+import type {
+  CSSProperties,
+  Dispatch,
+  ElementType,
+  FC,
+  ReactNode,
+} from "react";
+import type { ModalProps } from "@mui/material/Modal";
+import type { PopoverProps } from "@mui/material";
+import type { FormikConfig, FormikValues } from "formik";
 
 export interface ViewComponents {
   "popover.Notifications": true;
 }
 
-export type ViewName = string | keyof ViewComponents;
+export type ViewName = string | keyof ViewComponents | ElementType;
 
 export interface RemoteDataSource {
   apiUrl: string;
@@ -60,12 +67,12 @@ export interface MenuItemShape {
 export interface LoadResult<R> {
   data: R;
   meta?: {
-    pagination: {
+    pagination: Partial<{
       page: number;
       pages: number;
       count: number;
       limit: number;
-    };
+    }>;
   };
 }
 
@@ -73,7 +80,7 @@ export interface RowValues {
   id: unknown;
 }
 
-export type PagingAction<R, Q> =
+export type PagingAction<R extends RowValues, Q> =
   | { type: "setUrl"; payload: string }
   | { type: "setLimit"; payload: number }
   | { type: "setPage"; payload: number }
@@ -87,12 +94,12 @@ export type PagingAction<R, Q> =
   | { type: "setError" }
   | { type: "loadMore" };
 
-export interface PagingApi<_R, Q> {
-  dispatch?: Dispatch<PagingAction<_R, Q>>;
-  removeItem(id: string | number): void;
+export interface PagingApi<R extends RowValues, Q> {
+  dispatch?: Dispatch<PagingAction<R, Q>>;
+  removeItem(id: unknown): void;
   loadMore(): void;
   setPage(page: number): void;
-  setLimit(page: number): void;
+  setLimit(limit: number): void;
   setUrl(url: string): void;
   setQuery(query: Q): void;
   refresh(): void;
@@ -101,7 +108,9 @@ export interface PagingApi<_R, Q> {
   load(q?: unknown): void;
 }
 
-export interface PagingState<R, Q = Record<string, unknown>> {
+export type Loader<R, Q> = (params: Q) => Promise<LoadResult<R>>;
+
+export interface PagingState<R extends RowValues, Q = Record<string, unknown>> {
   loadingMore: boolean;
   selectStatus: "none" | "all" | "indeterminate";
   loading: boolean;
@@ -111,12 +120,70 @@ export interface PagingState<R, Q = Record<string, unknown>> {
   items: R[];
   page: number; // current_page
   limit: number;
-  count: number; // total item
+  count?: number; // total item
   pages: number; // total page
   perPageOptions?: number[];
   query: Q;
-  loader(q?: unknown): Promise<LoadResult<R[]>>;
+  loader: Loader<R[], unknown>;
   api: PagingApi<R, Q>;
+}
+
+export type FilterValues = FormikValues;
+
+export type GridColumnType =
+  | "string"
+  | "number"
+  | "boolean"
+  | "date"
+  | "actions"
+  | "selection";
+
+export type GridColumnAlign = "left" | "right" | "center";
+
+export interface GridColumnDef<R extends RowValues = RowValues> {
+  style?: CSSProperties;
+  field: string;
+  type?: GridColumnType;
+  align?: GridColumnAlign;
+  description?: string;
+  width?: string | number;
+  headerName?: string;
+  headerAlign?: GridColumnAlign;
+  actions?: ViewName;
+  valueGetter?(row: R): unknown;
+  valueFormatter?(row: R): unknown;
+  renderCell?(params: GridCellParams<R>): ReactNode;
+  renderHeader?(params: GridColumnDef<R>): ReactNode;
+  getActions?(params: GridCellParams<R>): ReactNode;
+}
+
+export interface GridCellParams<T extends RowValues = RowValues> {
+  row: T | undefined;
+  column: GridColumnDef<T>;
+  selected: unknown[];
+  paging: PagingState<T>;
+}
+
+export interface FilterProps<T extends FilterValues = FilterValues> {
+  value: T;
+  onSubmit: FormikConfig<T>["onSubmit"];
+}
+
+export interface GridDef<R extends RowValues> {
+  columns: GridColumnDef<R>[];
+  rowsPerPageOptions: number[];
+  size: "small" | "medium";
+}
+
+export type ListingProps<R extends RowValues> = {
+  grid: GridDef<R>;
+  filter?: FC<FilterProps>;
+  presenter: FC<DataListProps<R>>;
+  loader(): Promise<LoadResult<R[]>>;
+};
+export interface DataListProps<R extends RowValues> {
+  grid: GridDef<R>;
+  paging: PagingState<R>;
 }
 
 type MyMenuProps = Omit<PopoverProps, "children" | "component" | "open">;
