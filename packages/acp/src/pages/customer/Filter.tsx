@@ -1,5 +1,5 @@
-import { FilterProps } from "@ikx/data";
 import { MuiIcon } from "@ikx/mui";
+import { FilterProps } from "@ikx/types";
 import { IconButton } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";

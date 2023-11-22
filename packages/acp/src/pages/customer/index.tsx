@@ -13,7 +13,6 @@ import { LoadResult } from "@ikx/types";
 import { Menu, MenuItem, PopoverProps } from "@mui/material";
 import Box from "@mui/material/Box";
 import dayjs from "dayjs";
-import GridFilter from "./Filter";
 
 const createData = (p: number = 0, n: number) => {
   const ret = [];
@@ -110,7 +109,6 @@ export function Screen() {
   };
 
   const paging = usePagination<ItemShape>({
-    url: "",
     page: 1,
     query: {},
     perPageOptions: [10],
@@ -118,13 +116,7 @@ export function Screen() {
   });
 
   return (
-    <Pagination<ItemShape>
-      grid={grid}
-      paging={paging}
-      presenter={AsTable}
-      loader={loader}
-      filter={GridFilter}
-    />
+    <Pagination<ItemShape> grid={grid} paging={paging} presenter={AsTable} />
   );
 }
 
