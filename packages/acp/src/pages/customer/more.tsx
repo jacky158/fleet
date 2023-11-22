@@ -18,7 +18,7 @@ const createData = (p: number = 0, n: number) => {
     ret.push({
       id,
       name: `Nam Nguyen ${id}`,
-      email: `namnv.${id}@metafox.com`,
+      email: `fleet.${id}@metafox.com`,
       date: new Date(),
     });
   }
@@ -52,19 +52,20 @@ const loader: Loader<ItemShape[], unknown> = function (
 };
 
 function Customers({ paging }: DataListProps<ItemShape>) {
-  useScrollEnd(() => {
-    console.log("scrolled to end");
-  });
-
   if (!paging.items) return null;
 
-  return paging.items.map((x) => {
-    return (
-      <div style={{ height: 100 }} key={x.id.toString()}>
-        {x.name}
-      </div>
-    );
-  });
+  return (
+    <>
+      {paging.items.map((x) => {
+        return (
+          <div style={{ height: 100 }} key={x.id.toString()}>
+            {x.name}
+          </div>
+        );
+      })}
+      {paging.loading ? <div>Loading ...</div> : false}
+    </>
+  );
 }
 
 export function Screen() {
