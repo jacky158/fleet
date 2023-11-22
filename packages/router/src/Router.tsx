@@ -7,7 +7,7 @@ import createKey from "./createKey";
 interface RuleMap {
   xpath: string;
   match: MatchFunction;
-  groups: string[];
+  base: string;
   name: string;
   component: ElementType;
 }
@@ -44,7 +44,7 @@ export class Router {
         name: x.name,
         xpath: x.xpath,
         match: pathToReg(x.path),
-        groups: x.groups ?? ["root"],
+        base: x.base ?? "root",
         component: x.component,
       });
     });
@@ -61,11 +61,17 @@ export class Router {
     const urlObj = new URL(url, "http://locahost");
     const { pathname } = urlObj;
 
+    console.log({ pathname });
+
     const item = this.rules.find((x) => {
-      return (
-        x.groups.includes(base) && (x.match(pathname) || x.match(pathname))
-      );
+      return x.base == base && (x.match(pathname) || x.match(url));
     });
+
+    const based = this.rules.find((x) => {
+      return x.base == base;
+    });
+
+    console.log({ based });
 
     if (!item) {
       return Promise.resolve(undefined);
@@ -97,7 +103,7 @@ export class Router {
     this.setLoading(true);
 
     return this.app.http
-      .get(apiUrl, { params: { url, group: base } })
+      .get(apiUrl, { params: { url, base } })
       .then((res) => {
         const returnUrl = (res.data?.data?.path as string) ?? pageNotFound;
         this.cached[url] = returnUrl;
@@ -132,7 +138,7 @@ export class Router {
       result = await this.matchLocal("/error/404", base);
     }
 
-    if (result) {
+    if (result && base == "root") {
       this.onLocationChanged({
         key: createKey(),
         query: result.query,

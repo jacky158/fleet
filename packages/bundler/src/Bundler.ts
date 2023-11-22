@@ -26,6 +26,7 @@ interface Item {
   chunkName?: string;
   lazy?: boolean;
   path?: string;
+  base?: string;
 }
 
 export class Bundler {
@@ -261,11 +262,12 @@ export class Bundler {
             name: x.name,
             path: p,
             component: `[${x.importName}]`,
+            base: x.base,
           });
         });
 
         return acc;
-      }, [] as { path: string; name: string; component: string }[]),
+      }, [] as { path: string; name: string; component: string; base?: string }[]),
       null,
       "  "
     );

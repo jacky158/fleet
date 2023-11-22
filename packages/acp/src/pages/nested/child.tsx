@@ -1,7 +1,7 @@
 /**
  * @type: route
- * @name: nested.blog
- * @path: /nested/child
+ * @name: nested.child
+ * @path: /child
  * @base: sample_nest
  */
 

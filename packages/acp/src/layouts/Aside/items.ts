@@ -71,7 +71,10 @@ const items: MenuItemShape[] = [
   {
     label: "Nested",
     icon: "manage_accounts",
-    to: "/nested/child",
+    items: [
+      { label: "Child", to: "/nested/child" },
+      { label: "Child 2", to: "/nested/child2" },
+    ],
   },
   {
     label: "Auth",

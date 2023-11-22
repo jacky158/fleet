@@ -39,6 +39,7 @@ export interface RouteProps {
   path: string;
   xpath?: string;
   groups?: string[];
+  base?: string;
   children?: RouteProps[];
 }
 

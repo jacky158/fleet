@@ -8,11 +8,12 @@ import Box from "@mui/material/Box";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { styled } from "@mui/material/styles";
 // import { MenuItemShape } from "@ikx/types";
-import { Link } from "@ikx/router";
+import { Link, useLocation } from "@ikx/router";
 import Button from "@mui/material/Button";
 import { ReactNode } from "react";
 import Badge from "@mui/material/Badge";
 import { MenuItemShape } from "@ikx/types";
+import { Tab, Tabs } from "@mui/material";
 
 export interface PageHeaderProps {
   title?: ReactNode;
@@ -21,6 +22,7 @@ export interface PageHeaderProps {
   badge?: ReactNode;
   breadcrumbs?: MenuItemShape[];
   actions?: MenuItemShape[];
+  labs?: MenuItemShape[];
 }
 
 const name = "PageHeader";
@@ -106,50 +108,125 @@ const Root = styled(Box, {
   fontSize: "1rem",
 });
 
-export default function PageHeader(props: PageHeaderProps) {
-  const { title, subtitle, back, badge, actions, breadcrumbs } = props;
+const LabsRoot = styled("div", {
+  name,
+  slot: "Labs",
+  overridesResolver(_, styles) {
+    return [styles.labs];
+  },
+})(({ theme }) => ({
+  marginLeft: 16,
+  marginRight: 16,
+  borderBottom: `1px solid ${theme.palette.divider}`,
+}));
+
+const LabItem = styled("div", {
+  name,
+  slot: "labItem",
+  overridesResolver(_, styles) {
+    return [styles.labs];
+  },
+})<{ selected?: boolean }>(({ selected, theme }) => ({
+  minWidth: 72,
+  display: "inline-flex",
+  lineHeight: 2,
+  alignItems: "center",
+  justifyContent: "center",
+  color: theme.palette.primary.light,
+  cursor: "pointer",
+  borderTopLeftRadius: 8,
+  borderTopRightRadius: 8,
+  ":hover": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  ...(selected && {
+    color: theme.palette.primary.main,
+    background: theme.palette.action.selected,
+  }),
+}));
+
+function Labs({ labs }: Pick<PageHeaderProps, "labs">) {
+  const { pathname } = useLocation();
+  const selected = labs?.findIndex((x) => x.to == pathname);
+
+  if (!labs?.length) return null;
 
   return (
-    <Root>
-      <LeftSide>
-        {breadcrumbs?.length ? (
-          <Breadcrumbs
-            aria-label="breadcrumb"
-            sx={{ fontSize: "0.925em", paddingBottom: 1 }}
+    <>
+      <LabsRoot>
+        {labs.map((x, index) => (
+          <Link
+            size="small"
+            variant="text"
+            selected={index == selected}
+            component={LabItem}
+            to={x.to}
+            key={index.toString()}
+            role="button"
           >
-            {breadcrumbs.map((x) => (
-              <MuiLink underline="hover" to={x.to} children={x.label} />
-            ))}
-          </Breadcrumbs>
-        ) : null}
-        <Heading>
-          {back == true ? (
-            <Link
-              component={Back}
-              sx={{ minWidth: 32, width: 32 }}
-              color="inherit"
-              disableRipple
-              disableFocusRipple
+            {x.label}
+          </Link>
+        ))}
+      </LabsRoot>
+    </>
+  );
+}
+
+export default function PageHeader(props: PageHeaderProps) {
+  const {
+    title,
+    subtitle,
+    back,
+    badge,
+    actions,
+    breadcrumbs,
+    labs: tabs,
+  } = props;
+
+  return (
+    <>
+      <Root>
+        <LeftSide>
+          {breadcrumbs?.length ? (
+            <Breadcrumbs
+              aria-label="breadcrumb"
+              sx={{ fontSize: "0.925em", paddingBottom: 1 }}
             >
-              <MuiIcon name={"arrow_back"} />
-            </Link>
+              {breadcrumbs.map((x) => (
+                <MuiLink underline="hover" to={x.to} children={x.label} />
+              ))}
+            </Breadcrumbs>
           ) : null}
-          <Title>{title}</Title>
-          {subtitle ? <Subtitle>{subtitle}</Subtitle> : null}
-          {badge ? <Badge color="error" badgeContent={badge} /> : null}
-        </Heading>
-      </LeftSide>
-      {actions?.length ? (
-        <RightSide>
-          {actions.map((x) => {
-            return (
-              <Button component={Link} to={x.to}>
-                {x.label}
-              </Button>
-            );
-          })}
-        </RightSide>
-      ) : null}
-    </Root>
+          <Heading>
+            {back == true ? (
+              <Link
+                component={Back}
+                sx={{ minWidth: 32, width: 32 }}
+                color="inherit"
+                disableRipple
+                disableFocusRipple
+              >
+                <MuiIcon name={"arrow_back"} />
+              </Link>
+            ) : null}
+            <Title>{title}</Title>
+            {subtitle ? <Subtitle>{subtitle}</Subtitle> : null}
+            {badge ? <Badge color="error" badgeContent={badge} /> : null}
+          </Heading>
+        </LeftSide>
+        {actions?.length ? (
+          <RightSide>
+            {actions.map((x) => {
+              return (
+                <Button component={Link} to={x.to}>
+                  {x.label}
+                </Button>
+              );
+            })}
+          </RightSide>
+        ) : null}
+      </Root>
+      {tabs ? <Labs labs={tabs} /> : null}
+    </>
   );
 }
