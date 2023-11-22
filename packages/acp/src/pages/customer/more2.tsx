@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @type: route
  * @name: customer.more2
  * @path: /customer/more2
  */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import PageHeader from "@ikx/acp/src/ui/PageHeader";
 import { Pagination, usePagination } from "@ikx/data";
 import { Layout } from "@ikx/jsx";

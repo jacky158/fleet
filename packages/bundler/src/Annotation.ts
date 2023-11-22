@@ -44,6 +44,10 @@ export class Annotation {
     for (let i = 0; i < lines.length; ++i) {
       if (!lines[i]) {
         // avoid empty line
+      } else if (lines[i].startsWith("/* eslint")) {
+        // avoid
+      } else if (lines[i].startsWith("/* @ts-ignore")) {
+        // avoid
       } else if (lines[i].startsWith("/*")) {
         found = true;
         candidates.push(lines[i]);
