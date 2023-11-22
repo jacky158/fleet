@@ -60,6 +60,8 @@ export function PopoverHandler() {
   return createElement(app.jsx.get(component), {
     ...props,
     open: Boolean(open && anchorEl),
+    container: document.body,
+    disableScrollLock: true,
     anchorEl: anchorEl,
     onClick() {
       setOpen(false);
