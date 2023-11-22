@@ -35,7 +35,7 @@ import {
 
 const USE_NEV_MARGIN = false;
 
-export default class Scrollbars extends Component {
+export default class Scrollable extends Component {
   constructor(props, ...rest) {
     super(props, ...rest);
 
@@ -698,7 +698,7 @@ export default class Scrollbars extends Component {
   }
 }
 
-Scrollbars.propTypes = {
+Scrollable.propTypes = {
   onScroll: PropTypes.func,
   onScrollFrame: PropTypes.func,
   onScrollStart: PropTypes.func,
@@ -724,7 +724,7 @@ Scrollbars.propTypes = {
   children: PropTypes.node,
 };
 
-Scrollbars.defaultProps = {
+Scrollable.defaultProps = {
   renderView: renderViewDefault,
   renderTrackHorizontal: renderTrackHorizontalDefault,
   renderTrackVertical: renderTrackVerticalDefault,

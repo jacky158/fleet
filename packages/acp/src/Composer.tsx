@@ -2,6 +2,7 @@
 import { App, Provider } from "@ikx/core";
 import HelmetHandler from "@ikx/helmet";
 import { IntlProvider } from "@ikx/intl";
+import { ScrollProvider } from "@ikx/scroll";
 import {
   AlertHandler,
   ConfirmHandler,
@@ -46,15 +47,17 @@ export default function Composer({
   return (
     <Provider app={app}>
       <IntlProvider locale="en" messages={messages as any} defaultLocale="en">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <ThemeProvider>
-            <GlobalStyles />
-            <RouteProvider routes={routes}>
-              <Handlers />
-              <Routes group="root" />
-            </RouteProvider>
-          </ThemeProvider>
-        </LocalizationProvider>
+        <ScrollProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <ThemeProvider>
+              <GlobalStyles />
+              <RouteProvider routes={routes}>
+                <Handlers />
+                <Routes group="root" />
+              </RouteProvider>
+            </ThemeProvider>
+          </LocalizationProvider>
+        </ScrollProvider>
       </IntlProvider>
     </Provider>
   );

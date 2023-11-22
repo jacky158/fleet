@@ -26,6 +26,7 @@
     "@ikx/types": "workspace:^",
     "@ikx/utils": "workspace:^",
     "@ikx/data": "workspace:^",
+    "@ikx/scroll": "workspace:^",
     "@mui/x-date-pickers": "^5",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",

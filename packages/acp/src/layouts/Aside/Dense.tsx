@@ -7,7 +7,7 @@ import useMenuActivePath from "../useMenuActivePath";
 import items from "./items";
 
 import { MuiIcon } from "@ikx/mui";
-import Scrollbars from "../../scrollable";
+import { Scrollable } from "@ikx/scroll";
 
 const name = "Aside";
 
@@ -385,7 +385,7 @@ export default function Dense() {
   return (
     <>
       <AsideAppBranch />
-      <Scrollbars height={400}>
+      <Scrollable height={400}>
         <List>
           {items.map((item, index) => {
             return (
@@ -397,7 +397,7 @@ export default function Dense() {
             );
           })}
         </List>
-      </Scrollbars>
+      </Scrollable>
     </>
   );
 }

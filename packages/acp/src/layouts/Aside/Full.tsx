@@ -6,8 +6,7 @@ import { styled } from "@mui/material/styles";
 import { useState } from "react";
 import useMenuActivePath from "../useMenuActivePath";
 import items from "./items";
-
-import Scrollbars from "../../scrollable";
+import { Scrollable as Scrollable } from "@ikx/scroll";
 
 const name = "Aside";
 const seem = 32;
@@ -303,7 +302,7 @@ export default function Full() {
   return (
     <>
       <AsideAppBranch />
-      <Scrollbars height={400}>
+      <Scrollable height={400}>
         <List root>
           {items.map((item, index) => {
             return (
@@ -315,7 +314,7 @@ export default function Full() {
             );
           })}
         </List>
-      </Scrollbars>
+      </Scrollable>
     </>
   );
 }

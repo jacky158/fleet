@@ -18,12 +18,10 @@
     "@ikx/core": "workspace:^",
     "@ikx/types": "workspace:^",
     "@types/react": "^18",
-    "typescript": "^5",
-    "axios": "^1.6",
-    "formik": "^2"
+    "typescript": "^5"
   },
   "scripts": {
     "clean": "rm -rf ./dist",
-    "types:1": "npx tsc"
+    "types:1": "npx tsc && cp -rf src/Scrollable dist"
   }
 }

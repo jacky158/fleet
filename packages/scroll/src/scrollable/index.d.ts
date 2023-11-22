@@ -21,7 +21,7 @@ export interface positionValues {
   scrollTop: number;
 }
 
-export interface ScrollbarProps extends React.HTMLProps<Scrollbars> {
+export interface ScrollableProps extends React.HTMLProps<Scrollable> {
   onScroll?: React.UIEventHandler<any>;
   onScrollFrame?: (values: positionValues) => void;
   onScrollStart?: () => void;
@@ -52,7 +52,7 @@ export interface ScrollbarProps extends React.HTMLProps<Scrollbars> {
   style?: React.CSSProperties;
 }
 
-export class Scrollbars extends React.Component<ScrollbarProps> {
+export class Scrollable extends React.Component<ScrollableProps> {
   scrollTop(top: number): void;
   scrollLeft(left: number): void;
   scrollToTop(): void;
@@ -69,4 +69,4 @@ export class Scrollbars extends React.Component<ScrollbarProps> {
   container: HTMLDivElement;
 }
 
-export default Scrollbars;
+export default Scrollable;

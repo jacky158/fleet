@@ -14,6 +14,7 @@ import { Menu, MenuItem, PopoverProps } from "@mui/material";
 import Box from "@mui/material/Box";
 import dayjs from "dayjs";
 import GridFilter from "./Filter";
+import { useScrollEnd, useScrollRef } from "@ikx/scroll";
 
 const createData = (p: number = 0, n: number) => {
   const ret = [];
@@ -80,10 +81,17 @@ function Actions({
 }
 
 function Customers({ paging }: DataListProps<ItemShape>) {
+  const scrollRef = useScrollRef();
+  useScrollEnd(() => {
+    console.log("scrolled to end");
+  }, 200);
+
+  console.log({ scrollRef });
+
   if (!paging.items) return null;
 
   return paging.items.map((x) => {
-    return <div>{x.name}</div>;
+    return <div key={x.id.toString()}>{x.name}</div>;
   });
 }
 

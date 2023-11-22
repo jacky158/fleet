@@ -1,33 +1,47 @@
 import debounce from "lodash/debounce";
-import { MutableRefObject, useEffect } from "react";
+import { useEffect } from "react";
+import { useScrollRef } from ".";
 
 export function useScrollEnd(
-  cb: () => void,
-  scrollRef?: MutableRefObject<HTMLElement>,
+  cb?: () => void,
   threshold: number = 200,
-  bounceMs: number = 200
-): () => void {
-  useEffect(() => {
-    const node = scrollRef?.current;
+  bounceMs: number = 500
+): void {
+  const { current: node } = useScrollRef();
 
-    if (!node) {
-      return () => void 0;
+  useEffect(() => {
+    if (!cb) {
+      return undefined;
     }
 
-    const handle = () => {
-      if (threshold > node.scrollWidth - node.scrollLeft - node.clientWidth) {
-        cb();
-      }
-    };
+    const handle = node
+      ? () => {
+          if (
+            threshold >
+            node.scrollHeight - node.scrollTop - node.clientHeight
+          ) {
+            cb();
+          }
+        }
+      : () => {
+          if (window.scrollY + window.innerHeight * 2 > window.innerHeight) {
+            cb();
+          }
+        };
 
-    const bounce = debounce(handle, bounceMs, { leading: true });
+    const bounce = debounce(handle, bounceMs, { leading: false });
 
-    node.addEventListener("scroll", bounce);
+    if (node) {
+      node.addEventListener("scroll", bounce);
 
-    return () => node.removeEventListener("scroll", bounce);
-  }, [bounceMs, cb, scrollRef, threshold]);
+      return () => node.removeEventListener("scroll", bounce);
+    }
 
-  return cb;
+    window.addEventListener("scroll", bounce);
+
+    return () => window.removeEventListener("scroll", bounce);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [node]);
 }
 
 export default useScrollEnd;
