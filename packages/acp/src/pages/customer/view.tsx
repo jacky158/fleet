@@ -1,7 +1,7 @@
 /**
  * @type: route
  * @name: customer.view
- * @path: /customer/:customer_id
+ * @path: /customer/:customer_id(\d+)
  */
 
 import { Layout } from "@ikx/jsx";

@@ -1,0 +1,29 @@
+{
+  "name": "@ikx/scroll",
+  "version": "0.0.1",
+  "description": "ikx typings",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/scroll",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "dom-css": "^2.1.0",
+    "raf": "^3.4.1",
+    "@ikx/core": "workspace:^",
+    "@ikx/types": "workspace:^",
+    "@types/react": "^18",
+    "typescript": "^5",
+    "axios": "^1.6",
+    "formik": "^2"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:1": "npx tsc"
+  }
+}

@@ -92,7 +92,8 @@ const items: MenuItemShape[] = [
     label: "Customers",
     icon: "dashboard",
     items: [
-      { label: "List", icon: "dashboard", to: "/customer" },
+      { label: "Table", icon: "dashboard", to: "/customer" },
+      { label: "Load More", icon: "dashboard", to: "/customer/more" },
       {
         label: "Detail",
         icon: "dashboard",

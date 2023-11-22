@@ -1,12 +1,12 @@
 /**
  * @type: route
- * @name: customer
- * @path: /customer
+ * @name: customer.more
+ * @path: /customer/more
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import PageHeader from "@ikx/acp/src/ui/PageHeader";
 import { AsTable, Pagination } from "@ikx/data";
-import { GridCellParams, GridDef } from "@ikx/types";
+import { DataListProps, GridCellParams, GridDef, RowValues } from "@ikx/types";
 import { Layout } from "@ikx/jsx";
 import { Link } from "@ikx/router";
 import { LoadResult } from "@ikx/types";
@@ -79,6 +79,14 @@ function Actions({
   );
 }
 
+function Customers({ paging }: DataListProps<ItemShape>) {
+  if (!paging.items) return null;
+
+  return paging.items.map((x) => {
+    return <div>{x.name}</div>;
+  });
+}
+
 export function Screen() {
   const grid: GridDef<ItemShape> = {
     columns: [
@@ -112,7 +120,7 @@ export function Screen() {
   return (
     <Pagination<ItemShape>
       grid={grid}
-      presenter={AsTable}
+      presenter={Customers}
       loader={loader}
       filter={GridFilter}
     />
