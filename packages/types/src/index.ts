@@ -107,7 +107,7 @@ export interface PagingApi<R extends RowValues, Q> {
   load(q?: unknown): void;
 }
 
-export type Loader<R, Q> = (params: Q) => Promise<LoadResult<R>>;
+export type Loader<R, Q = unknown> = (params: Q) => Promise<LoadResult<R>>;
 
 export interface PagingState<R extends RowValues, Q = Record<string, unknown>> {
   loadingMore: boolean;

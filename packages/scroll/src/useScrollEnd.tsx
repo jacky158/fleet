@@ -29,7 +29,7 @@ export function useScrollEnd(
           }
         };
 
-    const bounce = debounce(handle, bounceMs, { leading: false });
+    const bounce = debounce(handle, bounceMs, { leading: true });
 
     if (node) {
       node.addEventListener("scroll", bounce);

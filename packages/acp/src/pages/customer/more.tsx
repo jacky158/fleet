@@ -32,24 +32,33 @@ type ItemShape = {
   date: Date;
 };
 
-const loader: Loader<ItemShape[], unknown> = function (
-  args
-): Promise<LoadResult<ItemShape[]>> {
-  console.log(args);
-  const { limit = 20, page = 0 } = args;
-
-  return Promise.resolve({
-    data: createData(page, limit),
-    meta: {
-      pagination: {
-        limit,
-        page,
-        pages: 10,
-        count: 100,
-      },
-    },
+function delay(ms: number): Promise<void> {
+  return new Promise(function (resolve) {
+    setTimeout(function () {
+      resolve();
+    }, ms);
   });
-};
+}
+
+const loader: Loader<ItemShape[], { limit?: number; page?: number }> =
+  function (args): Promise<LoadResult<ItemShape[]>> {
+    console.log(args);
+    const { limit = 20, page = 0 } = args;
+
+    return delay(3000).then(() => {
+      return {
+        data: createData(page, limit),
+        meta: {
+          pagination: {
+            limit,
+            page,
+            pages: 10,
+            count: 100,
+          },
+        },
+      };
+    });
+  };
 
 function Customers({ paging }: DataListProps<ItemShape>) {
   if (!paging.items) return null;
