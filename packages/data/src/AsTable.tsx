@@ -1,41 +1,56 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useApp } from "@ikx/core";
+import { MuiIcon } from "@ikx/mui";
+import { ViewName } from "@ikx/types";
+import { IconButton, styled } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import { DataListProps, GridCellParams, GridColumnDef, RowId } from "./types";
-import { ReactNode, useState } from "react";
-import get from "lodash/get";
 import TableFooter from "@mui/material/TableFooter";
+import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
-import { IconButton, styled } from "@mui/material";
-import { MuiIcon } from "@ikx/mui";
-import { useApp } from "@ikx/core";
-import { ViewName } from "@ikx/types";
+import TableRow from "@mui/material/TableRow";
+import get from "lodash/get";
+import { ReactNode } from "react";
+import { DataListProps, GridCellParams } from "./types";
 
-function renderHeaderCheck<T = unknown>(c: GridColumnDef<T>): ReactNode {
-  return <Checkbox name={c.field} />;
+function renderHeaderCheck<T>(c: GridCellParams<T>): ReactNode {
+  return (
+    <Checkbox
+      name={c.column.field}
+      onClick={(evt) =>
+        c.paging.api.selectAll(!!(evt.target as HTMLInputElement)?.checked)
+      }
+    />
+  );
 }
 
-function renderHeaderCell<T = unknown>(c: GridColumnDef<T>) {
-  if (c.renderHeader) {
-    return c.renderHeader(c);
+function HeaderCell<T>(c: GridCellParams<T>) {
+  if (c.column.renderHeader) {
+    return c.column.renderHeader(c.column);
   }
 
-  if (c.type == "selection") {
+  if (c.column.type == "selection") {
     return renderHeaderCheck(c);
   }
 
-  return <b>{c.headerName ?? c.field}</b>;
+  return <b>{c.column.headerName ?? c.column.field}</b>;
 }
 
-function renderCellCheck<T = unknown>(c: GridCellParams<T>): ReactNode {
-  return <Checkbox name={c.column.field} />;
+function renderCellCheck<T>(c: GridCellParams<T>): ReactNode {
+  const value = (c.row as any)?.id;
+  return (
+    <Checkbox
+      name={c.column.field}
+      checked={c.selected.includes(value)}
+      onChange={(_, checked) => c.paging.api.select(value, checked)}
+    />
+  );
 }
 
-function Actions(c: GridCellParams): ReactNode {
+function Actions<T>(c: GridCellParams<T>): ReactNode {
   const app = useApp();
   return (
     <IconButton
@@ -71,7 +86,6 @@ const Container = styled("div")(({ theme }) => ({
 }));
 
 export default function AsTable<T>({ grid, paging }: DataListProps<T>) {
-  const [selection] = useState<RowId[]>([]);
   if (!paging?.items?.length) return null;
 
   const data = paging.items;
@@ -88,7 +102,12 @@ export default function AsTable<T>({ grid, paging }: DataListProps<T>) {
                   align={column.headerAlign ?? column.align}
                   key={column.field}
                 >
-                  {renderHeaderCell(column)}
+                  <HeaderCell<T>
+                    row={undefined}
+                    column={column}
+                    paging={paging}
+                    selected={paging.selected}
+                  />
                 </TableCell>
               );
             })}
@@ -113,7 +132,8 @@ export default function AsTable<T>({ grid, paging }: DataListProps<T>) {
                         <BodyCell<T>
                           row={row}
                           column={column}
-                          selection={selection}
+                          selected={paging.selected}
+                          paging={paging}
                         />
                       </TableCell>
                     );

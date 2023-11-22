@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ReactNode } from "react";
+import { Dispatch, ReactNode } from "react";
 import { ModalProps } from "@mui/material/Modal";
+import { PopoverProps } from "@mui/material";
 
 export interface ViewComponents {
   "popover.Notifications": true;
@@ -79,7 +80,8 @@ export type PagingAction<R, Q> =
   | { type: "setQuery"; payload: Q }
   | { type: "setResult"; payload: LoadResult<R[]> }
   | { type: "removeItem"; payload: unknown }
-  | { type: "select"; payload: unknown }
+  | { type: "select"; id: unknown; checked?: boolean }
+  | { type: "toggleSelect"; payload: unknown }
   | { type: "selectAll"; payload: boolean }
   | { type: "refresh" }
   | { type: "load" }
@@ -87,6 +89,7 @@ export type PagingAction<R, Q> =
   | { type: "loadMore" };
 
 export interface PagingApi<_R, Q> {
+  dispatch?: Dispatch<PagingAction<_R, Q>>;
   removeItem(id: string | number): void;
   loadMore(): void;
   setPage(page: number): void;
@@ -94,7 +97,7 @@ export interface PagingApi<_R, Q> {
   setUrl(url: string): void;
   setQuery(query: Q): void;
   refresh(): void;
-  select(id: unknown): void;
+  select(id: unknown, checked?: boolean): void;
   selectAll(select: boolean): void;
   load(q?: unknown): void;
 }
@@ -113,12 +116,15 @@ export interface PagingState<R, Q = Record<string, unknown>> {
   perPageOptions?: number[];
   query: Q;
   loader(q?: unknown): Promise<LoadResult<R[]>>;
-  api?: PagingApi<R, Q>;
+  api: PagingApi<R, Q>;
 }
 
-export interface OpenPopoverProps {
+type MyMenuProps = Omit<PopoverProps, "children" | "component" | "open">;
+
+export interface OpenPopoverProps extends MyMenuProps {
+  [key: string]: unknown;
   component: ViewName;
-  ref?: unknown;
+  open?: boolean;
 }
 
 export interface ToastProps {

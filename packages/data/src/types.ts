@@ -32,9 +32,10 @@ export interface GridColumnDef<T> {
 }
 
 export interface GridCellParams<T = unknown> {
-  row: T;
+  row: T | undefined;
   column: GridColumnDef<T>;
-  selection: RowId[];
+  selected: unknown[];
+  paging: PagingState<T>;
 }
 
 export interface FilterProps<T extends FilterValues = FilterValues> {
