@@ -3,7 +3,7 @@ import { FormikHelpers, FormikProps, FormikValues } from "formik";
 import { FetchDataConfig, RemoteDataSource } from "@ikx/types";
 import React from "react";
 export type BuilderElementType = "field" | "container" | undefined;
-import { ConfirmProps } from "@ikx/mui";
+import { ConfirmProps } from "@ikx/types";
 
 export interface BuilderFieldProps<T = FormikValues> {
   config: T & BuilderElementShape;

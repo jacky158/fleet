@@ -62,8 +62,6 @@ export class Router {
     const urlObj = new URL(url, "http://locahost");
     const { pathname } = urlObj;
 
-    console.log({ rules: this.rules });
-
     let item = this.rules.find((x) => {
       return (
         x.groups.includes(group) && (x.match(pathname) || x.match(pathname))

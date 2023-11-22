@@ -1,4 +1,4 @@
-import { ConfirmProps } from "@ikx/mui";
+import { ConfirmProps } from "@ikx/types";
 import { FormikProps, FormikValues } from "formik";
 import { useEffect } from "react";
 import { FormBuilderSchema } from "./types";

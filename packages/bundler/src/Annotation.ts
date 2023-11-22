@@ -74,8 +74,6 @@ export class Annotation {
       result[key] = value;
     }
 
-    // console.log(result);
-
     if (!result["type"] || !validTypes.includes(result["type"] as string)) {
       return false;
     }

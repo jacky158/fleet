@@ -4,7 +4,7 @@
  */
 import { App } from "@ikx/core";
 import isString from "lodash/isString";
-import React, { ElementType, ReactNode } from "react";
+import React, { ElementType, ReactNode, createElement } from "react";
 import { isValidElementType } from "react-is";
 import { ViewConfig, RenderItemShape, RenderProps } from "./types";
 import { ViewName } from "@ikx/types";
@@ -100,14 +100,14 @@ export default class JsxBackend {
       const { props } = item;
 
       if ("string" === typeof tag && this.data[tag]) {
-        tag = this.data[tag];
+        tag = this.data[tag] as string;
       } else if (!isValidElementType(tag)) {
         return null;
       } else if ("string" === typeof tag) {
         if (!/div|span|p|h1|h2|h3|h4|h5|h6|b|i|img/i.test(tag)) return null;
       }
 
-      return React.createElement(tag, props);
+      return createElement(tag, props);
     }
 
     return null;

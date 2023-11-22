@@ -8,7 +8,7 @@ import HandleSubmitOnChange from "./HandleSubmitOnChange";
 import HandleUpdateCallback from "./HandleUpdateCallback";
 import transformSchema from "./transformSchema";
 import { FormBuilderProps, FormBuilderSchema } from "./types";
-import { ConfirmProps } from "@ikx/mui";
+import { ConfirmProps } from "@ikx/types";
 import Element from "./Element";
 import FormSchemaContext from "./Context";
 

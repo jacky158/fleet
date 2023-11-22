@@ -9,7 +9,6 @@ export function GridFilter({ value, onSubmit }: FilterProps) {
   const formik = useFormik({
     initialValues: value,
     onSubmit(values, helpers) {
-      console.log(values);
       onSubmit(values, helpers);
     },
   });

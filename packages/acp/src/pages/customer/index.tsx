@@ -47,7 +47,6 @@ function Actions({
       .then(() => passProps.paging.api.removeItem(passProps.row?.id))
       .catch(void 0);
   };
-  console.log(props);
   return (
     <Menu
       {...props}

@@ -124,8 +124,6 @@ export default function Layout({ children }: { children: ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.drawerOpened]);
 
-  console.log(app.localStore.get(DRAWER_CLOSED));
-
   return (
     <>
       <Header dx={state.dx} toggleDrawer={handleDrawer} />

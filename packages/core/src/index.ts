@@ -92,7 +92,6 @@ export class App {
     let creator = this._lazies[name];
 
     if (!creator) {
-      // console.log(`fallbacks[${name}]: ${typeof Manager.fallbacks[name]}`);
       creator = this._fallbacks[name];
     }
 

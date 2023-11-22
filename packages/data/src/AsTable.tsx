@@ -168,7 +168,7 @@ export default function AsTable<T>({ grid, paging }: DataListProps<T>) {
         <TableFooter>
           <TableRow>
             <TablePagination
-              page={1}
+              page={0}
               colSpan={grid.columns.length}
               count={data?.length}
               rowsPerPage={20}
