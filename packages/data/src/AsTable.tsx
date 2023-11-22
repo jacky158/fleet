@@ -5,12 +5,15 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { DataListProps, GridCellParams, GridColumnDef } from "./types";
-import { ReactNode } from "react";
+import { DataListProps, GridCellParams, GridColumnDef, RowId } from "./types";
+import { ReactNode, useState } from "react";
 import get from "lodash/get";
 import TableFooter from "@mui/material/TableFooter";
 import TablePagination from "@mui/material/TablePagination";
-import { styled } from "@mui/material";
+import { IconButton, styled } from "@mui/material";
+import { MuiIcon } from "@ikx/mui";
+import { useApp } from "@ikx/core";
+import { ViewName } from "@ikx/types";
 
 function renderHeaderCheck<T = unknown>(c: GridColumnDef<T>): ReactNode {
   return <Checkbox name={c.field} />;
@@ -21,7 +24,7 @@ function renderHeaderCell<T = unknown>(c: GridColumnDef<T>) {
     return c.renderHeader(c);
   }
 
-  if (c.type == "check") {
+  if (c.type == "selection") {
     return renderHeaderCheck(c);
   }
 
@@ -32,7 +35,21 @@ function renderCellCheck<T = unknown>(c: GridCellParams<T>): ReactNode {
   return <Checkbox name={c.column.field} />;
 }
 
-function renderBodyCell<T>(c: GridCellParams<T>) {
+function Actions(c: GridCellParams): ReactNode {
+  const app = useApp();
+  return (
+    <IconButton
+      size="small"
+      onClick={(e) =>
+        app.openPopover(e, { component: "popover.TableActions" as ViewName, c })
+      }
+    >
+      <MuiIcon name="settings" />
+    </IconButton>
+  );
+}
+
+function BodyCell<T>(c: GridCellParams<T>) {
   if (c.column.renderCell) {
     return c.column.renderCell(c);
   }
@@ -41,8 +58,10 @@ function renderBodyCell<T>(c: GridCellParams<T>) {
   switch (c.column.type) {
     case "string":
       return get(c.row, c.column.field);
-    case "check":
+    case "selection":
       return renderCellCheck(c);
+    case "actions":
+      return <Actions {...c} />;
   }
   return value ? value.toString() : null;
 }
@@ -51,8 +70,11 @@ const Container = styled("div")(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
 }));
 
-export default function AsTable<T>({ grid, data }: DataListProps<T>) {
-  if (!data?.length) return null;
+export default function AsTable<T>({ grid, paging }: DataListProps<T>) {
+  const [selection] = useState<RowId[]>([]);
+  if (!paging?.items?.length) return null;
+
+  const data = paging.items;
 
   return (
     <TableContainer component={Container}>
@@ -83,8 +105,16 @@ export default function AsTable<T>({ grid, data }: DataListProps<T>) {
                 >
                   {grid.columns.map((column) => {
                     return (
-                      <TableCell width={column.width} key={column.field}>
-                        {renderBodyCell<T>({ row, column })}
+                      <TableCell
+                        align={column.align}
+                        width={column.width}
+                        key={column.field}
+                      >
+                        <BodyCell<T>
+                          row={row}
+                          column={column}
+                          selection={selection}
+                        />
                       </TableCell>
                     );
                   })}

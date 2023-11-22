@@ -13,10 +13,20 @@ const breadcrumbs: MenuItemShape[] = [
   { label: "Blogs", to: "/settings/blog" },
 ];
 
+const actions: MenuItemShape[] = [
+  { label: "Home", to: "/" },
+  { label: "Settings", to: "/settings" },
+  { label: "Blogs", to: "/settings/blog" },
+];
+
 export default function Dashboard() {
   return (
     <Layout name="layout.master">
-      <PageHeader title="Dashboard" breadcrumbs={breadcrumbs} />
+      <PageHeader
+        title="Dashboard"
+        breadcrumbs={breadcrumbs}
+        actions={actions}
+      />
     </Layout>
   );
 }

@@ -19,7 +19,9 @@
     "formik": "^2",
     "@ikx/core": "workspace:^",
     "@ikx/types": "workspace:^",
-    "@ikx/http": "workspace:^"
+    "@ikx/http": "workspace:^",
+    "@ikx/mui": "workspace:^",
+    "@ikx/router": "workspace:^"
   },
   "scripts": {
     "clean": "rm -rf ./dist",

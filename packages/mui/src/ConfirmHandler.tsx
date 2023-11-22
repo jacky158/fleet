@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useApp } from "@ikx/core";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ConfirmProps } from "./types";
+import { ConfirmProps } from "@ikx/types";
 
 export default function ConfirmHandler() {
   const app = useApp();

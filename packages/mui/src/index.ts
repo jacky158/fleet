@@ -10,9 +10,3 @@ export { default as PopoverHandler } from "./PopoverHandler";
 export { default as MuiIcon } from "./MuiIcon";
 export { default as MuiLink } from "./MuiLink";
 export { default as Link } from "./MuiLink";
-export type {
-  AlertProps,
-  OpenPopoverProps as OpenMenuProps,
-  ConfirmProps,
-  ToastProps,
-} from "./types";

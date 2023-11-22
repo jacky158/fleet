@@ -1,6 +1,6 @@
 import { last } from "lodash";
 import { useMemo, useReducer } from "react";
-import { ModalApi, OpenModalProps } from "./types";
+import { ModalApi, OpenModalProps } from "@ikx/types";
 import { Backdrop } from "@mui/material";
 import { useApp } from "@ikx/core";
 

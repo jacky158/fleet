@@ -1,10 +1,19 @@
 import type {
+  ModalApi,
   ToastProps,
   AlertProps,
   ConfirmProps,
   OpenPopoverProps,
-  ModalApi,
-} from "./types";
+} from "@ikx/types";
+import { MenuProps } from "@mui/material/Menu";
+
+declare module "@ikx/types" {
+  export interface OpenModalProps {
+    key: string;
+  }
+
+  export interface OpenPopoverProps extends MenuProps {}
+}
 
 declare module "@ikx/core" {
   export interface App {

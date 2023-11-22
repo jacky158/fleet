@@ -2,6 +2,7 @@ import { useTheme, Theme } from "@mui/material/styles";
 import MuiGlobalStyles from "@mui/material/GlobalStyles";
 
 const converted = (theme: Theme) => ({
+  ".srOnly": { display: "none", visibility: "hidden" },
   ":root": {
     fontFamily:
       'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',

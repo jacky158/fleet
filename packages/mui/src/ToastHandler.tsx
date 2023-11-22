@@ -2,7 +2,7 @@ import { Alert, Snackbar } from "@mui/material";
 import { useApp } from "@ikx/core";
 import { isString } from "lodash";
 import { useCallback, useEffect, useState } from "react";
-import { ToastProps } from "./types";
+import { ToastProps } from "@ikx/types";
 
 export default function ToastHandler() {
   const app = useApp();

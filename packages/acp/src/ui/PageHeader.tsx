@@ -20,42 +20,86 @@ export interface PageHeaderProps {
   back?: boolean;
   badge?: ReactNode;
   breadcrumbs?: MenuItemShape[];
+  actions?: MenuItemShape[];
 }
 
-const Title = styled("span")({
-  fontSize: "1.4rem",
+const name = "PageHeader";
+
+const Title = styled("span", {
+  name,
+  slot: "Title",
+  overridesResolver(_, styles) {
+    return [styles.title];
+  },
+})(({ theme }) => ({
   paddingRight: "1rem",
+  ...theme.typography.h5,
   fontWeight: 600,
-});
-const Subtitle = styled("span")(({ theme }) => ({
+}));
+const Subtitle = styled("span", {
+  name,
+  slot: "SubTitle",
+  overridesResolver(_, styles) {
+    return [styles.subTitle];
+  },
+})(({ theme }) => ({
   color: theme.palette.text.secondary,
   fontSize: "0.9em",
 }));
-const Back = styled(Button)({
+const Back = styled(Button, {
+  name,
+  slot: "Back",
+  overridesResolver(_, styles) {
+    return [styles.back];
+  },
+})({
   width: 32,
   minWidth: 32,
   padding: "0 0 0 0",
   marginRight: "1rem",
 });
 
-const Heading = styled(Box)({
+const Heading = styled("div", {
+  name,
+  slot: "Heading",
+  overridesResolver(_, styles) {
+    return [styles.heading];
+  },
+})({
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
 });
-const Left = styled(Box)({
+const LeftSide = styled("div", {
+  name,
+  slot: "LeftSide",
+  overridesResolver(_, styles) {
+    return [styles.leftSide];
+  },
+})({
   display: "flex",
   flexGrow: 0,
   flexDirection: "column",
 });
-const Right = styled(Box)({
+const RightSide = styled("div", {
+  name,
+  slot: "RightSide",
+  overridesResolver(_, styles) {
+    return [styles.rightSide];
+  },
+})({
   display: "flex",
   flexDirection: "row",
   flexGrow: 1,
-  alignItems: "center",
   justifyContent: "flex-end",
 });
-const Root = styled(Box)({
+const Root = styled(Box, {
+  name,
+  slot: "Root",
+  overridesResolver(_, styles) {
+    return [styles.root];
+  },
+})({
   display: "flex",
   flexDirection: "row",
   padding: "16px",
@@ -63,11 +107,11 @@ const Root = styled(Box)({
 });
 
 export default function PageHeader(props: PageHeaderProps) {
-  const { title, subtitle, back, badge, breadcrumbs } = props;
+  const { title, subtitle, back, badge, actions, breadcrumbs } = props;
 
   return (
     <Root>
-      <Left>
+      <LeftSide>
         {breadcrumbs?.length ? (
           <Breadcrumbs
             aria-label="breadcrumb"
@@ -94,18 +138,18 @@ export default function PageHeader(props: PageHeaderProps) {
           {subtitle ? <Subtitle>{subtitle}</Subtitle> : null}
           {badge ? <Badge color="error" badgeContent={badge} /> : null}
         </Heading>
-      </Left>
-      <Right>
-        <Button component={Link} to="/">
-          Operation 1
-        </Button>
-        <Button component={Link} to="/">
-          Operation 2
-        </Button>
-        <Button component={Link} to="/">
-          Operation 3
-        </Button>
-      </Right>
+      </LeftSide>
+      {actions?.length ? (
+        <RightSide>
+          {actions.map((x) => {
+            return (
+              <Button component={Link} to={x.to}>
+                {x.label}
+              </Button>
+            );
+          })}
+        </RightSide>
+      ) : null}
     </Root>
   );
 }

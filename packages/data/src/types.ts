@@ -1,3 +1,4 @@
+import { LoadResult, PagingState } from "@ikx/types";
 import { FormikConfig, FormikValues } from "formik";
 import { FC, ReactNode } from "react";
 
@@ -9,9 +10,11 @@ export type GridColumnType =
   | "boolean"
   | "date"
   | "actions"
-  | "check";
+  | "selection";
 
 export type GridColumnAlign = "left" | "right" | "center";
+
+export type RowId = string;
 
 export interface GridColumnDef<T> {
   field: string;
@@ -31,6 +34,7 @@ export interface GridColumnDef<T> {
 export interface GridCellParams<T = unknown> {
   row: T;
   column: GridColumnDef<T>;
+  selection: RowId[];
 }
 
 export interface FilterProps<T extends FilterValues = FilterValues> {
@@ -44,13 +48,13 @@ export interface GridDef<T> {
   size: "small" | "medium";
 }
 
-export type ListingProps<T> = {
-  grid: GridDef<T>;
+export type ListingProps<R> = {
+  grid: GridDef<R>;
   filter?: FC<FilterProps>;
-  presenter: FC<DataListProps<T>>;
-  loader?(): Promise<T[]>;
+  presenter: FC<DataListProps<R>>;
+  loader(): Promise<LoadResult<R[]>>;
 };
 export interface DataListProps<T> {
   grid: GridDef<T>;
-  data: T[];
+  paging: PagingState<T>;
 }

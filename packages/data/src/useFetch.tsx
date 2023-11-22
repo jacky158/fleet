@@ -25,7 +25,7 @@ export function useFetch<T = unknown>(props: FetchDataConfig<T>) {
     const fetchData = () =>
       app.http
         .load<T>(props)
-        .then((result) => {
+        .then((result: FetchDataResult<T>) => {
           return mounted ? setResult(result) : undefined;
         })
         .catch(void 0);

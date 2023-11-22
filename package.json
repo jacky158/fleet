@@ -23,6 +23,7 @@
     "@ikx/chatbot": "workspace:^",
     "@ikx/composer": "workspace:^",
     "@ikx/core": "workspace:^",
+    "@ikx/data": "workspace:^",
     "@ikx/http": "workspace:^",
     "@ikx/intl": "workspace:^",
     "@ikx/json-to-yup": "workspace:^",

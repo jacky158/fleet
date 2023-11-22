@@ -45,7 +45,7 @@ const Title = styled(Typography, {
   },
 })({
   fontWeight: 600,
-  paddingTop: "2em",
+  paddingTop: "1.2rem",
 });
 
 const Banner = styled("img", {
@@ -56,6 +56,7 @@ const Banner = styled("img", {
   },
 })({
   maxWidth: "calc(30vw)",
+  maxHeight: "calc(30vh)",
 });
 
 const HelpText = styled(Typography, {

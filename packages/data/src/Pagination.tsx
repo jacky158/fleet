@@ -1,18 +1,19 @@
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { ListingProps } from "./types";
+import { usePagination } from "./usePagination";
+import {} from "@ikx/types";
 
 export function Pagination<T>(props: ListingProps<T>) {
   const { loader, grid, filter: Filter, presenter: List } = props;
-  const [data, setData] = useState<T[]>([]);
   const [mounted, setMounted] = useState<boolean>();
 
-  useEffect(() => {
-    if (loader) {
-      loader().then((data) => setData(data as unknown as T[]));
-    }
-    // setMounted(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const paging = usePagination<T>({
+    url: "",
+    page: 1,
+    query: {},
+    perPageOptions: [10],
+    loader,
+  });
 
   useLayoutEffect(() => {
     setMounted(true);
@@ -23,7 +24,7 @@ export function Pagination<T>(props: ListingProps<T>) {
   return (
     <>
       {Filter ? <Filter value={{}} onSubmit={() => {}} /> : null}
-      {List ? <List grid={grid} data={data} /> : null}
+      {List ? <List grid={grid} paging={paging} /> : null}
     </>
   );
 }

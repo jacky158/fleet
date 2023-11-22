@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { OpenPopoverProps } from "./types";
+import { OpenPopoverProps } from "@ikx/types";
 import { useLocation } from "@ikx/router";
 import { PopoverVirtualElement } from "@mui/material";
 
@@ -50,11 +50,14 @@ export function MenuHandler() {
 
   if (!state || !anchorEl) return null;
 
+  const { component, ...props } = state;
+
   return createElement(
-    app.jsx.get(state?.component) as unknown as React.FC<MenuProps>,
+    app.jsx.get(component) as unknown as React.FC<MenuProps>,
     {
+      ...(props as MenuProps),
+      anchorEl: anchorEl as unknown as MenuProps["anchorEl"],
       open: Boolean(open),
-      anchorEl: anchorEl,
       // disableScrollLock: true,
       // disablePortal: false,
       onClose() {

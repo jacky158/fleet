@@ -7,7 +7,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { OpenPopoverProps } from "./types";
+import { OpenPopoverProps } from "@ikx/types";
 import { useLocation } from "@ikx/router";
 import { PopoverVirtualElement } from "@mui/material";
 

@@ -3,5 +3,5 @@
   "compilerOptions": {
     "outDir": "dist"
   },
-  "include": ["src", "../core/dist/module.d.ts"]
+  "include": ["src", "../**/dist/module.d.ts"]
 }
