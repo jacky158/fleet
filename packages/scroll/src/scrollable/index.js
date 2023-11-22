@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import raf, { cancel as caf } from "raf";
 import css from "dom-css";
-import { Component, createElement, cloneElement } from "react";
+import { Component, createElement, cloneElement, createRef } from "react";
+import ScrollContext from "../ScrollContext";
 import PropTypes from "prop-types";
 
 import {
@@ -39,6 +41,7 @@ export default class Scrollable extends Component {
   constructor(props, ...rest) {
     super(props, ...rest);
 
+    this.scrollRef = createRef(null);
     this.getScrollLeft = this.getScrollLeft.bind(this);
     this.getScrollTop = this.getScrollTop.bind(this);
     this.getScrollWidth = this.getScrollWidth.bind(this);
@@ -541,7 +544,6 @@ export default class Scrollable extends Component {
 
   render() {
     const scrollbarWidth = getScrollbarWidth();
-    /* eslint-disable no-unused-vars */
     const {
       height,
       onScroll,
@@ -637,63 +639,68 @@ export default class Scrollable extends Component {
     };
 
     return createElement(
-      tagName,
-      {
-        //...props,
-        style: containerStyle,
-        ref: (ref) => {
-          this.container = ref;
+      ScrollContext.Provider,
+      { value: this.scrollRef },
+      createElement(
+        tagName,
+        {
+          //...props,
+          style: containerStyle,
+          ref: (ref) => {
+            this.container = ref;
+          },
         },
-      },
-      [
-        cloneElement(
-          renderView({
-            style: viewStyle,
-            className: USE_NEV_MARGIN ? "" : "noScrollBar",
-          }),
-          {
-            key: "view",
-            ref: (ref) => {
-              this.view = ref;
-            },
-          },
-          children
-        ),
-        cloneElement(
-          renderTrackHorizontal({ style: trackHorizontalStyle }),
-          {
-            key: "trackHorizontal",
-            ref: (ref) => {
-              this.trackHorizontal = ref;
-            },
-          },
+        [
           cloneElement(
-            renderThumbHorizontal({ style: thumbHorizontalStyleDefault }),
+            renderView({
+              style: viewStyle,
+              className: USE_NEV_MARGIN ? "" : "noScrollBar",
+            }),
             {
+              key: "view",
               ref: (ref) => {
-                this.thumbHorizontal = ref;
+                this.view = ref;
+                this.scrollRef.current = ref;
               },
-            }
-          )
-        ),
-        cloneElement(
-          renderTrackVertical({ style: trackVerticalStyle }),
-          {
-            key: "trackVertical",
-            ref: (ref) => {
-              this.trackVertical = ref;
             },
-          },
+            children
+          ),
           cloneElement(
-            renderThumbVertical({ style: thumbVerticalStyleDefault }),
+            renderTrackHorizontal({ style: trackHorizontalStyle }),
             {
+              key: "trackHorizontal",
               ref: (ref) => {
-                this.thumbVertical = ref;
+                this.trackHorizontal = ref;
               },
-            }
-          )
-        ),
-      ]
+            },
+            cloneElement(
+              renderThumbHorizontal({ style: thumbHorizontalStyleDefault }),
+              {
+                ref: (ref) => {
+                  this.thumbHorizontal = ref;
+                },
+              }
+            )
+          ),
+          cloneElement(
+            renderTrackVertical({ style: trackVerticalStyle }),
+            {
+              key: "trackVertical",
+              ref: (ref) => {
+                this.trackVertical = ref;
+              },
+            },
+            cloneElement(
+              renderThumbVertical({ style: thumbVerticalStyleDefault }),
+              {
+                ref: (ref) => {
+                  this.thumbVertical = ref;
+                },
+              }
+            )
+          ),
+        ]
+      )
     );
   }
 }
