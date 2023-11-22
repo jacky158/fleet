@@ -24,9 +24,7 @@ export class Api<R extends RowValues, Q> implements PagingApi<R, Q> {
   setLimit(limit: number) {
     this.d({ type: "setLimit", payload: limit });
   }
-  setUrl(url: string) {
-    this.d({ type: "setUrl", payload: url });
-  }
+
   setQuery(filter: Q) {
     this.d({ type: "setQuery", payload: filter });
   }
@@ -54,14 +52,12 @@ export function usePagination<
   R extends RowValues,
   Q = Record<string, unknown>
 >({
-  url,
   limit,
   page,
   query,
   perPageOptions,
   loader,
 }: {
-  url: string;
   page?: number;
   limit?: number;
   query?: Q;
@@ -171,7 +167,7 @@ export function usePagination<
           draft
             .loader(params)
             .then((data) => {
-              console.log("load data");
+              console.log("load data", data);
               dispatch({ type: "setResult", payload: data });
             })
             .catch((err) => {
@@ -190,7 +186,6 @@ export function usePagination<
       return { ...draft };
     },
     {
-      url,
       loading: true,
       rev: 0,
       page: page ?? 0,

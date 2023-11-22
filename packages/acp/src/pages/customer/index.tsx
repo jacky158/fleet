@@ -5,7 +5,7 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import PageHeader from "@ikx/acp/src/ui/PageHeader";
-import { AsTable, Pagination } from "@ikx/data";
+import { AsTable, Pagination, usePagination } from "@ikx/data";
 import { GridCellParams, GridDef } from "@ikx/types";
 import { Layout } from "@ikx/jsx";
 import { Link } from "@ikx/router";
@@ -37,7 +37,7 @@ type ItemShape = {
 
 export const loader = function ({
   limit = 20,
-  page = 1,
+  page = 0,
 }): Promise<LoadResult<ItemShape[]>> {
   return Promise.resolve({
     data: createData(page, limit),
@@ -109,9 +109,18 @@ export function Screen() {
     rowsPerPageOptions: [20, 50, 100],
   };
 
+  const paging = usePagination<ItemShape>({
+    url: "",
+    page: 1,
+    query: {},
+    perPageOptions: [10],
+    loader,
+  });
+
   return (
     <Pagination<ItemShape>
       grid={grid}
+      paging={paging}
       presenter={AsTable}
       loader={loader}
       filter={GridFilter}

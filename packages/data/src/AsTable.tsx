@@ -103,6 +103,7 @@ export default function AsTable<T extends RowValues>({
   paging,
 }: DataListProps<T>) {
   const columns: GridColumnDef<T>[] = useMemo(() => {
+    if (!grid) return [];
     return grid.columns.map((x) => {
       switch (x.type) {
         case "actions":
@@ -114,9 +115,9 @@ export default function AsTable<T extends RowValues>({
       }
       return x;
     });
-  }, [grid.columns]);
+  }, [grid]);
 
-  if (!paging?.items?.length) return null;
+  if (!grid || !paging?.items?.length) return null;
 
   const data = paging.items;
 

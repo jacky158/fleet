@@ -1,18 +1,9 @@
 import { useLayoutEffect, useState } from "react";
-import { usePagination } from "./usePagination";
 import { ListingProps, RowValues } from "@ikx/types";
 
 export function Pagination<T extends RowValues>(props: ListingProps<T>) {
-  const { loader, grid, filter: Filter, presenter: List } = props;
+  const { grid, paging, filter: Filter, presenter: List } = props;
   const [mounted, setMounted] = useState<boolean>();
-
-  const paging = usePagination<T>({
-    url: "",
-    page: 1,
-    query: {},
-    perPageOptions: [10],
-    loader,
-  });
 
   useLayoutEffect(() => {
     setMounted(true);

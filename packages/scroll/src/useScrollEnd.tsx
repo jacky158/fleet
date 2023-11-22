@@ -1,13 +1,13 @@
 import debounce from "lodash/debounce";
-import { useEffect } from "react";
-import { useScrollRef } from ".";
+import { RefObject, useEffect } from "react";
 
 export function useScrollEnd(
   cb?: () => void,
+  scrollRef?: RefObject<HTMLElement | null>,
   threshold: number = 200,
   bounceMs: number = 500
 ): void {
-  const { current: node } = useScrollRef();
+  const node = scrollRef?.current;
 
   useEffect(() => {
     if (!cb) {

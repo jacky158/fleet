@@ -100,7 +100,6 @@ export interface PagingApi<R extends RowValues, Q> {
   loadMore(): void;
   setPage(page: number): void;
   setLimit(limit: number): void;
-  setUrl(url: string): void;
   setQuery(query: Q): void;
   refresh(): void;
   select(id: unknown, checked?: boolean): void;
@@ -114,7 +113,6 @@ export interface PagingState<R extends RowValues, Q = Record<string, unknown>> {
   loadingMore: boolean;
   selectStatus: "none" | "all" | "indeterminate";
   loading: boolean;
-  url: string;
   rev: number;
   selected: unknown[];
   items: R[];
@@ -176,13 +174,14 @@ export interface GridDef<R extends RowValues> {
 }
 
 export type ListingProps<R extends RowValues> = {
-  grid: GridDef<R>;
+  grid?: GridDef<R>;
   filter?: FC<FilterProps>;
   presenter: FC<DataListProps<R>>;
-  loader(): Promise<LoadResult<R[]>>;
+  paging: PagingState<R>;
 };
+
 export interface DataListProps<R extends RowValues> {
-  grid: GridDef<R>;
+  grid?: GridDef<R>;
   paging: PagingState<R>;
 }
 

@@ -5,24 +5,20 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import PageHeader from "@ikx/acp/src/ui/PageHeader";
-import { AsTable, Pagination } from "@ikx/data";
-import { DataListProps, GridCellParams, GridDef, RowValues } from "@ikx/types";
+import { Pagination, usePagination } from "@ikx/data";
 import { Layout } from "@ikx/jsx";
-import { Link } from "@ikx/router";
-import { LoadResult } from "@ikx/types";
-import { Menu, MenuItem, PopoverProps } from "@mui/material";
-import Box from "@mui/material/Box";
-import dayjs from "dayjs";
+import { useScrollEnd } from "@ikx/scroll";
+import { DataListProps, LoadResult, Loader } from "@ikx/types";
 import GridFilter from "./Filter";
-import { useScrollEnd, useScrollRef } from "@ikx/scroll";
 
 const createData = (p: number = 0, n: number) => {
   const ret = [];
   for (let i = 1; i < n; ++i) {
+    const id = p * n + i + 1;
     ret.push({
-      id: p * n + i + 1,
-      name: `Nam Nguyen ${i}`,
-      email: `Nam Nguyen Van ${i}`,
+      id,
+      name: `Nam Nguyen ${id}`,
+      email: `namnv.${id}@metafox.com`,
       date: new Date(),
     });
   }
@@ -36,100 +32,52 @@ type ItemShape = {
   date: Date;
 };
 
-export const loader = function ({
-  limit = 20,
-  page = 1,
-}): Promise<LoadResult<ItemShape[]>> {
+const loader: Loader<ItemShape[], unknown> = function (
+  args
+): Promise<LoadResult<ItemShape[]>> {
+  console.log(args);
+  const { limit = 20, page = 0 } = args;
+
   return Promise.resolve({
     data: createData(page, limit),
     meta: {
       pagination: {
         limit,
         page,
+        pages: 10,
         count: 100,
       },
     },
   });
 };
 
-function Actions({
-  passProps,
-  ...props
-}: PopoverProps & { passProps: GridCellParams; close?(): void }) {
-  const handleDelete = async () => {
-    Promise.resolve(true)
-      .then(() => passProps.paging.api.removeItem(passProps.row?.id))
-      .catch(void 0);
-  };
-  return (
-    <Menu
-      {...props}
-      sx={{ minWidth: 120 }}
-      anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-    >
-      <Link component={MenuItem} to={`/customer/${passProps.row?.id}`}>
-        View
-      </Link>
-      <Link component={MenuItem} to={`/customer/${passProps.row?.id}/edit`}>
-        Edit
-      </Link>
-      <MenuItem color="error" onClick={handleDelete}>
-        Delete
-      </MenuItem>
-    </Menu>
-  );
-}
-
 function Customers({ paging }: DataListProps<ItemShape>) {
-  const scrollRef = useScrollRef();
   useScrollEnd(() => {
     console.log("scrolled to end");
-  }, 200);
-
-  console.log({ scrollRef });
+  });
 
   if (!paging.items) return null;
 
   return paging.items.map((x) => {
-    return <div key={x.id.toString()}>{x.name}</div>;
+    return (
+      <div style={{ height: 100 }} key={x.id.toString()}>
+        {x.name}
+      </div>
+    );
   });
 }
 
 export function Screen() {
-  const grid: GridDef<ItemShape> = {
-    columns: [
-      { field: "check", type: "selection" },
-      { field: "id", headerName: "ID", width: "100px" },
-      {
-        field: "name",
-        headerName: "Name",
-        width: "auto",
-      },
-      { field: "email", headerName: "Email" },
-      {
-        field: "date",
-        headerName: "Date",
-        renderCell({ row }) {
-          return dayjs(row?.date).format("LLL");
-        },
-      },
-      {
-        field: "actions",
-        headerName: "Actions",
-        align: "right",
-        type: "actions",
-        actions: Actions,
-      },
-    ],
-    size: "medium",
-    rowsPerPageOptions: [20, 50, 100],
-  };
+  const paging = usePagination<ItemShape>({ loader, limit: 20 });
+
+  useScrollEnd(() => {
+    paging.api.loadMore();
+  });
 
   return (
     <Pagination<ItemShape>
-      grid={grid}
+      paging={paging}
       presenter={Customers}
-      loader={loader}
       filter={GridFilter}
     />
   );
@@ -139,9 +87,7 @@ export default function ECommerce() {
   return (
     <Layout name="layout.master">
       <PageHeader title="E-Commerce" />
-      <Box sx={{ p: 2 }}>
-        <Screen />
-      </Box>
+      <Screen />
     </Layout>
   );
 }
