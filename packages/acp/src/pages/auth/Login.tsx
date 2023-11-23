@@ -34,6 +34,7 @@ export function Content() {
         <Box sx={{ pb: 1 }}>
           <TextField
             name="email"
+            margin="dense"
             autoComplete="current-email"
             fullWidth
             autoCorrect="off"

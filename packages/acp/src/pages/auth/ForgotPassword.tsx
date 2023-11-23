@@ -50,6 +50,7 @@ export function Content() {
             autoComplete="current-email"
             autoCorrect="off"
             autoCapitalize="off"
+            fullWidth
             autoFocus
             tabIndex={0}
             value={formik.values.email}

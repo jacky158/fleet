@@ -48,15 +48,12 @@ export default function AccountMenu({
       <Divider variant="middle" />
       <List component="div">
         <Item to="/customer">
-          <Icon name="person" />
           <Text>Profile</Text>
         </Item>
         <Item to="/analytics">
-          <Icon name="settings" />
           <Text>Settings</Text>
         </Item>
         <Item to="/logout">
-          <Icon name="logout" />
           <Text>Logout</Text>
         </Item>
       </List>
