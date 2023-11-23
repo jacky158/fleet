@@ -12,7 +12,8 @@ interface RuleMap {
   component: ElementType;
 }
 
-const ROOT = "";
+/** Keep code readable */
+const ROOT_NAME = "";
 
 export class Router {
   private readonly app: App;
@@ -36,7 +37,7 @@ export class Router {
 
   public bootstrap() {}
 
-  private normalize(items: RouteProps[], parent: string = ROOT) {
+  private normalize(items: RouteProps[], parent: string = ROOT_NAME) {
     items.forEach((x: RouteProps, index: number) => {
       x.xpath = `${parent}/r${index}h`;
       if (x.children?.length) {
@@ -46,7 +47,7 @@ export class Router {
         name: x.name,
         xpath: x.xpath,
         match: pathToReg(x.path),
-        parent: x.parent ?? ROOT,
+        parent: x.parent ?? ROOT_NAME,
         component: x.component,
       });
     });
@@ -122,13 +123,11 @@ export class Router {
 
   public async lookup(
     url: string,
-    parent: string = ROOT
+    parent: string = ROOT_NAME
   ): Promise<MatchResult | undefined> {
     if (!url) {
       url = "/";
     }
-
-    console.log("lookup", url, parent);
 
     let result = await this.localLookup(url, parent);
 
@@ -136,11 +135,11 @@ export class Router {
       result = await this.remoteLookup(url, parent);
     }
 
-    if (!result && parent == ROOT) {
+    if (!result && parent == ROOT_NAME) {
       result = await this.localLookup("/error/404", parent);
     }
 
-    if (result && parent == ROOT) {
+    if (result && parent == ROOT_NAME) {
       this.onLocationChanged({
         key: createKey(),
         query: result.query,
