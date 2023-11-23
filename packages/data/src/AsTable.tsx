@@ -1,12 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useApp } from "@ikx/core";
 import { MuiIcon } from "@ikx/mui";
-import styled from "@mui/material/styles/styled";
+import {
+  DataListProps,
+  GridCellParams,
+  GridColumnDef,
+  RowValues,
+} from "@ikx/types";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import IconButton from "@mui/material/IconButton";
 import Switch from "@mui/material/Switch";
-import Table, { TableProps } from "@mui/material/Table";
+import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { TableCellProps } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
@@ -14,14 +19,9 @@ import TableFooter from "@mui/material/TableFooter";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import styled from "@mui/material/styles/styled";
 import get from "lodash/get";
 import { ReactNode, useMemo } from "react";
-import {
-  DataListProps,
-  GridCellParams,
-  GridColumnDef,
-  RowValues,
-} from "@ikx/types";
 
 function renderHeaderCheck<T extends RowValues>(
   c: GridCellParams<T>
@@ -109,10 +109,10 @@ export default function AsTable<T extends RowValues>({
     return grid.columns.map((x) => {
       switch (x.type) {
         case "actions":
-          x.style = { padding: "0 8px 0 8px" };
+          x.style = { padding: "0 16px 0 8px" };
           break;
         case "selection":
-          x.style = { padding: "0 0 0 0" };
+          x.style = { padding: "0 0 0 8px" };
           break;
       }
       return x;

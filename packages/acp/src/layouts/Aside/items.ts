@@ -29,7 +29,7 @@ const items: MenuItemShape[] = [
     icon: "\uf02e",
     to: "/account",
     items: [
-      { label: "Browse", to: "/" },
+      { label: "Browse", to: "/user" },
       { label: "Permissions", to: "/" },
       { label: "Invitation", to: "/" },
     ],
@@ -68,11 +68,6 @@ const items: MenuItemShape[] = [
     ],
   },
   { label: "Pages", type: "header" },
-  {
-    label: "Members",
-    icon: "manage_accounts",
-    items: [{ label: "Manage", to: "/user" }],
-  },
   {
     label: "Auth",
     icon: "manage_accounts",
