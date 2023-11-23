@@ -210,8 +210,9 @@ export default function PageHeader(props: PageHeaderProps) {
               aria-label="breadcrumb"
               sx={{ fontSize: "0.925em", paddingBottom: 1 }}
             >
-              {breadcrumbs.map((x) => (
+              {breadcrumbs.map((x, index) => (
                 <MuiLink
+                  key={index.toString()}
                   underline="hover"
                   color="inherit"
                   to={x.to}
@@ -223,9 +224,9 @@ export default function PageHeader(props: PageHeaderProps) {
         </LeftSide>
         {actions?.length ? (
           <RightSide>
-            {actions.map((x) => {
+            {actions.map((x, index) => {
               return (
-                <Button component={Link} to={x.to}>
+                <Button component={Link} to={x.to} key={index.toString()}>
                   {x.label}
                 </Button>
               );

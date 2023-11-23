@@ -6,7 +6,7 @@ import { RouterProps, LocationShape } from "./types";
 import LocationContext from "./LocationContext";
 import createKey from "./createKey";
 
-export default function Provider({
+export default function RouterProvider({
   baseUrl = "",
   routes,
   children,
@@ -14,7 +14,10 @@ export default function Provider({
   const app = useApp();
   const [loc, setLocation] = useState<LocationShape>({
     key: "i0",
-    pathname: `${window?.location?.pathname}${window?.location?.search}`,
+    pathname:
+      `${window?.location?.pathname}${window?.location?.search}`.substring(
+        baseUrl.length
+      ),
     query: {},
     state: window?.history?.state ?? {},
   } as unknown as LocationShape);

@@ -2,7 +2,7 @@
  * @type: route
  * @name: nested.child2
  * @path: /child2
- * @base: sample_nest
+ * @parent: sample_nest
  */
 
 export default function route() {

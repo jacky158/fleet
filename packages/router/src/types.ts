@@ -34,12 +34,12 @@ export interface RouterConfig {
 }
 
 export interface RouteProps {
+  parent?: string;
   name: string;
   component: ElementType;
   path: string;
   xpath?: string;
   groups?: string[];
-  base?: string;
   children?: RouteProps[];
 }
 

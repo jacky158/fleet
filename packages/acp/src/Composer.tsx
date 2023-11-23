@@ -20,7 +20,7 @@ import { ReactNode } from "react";
 // dayjs.extend(localizedFormat);
 import routes from "./bundle/routes";
 import GlobalStyles from "./GlobalStyles";
-import { Provider as RouteProvider, Routes } from "@ikx/router";
+import { RouterProvider, Routes } from "@ikx/router";
 
 const Handlers = () => {
   return (
@@ -51,10 +51,10 @@ export default function Composer({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <ThemeProvider>
               <GlobalStyles />
-              <RouteProvider routes={routes} baseUrl="/acp">
+              <RouterProvider routes={routes} baseUrl="/acp">
                 <Handlers />
-                <Routes base="root" />
-              </RouteProvider>
+                <Routes />
+              </RouterProvider>
             </ThemeProvider>
           </LocalizationProvider>
         </ScrollProvider>

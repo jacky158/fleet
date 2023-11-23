@@ -7,10 +7,12 @@ import createKey from "./createKey";
 interface RuleMap {
   xpath: string;
   match: MatchFunction;
-  base: string;
+  parent: string;
   name: string;
   component: ElementType;
 }
+
+const ROOT = "";
 
 export class Router {
   private readonly app: App;
@@ -34,7 +36,7 @@ export class Router {
 
   public bootstrap() {}
 
-  private normalize(items: RouteProps[], parent: string = "") {
+  private normalize(items: RouteProps[], parent: string = ROOT) {
     items.forEach((x: RouteProps, index: number) => {
       x.xpath = `${parent}/r${index}h`;
       if (x.children?.length) {
@@ -44,7 +46,7 @@ export class Router {
         name: x.name,
         xpath: x.xpath,
         match: pathToReg(x.path),
-        base: x.base ?? "root",
+        parent: x.parent ?? ROOT,
         component: x.component,
       });
     });
@@ -56,7 +58,7 @@ export class Router {
 
   private localLookup(
     url: string,
-    base: string
+    parent: string
   ): Promise<MatchResult | undefined> {
     const urlObj = new URL(url, "http://locahost");
     const { pathname } = urlObj;
@@ -64,14 +66,8 @@ export class Router {
     console.log({ pathname });
 
     const item = this.rules.find((x) => {
-      return x.base == base && (x.match(pathname) || x.match(url));
+      return x.parent == parent && (x.match(pathname) || x.match(url));
     });
-
-    const based = this.rules.find((x) => {
-      return x.base == base;
-    });
-
-    console.log({ based });
 
     if (!item) {
       return Promise.resolve(undefined);
@@ -92,7 +88,7 @@ export class Router {
 
   private async remoteLookup(
     url: string,
-    base: string
+    parent: string
   ): Promise<MatchResult | undefined> {
     const { cache: enableCache, apiUrl, pageNotFound } = this.config;
 
@@ -103,7 +99,7 @@ export class Router {
     this.setLoading(true);
 
     return this.app.http
-      .get(apiUrl, { params: { url, base } })
+      .get(apiUrl, { params: { url } })
       .then((res) => {
         const returnUrl = (res.data?.data?.path as string) ?? pageNotFound;
         this.cached[url] = returnUrl;
@@ -111,7 +107,7 @@ export class Router {
         return returnUrl;
       })
       .then((url) => {
-        return this.localLookup(url, base);
+        return this.localLookup(url, parent);
       })
       .finally(() => {
         this.setLoading(false);
@@ -126,19 +122,25 @@ export class Router {
 
   public async lookup(
     url: string,
-    base: string = "root"
+    parent: string = ROOT
   ): Promise<MatchResult | undefined> {
-    let result = await this.localLookup(url, base);
+    if (!url) {
+      url = "/";
+    }
+
+    console.log("lookup", url, parent);
+
+    let result = await this.localLookup(url, parent);
 
     if (!result && this.config.apiUrl) {
-      result = await this.remoteLookup(url, base);
+      result = await this.remoteLookup(url, parent);
     }
 
-    if (!result) {
-      result = await this.localLookup("/error/404", base);
+    if (!result && parent == ROOT) {
+      result = await this.localLookup("/error/404", parent);
     }
 
-    if (result && base == "root") {
+    if (result && parent == ROOT) {
       this.onLocationChanged({
         key: createKey(),
         query: result.query,
@@ -150,19 +152,26 @@ export class Router {
     return result;
   }
 
-  public push(to?: unknown) {
+  public createPath(to?: unknown): string {
     if (typeof to == "string") {
-      history.pushState(null, "", to);
+      return to;
     }
+    return "/";
+  }
+
+  public push(to?: unknown) {
+    const pathname = this.createPath(to);
+
+    history.pushState(null, "", this.config.baseUrl + to);
 
     this.onLocationChanged({
       key: createKey(),
-      pathname: to as string,
+      pathname,
       query: {},
       state: {},
     });
 
-    console.log({ push: to });
+    console.log({ push: pathname });
   }
 
   public replace(to?: unknown) {

@@ -16,6 +16,7 @@ function log(...args: unknown[]) {
 }
 
 interface Item {
+  parent?: string;
   type: string;
   name: string; // key name to put to container.
   from: string; // related import name, using to import
@@ -26,7 +27,6 @@ interface Item {
   chunkName?: string;
   lazy?: boolean;
   path?: string;
-  base?: string;
 }
 
 export class Bundler {
@@ -262,12 +262,12 @@ export class Bundler {
             name: x.name,
             path: p,
             component: `[${x.importName}]`,
-            base: x.base,
+            parent: x.parent,
           });
         });
 
         return acc;
-      }, [] as { path: string; name: string; component: string; base?: string }[]),
+      }, [] as { path: string; name: string; component: string; parent?: string }[]),
       null,
       "  "
     );
