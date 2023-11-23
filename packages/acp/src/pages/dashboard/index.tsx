@@ -8,13 +8,13 @@ import PageHeader from "@ikx/acp/src/ui/PageHeader";
 import { MenuItemShape } from "@ikx/types";
 
 const breadcrumbs: MenuItemShape[] = [
-  { label: "Home", to: "/" },
+  { label: "Dashboard", to: "/" },
   { label: "Settings", to: "/settings" },
   { label: "Blogs", to: "/settings/blog" },
 ];
 
 const actions: MenuItemShape[] = [
-  { label: "Home", to: "/" },
+  { label: "Dashboard", to: "/" },
   { label: "Settings", to: "/settings" },
   { label: "Blogs", to: "/settings/blog" },
 ];

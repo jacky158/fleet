@@ -69,12 +69,9 @@ const items: MenuItemShape[] = [
   },
   { label: "Pages", type: "header" },
   {
-    label: "Nested",
+    label: "Members",
     icon: "manage_accounts",
-    items: [
-      { label: "Child", to: "/nested/child" },
-      { label: "Child 2", to: "/nested/child2" },
-    ],
+    items: [{ label: "Manage", to: "/user" }],
   },
   {
     label: "Auth",
@@ -94,6 +91,15 @@ const items: MenuItemShape[] = [
       { label: "403", to: "/error/403" },
       { label: "404", to: "/error/404" },
       { label: "500", to: "/error/500" },
+    ],
+  },
+  { label: "Techie", type: "header" },
+  {
+    label: "Nested",
+    icon: "manage_accounts",
+    items: [
+      { label: "Child", to: "/nested/child" },
+      { label: "Child 2", to: "/nested/child2" },
     ],
   },
   {

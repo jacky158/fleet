@@ -35,8 +35,9 @@ const Title = styled("span", {
   },
 })(({ theme }) => ({
   paddingRight: "1rem",
-  ...theme.typography.h5,
+  fontSize: theme.typography.h5.fontSize,
   fontWeight: 600,
+  padding: "0em 0px 0.5em 0px",
 }));
 const Subtitle = styled("span", {
   name,
@@ -187,16 +188,6 @@ export default function PageHeader(props: PageHeaderProps) {
     <>
       <Root>
         <LeftSide>
-          {breadcrumbs?.length ? (
-            <Breadcrumbs
-              aria-label="breadcrumb"
-              sx={{ fontSize: "0.925em", paddingBottom: 1 }}
-            >
-              {breadcrumbs.map((x) => (
-                <MuiLink underline="hover" to={x.to} children={x.label} />
-              ))}
-            </Breadcrumbs>
-          ) : null}
           <Heading>
             {back == true ? (
               <Link
@@ -213,6 +204,22 @@ export default function PageHeader(props: PageHeaderProps) {
             {subtitle ? <Subtitle>{subtitle}</Subtitle> : null}
             {badge ? <Badge color="error" badgeContent={badge} /> : null}
           </Heading>
+          {breadcrumbs?.length ? (
+            <Breadcrumbs
+              separator="&middot;"
+              aria-label="breadcrumb"
+              sx={{ fontSize: "0.925em", paddingBottom: 1 }}
+            >
+              {breadcrumbs.map((x) => (
+                <MuiLink
+                  underline="hover"
+                  color="inherit"
+                  to={x.to}
+                  children={x.label}
+                />
+              ))}
+            </Breadcrumbs>
+          ) : null}
         </LeftSide>
         {actions?.length ? (
           <RightSide>

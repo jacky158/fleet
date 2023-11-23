@@ -51,9 +51,9 @@ export default function Composer({
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <ThemeProvider>
               <GlobalStyles />
-              <RouteProvider routes={routes}>
+              <RouteProvider routes={routes} baseUrl="/acp">
                 <Handlers />
-                <Routes group="root" />
+                <Routes base="root" />
               </RouteProvider>
             </ThemeProvider>
           </LocalizationProvider>
