@@ -1,5 +1,6 @@
 import { useApp } from "@ikx/core";
 import { MuiIcon } from "@ikx/mui";
+import { Link } from "@ikx/router";
 import {
   AppBar,
   Avatar,
@@ -10,15 +11,16 @@ import {
   Stack,
   Toolbar,
   Typography,
+  useTheme,
 } from "@mui/material";
 
 export function AppBarBranch() {
   return (
     <>
       <Box sx={{ pr: 2, cursor: "pointer" }}>
-        <a to="/">
+        <Link to="/">
           <img src="/logo.png" height="32" />
-        </a>
+        </Link>
       </Box>
       <Box sx={{ display: "none" }}>
         <Typography
@@ -41,6 +43,7 @@ export default function Header({
   dx: string;
   toggleDrawer: () => void;
 }) {
+  const theme = useTheme();
   const app = useApp();
   return (
     <>
@@ -73,6 +76,16 @@ export default function Header({
           </Button>
           <Box sx={{ flexGrow: 1 }}></Box>
           <Stack direction="row" spacing={1}>
+            <Button
+              size="small"
+              variant="text"
+              color="inherit"
+              onClick={(evt) =>
+                app.openPopover(evt, { component: "popover.LanguagePicker" })
+              }
+            >
+              English
+            </Button>
             <Badge
               badgeContent={"9k+"}
               color="warning"
@@ -90,6 +103,12 @@ export default function Header({
                 <MuiIcon name="notifications" style={{ width: 32 }} />
               </IconButton>
             </Badge>
+            <IconButton size="small">
+              <MuiIcon
+                name={theme.palette.mode == "dark" ? "light_mode" : "dark_mode"}
+                style={{ width: 32 }}
+              />
+            </IconButton>
             <IconButton
               size="small"
               onClick={(evt) =>

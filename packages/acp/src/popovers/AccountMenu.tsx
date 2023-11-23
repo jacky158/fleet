@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @type: popover
  * @name: popover.AccountMenu
  */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { MuiIcon } from "@ikx/mui";
+
+import { Link } from "@ikx/router";
 import { Box, Divider, List, Popover, PopoverProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Link } from "@ikx/router";
 
 const Item = styled(Link)(({ theme }) => ({
   display: "flex",
@@ -24,10 +24,6 @@ const Item = styled(Link)(({ theme }) => ({
 const Text = styled("span")({
   flexGrow: 1,
 });
-
-const Icon = (props: any) => (
-  <MuiIcon {...props} style={{ fontSize: "1.2em", minWidth: 32 }} />
-);
 
 export default function AccountMenu({
   ...props
