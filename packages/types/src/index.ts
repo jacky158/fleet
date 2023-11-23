@@ -90,6 +90,7 @@ export type PagingAction<R extends RowValues, Q> =
   | { type: "select"; id: unknown; checked?: boolean }
   | { type: "selectAll"; payload?: boolean }
   | { type: "refresh" }
+  | { type: "setSize"; payload: string }
   | { type: "load" }
   | { type: "setError" }
   | { type: "loadMore" };
@@ -105,6 +106,7 @@ export interface PagingApi<R extends RowValues, Q> {
   select(id: unknown, checked?: boolean): void;
   selectAll(select?: boolean): void;
   load(q?: unknown): void;
+  setSize(value: string): void;
 }
 
 export type Loader<R, Q = unknown> = (params: Q) => Promise<LoadResult<R>>;
@@ -115,6 +117,7 @@ export interface PagingState<R extends RowValues, Q = Record<string, unknown>> {
   loading: boolean;
   rev: number;
   selected: unknown[];
+  size?: string;
   items: R[];
   page: number; // current_page
   limit: number;

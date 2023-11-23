@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useApp } from "@ikx/core";
 import { MuiIcon } from "@ikx/mui";
-import { IconButton, styled } from "@mui/material";
+import styled from "@mui/material/styles/styled";
 import Checkbox from "@mui/material/Checkbox";
-import Table from "@mui/material/Table";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import IconButton from "@mui/material/IconButton";
+import Switch from "@mui/material/Switch";
+import Table, { TableProps } from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
+import TableCell, { TableCellProps } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableFooter from "@mui/material/TableFooter";
 import TableHead from "@mui/material/TableHead";
@@ -59,7 +62,6 @@ function renderCellCheck<T extends RowValues>(c: GridCellParams<T>): ReactNode {
     />
   );
 }
-
 function Actions<T extends RowValues>(passProps: GridCellParams<T>): ReactNode {
   const app = useApp();
   return (
@@ -72,7 +74,7 @@ function Actions<T extends RowValues>(passProps: GridCellParams<T>): ReactNode {
         })
       }
     >
-      <MuiIcon name="settings" />
+      <MuiIcon name="more_vert" />
     </IconButton>
   );
 }
@@ -121,14 +123,17 @@ export default function AsTable<T extends RowValues>({
 
   const data = paging.items;
 
+  console.log(paging.size);
+
   return (
     <TableContainer component={Container}>
-      <Table size={grid.size}>
+      <Table size={paging.size == "small" ? "small" : "medium"}>
         <TableHead>
           <TableRow>
             {columns.map((column) => {
               return (
                 <TableCell
+                  size={paging.size as unknown as TableCellProps["size"]}
                   width={column.width}
                   align={column.headerAlign ?? column.align}
                   key={column.field}
@@ -157,6 +162,7 @@ export default function AsTable<T extends RowValues>({
                   {columns.map((column) => {
                     return (
                       <TableCell
+                        size={paging.size as unknown as TableCellProps["size"]}
                         align={column.align}
                         width={column.width}
                         key={column.field}
@@ -178,9 +184,24 @@ export default function AsTable<T extends RowValues>({
         ) : null}
         <TableFooter>
           <TableRow>
+            <TableCell style={{ padding: "0 0 0 16px" }}>
+              <FormControlLabel
+                onChange={(_, checked) =>
+                  paging.api.setSize(checked ? "small" : "medium")
+                }
+                control={
+                  <Switch
+                    checked={paging.size === "small"}
+                    aria-label="dense"
+                    size="small"
+                  />
+                }
+                label={"Dense"}
+              />
+            </TableCell>
             <TablePagination
               page={paging.page}
-              colSpan={grid.columns.length}
+              colSpan={grid.columns.length - 1}
               count={paging.count ?? data?.length}
               rowsPerPage={paging.limit}
               rowsPerPageOptions={grid.rowsPerPageOptions}

@@ -17,10 +17,11 @@ import dayjs from "dayjs";
 const createData = (p: number = 0, n: number) => {
   const ret = [];
   for (let i = 1; i < n; ++i) {
+    const id = p * n + i + 1;
     ret.push({
-      id: p * n + i + 1,
-      name: `Nam Nguyen ${i}`,
-      email: `Nam Nguyen Van ${i}`,
+      id,
+      name: `Generated ${id}`,
+      email: `generated-${id}@example.com`,
       date: new Date(),
     });
   }

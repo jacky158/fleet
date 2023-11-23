@@ -18,11 +18,11 @@ export class Api<R extends RowValues, Q> implements PagingApi<R, Q> {
     }
   }
 
-  setPage(page: number) {
-    this.d({ type: "setPage", payload: page });
+  setPage(payload: number) {
+    this.d({ type: "setPage", payload });
   }
-  setLimit(limit: number) {
-    this.d({ type: "setLimit", payload: limit });
+  setLimit(payload: number) {
+    this.d({ type: "setLimit", payload });
   }
 
   setQuery(filter: Q) {
@@ -34,14 +34,17 @@ export class Api<R extends RowValues, Q> implements PagingApi<R, Q> {
   loadMore() {
     this.d({ type: "loadMore" });
   }
-  removeItem(id: unknown) {
-    this.d({ type: "removeItem", payload: id });
+  removeItem(payload: unknown) {
+    this.d({ type: "removeItem", payload });
   }
   select(id: unknown, checked?: boolean) {
     this.d({ type: "select", id, checked });
   }
-  selectAll(select: boolean) {
-    this.d({ type: "selectAll", payload: select });
+  selectAll(payload: boolean) {
+    this.d({ type: "selectAll", payload });
+  }
+  setSize(payload: string): void {
+    this.d({ type: "setSize", payload });
   }
   load() {
     this.d({ type: "load" });
@@ -54,10 +57,12 @@ export function usePagination<
 >({
   limit,
   page,
+  size,
   query,
   perPageOptions,
   loader,
 }: {
+  size?: string;
   page?: number;
   limit?: number;
   query?: Q;
@@ -106,6 +111,9 @@ export function usePagination<
           draft.rev = draft.rev + 1;
           break;
         case "setError":
+          break;
+        case "setSize":
+          draft.size = action.payload ?? "medium";
           break;
 
         case "setResult": {
@@ -195,6 +203,7 @@ export function usePagination<
       query: query ?? ({} as Q),
       perPageOptions: perPageOptions ?? [20, 50],
       selectStatus: "none",
+      size: size ?? "medium",
       items: [],
       selected: [],
       loadingMore: false,
