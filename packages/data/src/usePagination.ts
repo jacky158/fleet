@@ -169,6 +169,7 @@ export function usePagination<
         case "load": {
           const params = {
             ...draft.query,
+            loading: true,
             page: draft.page,
             limit: draft.limit,
           };

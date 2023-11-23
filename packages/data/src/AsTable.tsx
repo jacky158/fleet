@@ -125,7 +125,7 @@ export default function AsTable<T extends RowValues>({
     });
   }, [grid]);
 
-  if (!grid || !paging?.items?.length) return null;
+  if (!grid) return null;
 
   const data = paging.items;
 
@@ -154,38 +154,45 @@ export default function AsTable<T extends RowValues>({
             })}
           </TableRow>
         </TableHead>
-        {data?.length ? (
-          <TableBody>
-            {data.map((row, index) => {
-              return (
-                <TableRow
-                  hover
-                  key={index.toString()}
-                  className={index % 2 ? "odd" : "even"}
-                >
-                  {columns.map((column) => {
-                    return (
-                      <TableCell
-                        size={paging.size as unknown as TableCellProps["size"]}
-                        align={column.align}
-                        width={column.width}
-                        key={column.field}
-                        style={column.style}
-                      >
-                        <BodyCell<T>
-                          row={row}
-                          column={column}
-                          selected={paging.selected}
-                          paging={paging}
-                        />
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        ) : null}
+        <TableBody>
+          {!data?.length && paging.loading ? (
+            <TableRow>
+              <TableCell colSpan={columns.length}>Loading ...</TableCell>
+            </TableRow>
+          ) : null}
+          {data?.length
+            ? data.map((row, index) => {
+                return (
+                  <TableRow
+                    hover
+                    key={index.toString()}
+                    className={index % 2 ? "odd" : "even"}
+                  >
+                    {columns.map((column) => {
+                      return (
+                        <TableCell
+                          size={
+                            paging.size as unknown as TableCellProps["size"]
+                          }
+                          align={column.align}
+                          width={column.width}
+                          key={column.field}
+                          style={column.style}
+                        >
+                          <BodyCell<T>
+                            row={row}
+                            column={column}
+                            selected={paging.selected}
+                            paging={paging}
+                          />
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })
+            : null}
+        </TableBody>
         <TableFooter>
           <TableRow>
             <TableCell style={{ padding: "0 0 0 16px" }}>

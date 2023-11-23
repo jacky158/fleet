@@ -13,6 +13,7 @@ import { Menu, MenuItem, PopoverProps } from "@mui/material";
 import Box from "@mui/material/Box";
 import dayjs from "dayjs";
 import FilterUser from "./Filter";
+import delay from "@ikx/utils/dist/delay";
 
 const createData = (p: number = 0, n: number) => {
   const ret = [];
@@ -39,7 +40,7 @@ export const loader = function ({
   limit = 20,
   page = 0,
 }): Promise<LoadResult<ItemShape[]>> {
-  return Promise.resolve({
+  return delay(2000).then(() => ({
     data: createData(page, limit),
     meta: {
       pagination: {
@@ -48,7 +49,7 @@ export const loader = function ({
         count: 100,
       },
     },
-  });
+  }));
 };
 
 function Actions({
