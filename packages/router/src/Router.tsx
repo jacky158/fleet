@@ -54,7 +54,7 @@ export class Router {
     // to do others.
   }
 
-  private matchLocal(
+  private localLookup(
     url: string,
     base: string
   ): Promise<MatchResult | undefined> {
@@ -90,7 +90,7 @@ export class Router {
     });
   }
 
-  private async matchRemote(
+  private async remoteLookup(
     url: string,
     base: string
   ): Promise<MatchResult | undefined> {
@@ -111,7 +111,7 @@ export class Router {
         return returnUrl;
       })
       .then((url) => {
-        return this.matchLocal(url, base);
+        return this.localLookup(url, base);
       })
       .finally(() => {
         this.setLoading(false);
@@ -124,18 +124,18 @@ export class Router {
     }
   }
 
-  public async match(
+  public async lookup(
     url: string,
     base: string = "root"
   ): Promise<MatchResult | undefined> {
-    let result = await this.matchLocal(url, base);
+    let result = await this.localLookup(url, base);
 
     if (!result && this.config.apiUrl) {
-      result = await this.matchRemote(url, base);
+      result = await this.remoteLookup(url, base);
     }
 
     if (!result) {
-      result = await this.matchLocal("/error/404", base);
+      result = await this.localLookup("/error/404", base);
     }
 
     if (result && base == "root") {

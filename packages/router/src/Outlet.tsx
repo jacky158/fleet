@@ -12,7 +12,7 @@ export default function Outlet({ base, url }: OutletProps) {
   const [outlet, setOutlet] = useState<MatchResult>();
 
   useEffect(() => {
-    app.router.match(url, base).then((x) => setOutlet(x));
+    app.router.lookup(url, base).then((x) => setOutlet(x));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [base, url]);
 

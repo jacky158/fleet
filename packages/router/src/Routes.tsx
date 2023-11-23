@@ -13,7 +13,7 @@ export function Routes({ base }: { base: string }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // test if can map
   React.useEffect(() => {
-    app.router.match(pathname, base).then(setPage);
+    app.router.lookup(pathname, base).then(setPage);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
