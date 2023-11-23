@@ -33,26 +33,26 @@ export function Content() {
         </Box>
         <Box sx={{ pb: 1 }}>
           <TextField
+            fullWidth
+            autoFocus
+            tabIndex={0}
             name="email"
             margin="dense"
             autoComplete="current-email"
-            fullWidth
             autoCorrect="off"
             autoCapitalize="off"
-            autoFocus
-            tabIndex={0}
             value={formik.values.email}
-            label={app.t("auth.email")}
-            InputLabelProps={{ shrink: true }}
-            placeholder={app.t("auth.enter_your_email")}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
+            InputLabelProps={{ shrink: true }}
+            label={app.t("auth.email")}
+            placeholder={app.t("auth.enter_your_email")}
           />
           <TextField
+            fullWidth
             type="password"
             name="password"
             autoComplete="current-password"
-            fullWidth
             margin="normal"
             autoCorrect="off"
             autoCapitalize="off"
