@@ -8,18 +8,18 @@ export function Routes({ base }: { base: string }) {
   const app = useApp();
   const { pathname } = useLocation();
 
-  const [page, setPage] = useState<MatchResult>();
+  const [result, setResult] = useState<MatchResult>();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // test if can map
   React.useEffect(() => {
-    app.router.lookup(pathname, base).then(setPage);
+    app.router.lookup(pathname, base).then(setResult);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  if (!page) return null;
+  if (!result) return null;
 
-  return createElement(page.component, page.query);
+  return createElement(result.component, result.query);
 }
 
 export default Routes;
