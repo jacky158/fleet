@@ -15,6 +15,8 @@ export interface ViewComponents {
   "popover.Notifications": true;
 }
 
+export type RefOf<T> = React.MutableRefObject<T> | ((instance: T) => void);
+
 export type ViewName = string | keyof ViewComponents | ElementType;
 
 export interface RemoteDataSource {

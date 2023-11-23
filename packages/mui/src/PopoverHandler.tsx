@@ -61,7 +61,6 @@ export function PopoverHandler() {
     ...props,
     open: Boolean(open && anchorEl),
     container: document.body,
-    disableScrollLock: true,
     anchorEl: anchorEl,
     onClick() {
       setOpen(false);

@@ -61,11 +61,7 @@ function Actions({
       .catch(void 0);
   };
   return (
-    <Menu
-      {...props}
-      sx={{ minWidth: 120 }}
-      anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-    >
+    <Menu {...props}>
       <Link component={MenuItem} to={`/customer/${passProps.row?.id}`}>
         View
       </Link>

@@ -1,19 +1,43 @@
 import { useApp } from "@ikx/core";
 import { MuiIcon } from "@ikx/mui";
 import { Link } from "@ikx/router";
-import {
-  AppBar,
-  Avatar,
-  Badge,
-  Box,
-  Button,
-  IconButton,
-  Stack,
-  Toolbar,
-  Typography,
-  useTheme,
-} from "@mui/material";
-import { useCallback } from "react";
+import AppBar from "@mui/material/AppBar";
+import InputBase from "@mui/material/InputBase";
+import Avatar from "@mui/material/Avatar";
+import Badge from "@mui/material/Badge";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import useTheme from "@mui/material/styles/useTheme";
+import styled from "@mui/material/styles/styled";
+import { FormEvent, useCallback, useRef, useState } from "react";
+
+const SearchField = styled(InputBase, {
+  shouldForwardProp(propName) {
+    return propName != "focused";
+  },
+})<{ focused?: boolean }>(({ theme, focused }) => ({
+  borderRadius: 24,
+  border: `1px solid ${theme.palette.divider}`,
+  color: theme.palette.text.secondary,
+  padding: theme.spacing(0, 2, 0, 0),
+  width: focused ? "250px" : "100px",
+  boxSizing: "border-box",
+  background: focused ? "transparent" : theme.palette.action.hover,
+  "& input": {
+    padding: 0,
+  },
+  "& span": {
+    cursor: "pointer",
+  },
+  transition: "width 150ms ease-in-out",
+  outline: focused
+    ? `2px solid ${theme.palette.primary.main}`
+    : `0px solid ${theme.palette.primary.main}`,
+}));
 
 export function AppBarBranch() {
   return (
@@ -56,6 +80,39 @@ function DarkModeButton() {
     </IconButton>
   );
 }
+function SearchBox() {
+  const [focused, setFocused] = useState<boolean>(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handleSubmit = useCallback((e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const q = inputRef.current?.value?.trim();
+
+    if (!q) return;
+
+    // continue search with q.
+  }, []);
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="submit" className="srOnly" />
+      <SearchField
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        autoCorrect="on"
+        size="small"
+        inputRef={inputRef}
+        focused={Boolean(focused || inputRef.current?.value)}
+        startAdornment={
+          <IconButton
+            onClick={() => setTimeout(() => inputRef.current?.focus(), 100)}
+            children={<MuiIcon name="search" />}
+          />
+        }
+      />
+    </form>
+  );
+}
 
 export default function Header({
   dx,
@@ -96,33 +153,26 @@ export default function Header({
           </Button>
           <Box sx={{ flexGrow: 1 }}></Box>
           <Stack direction="row" spacing={1}>
-            <Button
+            <SearchBox />
+            <IconButton
               size="small"
-              variant="text"
-              color="inherit"
               onClick={(evt) =>
-                app.openPopover(evt, { component: "popover.LanguagePicker" })
+                app.openPopover(evt, { component: "popover.Notifications" })
               }
             >
-              English
-            </Button>
-            <Badge
-              badgeContent={"9k+"}
-              color="warning"
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "left",
-              }}
-            >
-              <IconButton
-                size="small"
-                onClick={(evt) =>
-                  app.openPopover(evt, { component: "popover.Notifications" })
-                }
+              <Badge
+                badgeContent={"9k+"}
+                variant="dot"
+                color="warning"
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
               >
                 <MuiIcon name="notifications" style={{ width: 32 }} />
-              </IconButton>
-            </Badge>
+              </Badge>
+            </IconButton>
+
             <DarkModeButton />
             <IconButton
               size="small"

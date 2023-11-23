@@ -13,7 +13,7 @@ import Button from "@mui/material/Button";
 import { ReactNode } from "react";
 import Badge from "@mui/material/Badge";
 import { MenuItemShape } from "@ikx/types";
-import { Tab, Tabs } from "@mui/material";
+import ActionMenu from "./ActionMenu";
 
 export interface PageHeaderProps {
   title?: ReactNode;
@@ -35,9 +35,9 @@ const Title = styled("span", {
   },
 })(({ theme }) => ({
   paddingRight: "1rem",
-  fontSize: theme.typography.h5.fontSize,
+  fontSize: theme.typography.h4.fontSize,
   fontWeight: 600,
-  padding: "0em 0px 0.5em 0px",
+  padding: "0 0 0 0",
 }));
 const Subtitle = styled("span", {
   name,
@@ -224,13 +224,7 @@ export default function PageHeader(props: PageHeaderProps) {
         </LeftSide>
         {actions?.length ? (
           <RightSide>
-            {actions.map((x, index) => {
-              return (
-                <Button component={Link} to={x.to} key={index.toString()}>
-                  {x.label}
-                </Button>
-              );
-            })}
+            <ActionMenu items={actions} />
           </RightSide>
         ) : null}
       </Root>

@@ -1,12 +1,16 @@
 import { MuiIcon } from "@ikx/mui";
 import { Link, useLocation } from "@ikx/router";
 import { MenuItemShape } from "@ikx/types";
-import { Box, Collapse, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useState } from "react";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Collapse from "@mui/material/Collapse";
+import Typography from "@mui/material/Typography";
 import useMenuActivePath from "../useMenuActivePath";
 import items from "./items";
 import { Scrollable as Scrollable } from "@ikx/scroll";
+import { useApp } from "@ikx/core";
 
 const name = "Aside";
 const seem = 32;
@@ -295,6 +299,40 @@ function MenuItem({ item, selectedPath }: ListItemProps) {
   );
 }
 
+const FooterRoot = styled("div", {
+  name,
+  slot: "footer",
+})({
+  height: "40px",
+  padding: "12px 12px 20px 20px",
+});
+
+function Footer() {
+  const app = useApp();
+  return (
+    <FooterRoot>
+      <small>v1.5.0</small>
+      <span> &middot; </span>
+      <Button
+        size="small"
+        variant="text"
+        color="inherit"
+        sx={{ textTransform: "none" }}
+        onClick={(evt) =>
+          app.openPopover(evt, {
+            component: "popover.LanguagePicker",
+            source: "footer",
+            anchorOrigin: { horizontal: "left", vertical: "bottom" },
+            slotProps: { paper: { sx: { minWidth: 100 } } },
+          })
+        }
+      >
+        English
+      </Button>
+    </FooterRoot>
+  );
+}
+
 export default function Full() {
   const { pathname } = useLocation();
   const selected = useMenuActivePath(items, pathname);
@@ -315,6 +353,7 @@ export default function Full() {
           })}
         </List>
       </Scrollable>
+      <Footer />
     </>
   );
 }

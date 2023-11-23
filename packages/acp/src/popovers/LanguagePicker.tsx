@@ -13,8 +13,6 @@ export default function LanguagePicker({
       disablePortal
       disableScrollLock
       className="popoverSizeSmall"
-      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      slotProps={{ paper: { sx: { minWidth: 200 } } }}
     >
       <MenuItem>English</MenuItem>
       <MenuItem>Vietnamese</MenuItem>

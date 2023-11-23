@@ -71,6 +71,12 @@ function Actions<T extends RowValues>(passProps: GridCellParams<T>): ReactNode {
         app.openPopover(e, {
           component: passProps.column.actions ?? "popover.TableActions",
           passProps,
+          // disablePortal: true,
+          // disableScrollLock: true,
+          // anchorOrigin: { horizontal: "right", vertical: "bottom" },
+          // transformOrigin: { horizontal: "right", vertical: "top" },
+          // slotProps: { root: { sx: { position: "absolute", zIndex: 1 } } },
+          // sx: { minWidth: 120 },
         })
       }
     >
@@ -122,8 +128,6 @@ export default function AsTable<T extends RowValues>({
   if (!grid || !paging?.items?.length) return null;
 
   const data = paging.items;
-
-  console.log(paging.size);
 
   return (
     <TableContainer component={Container}>

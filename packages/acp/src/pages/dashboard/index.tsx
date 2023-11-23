@@ -17,6 +17,12 @@ const actions: MenuItemShape[] = [
   { label: "Dashboard", to: "/" },
   { label: "Settings", to: "/settings" },
   { label: "Blogs", to: "/settings/blog" },
+  { label: "Dashboard", to: "/" },
+  { label: "Settings", to: "/settings" },
+  { label: "Blogs", to: "/settings/blog" },
+  { label: "Dashboard", to: "/" },
+  { label: "Settings", to: "/settings" },
+  { label: "Blogs", to: "/settings/blog" },
 ];
 
 export default function Dashboard() {
