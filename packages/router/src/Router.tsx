@@ -64,8 +64,6 @@ export class Router {
     const urlObj = new URL(url, "http://locahost");
     const { pathname } = urlObj;
 
-    console.log({ pathname });
-
     const item = this.rules.find((x) => {
       return x.parent == parent && (x.match(pathname) || x.match(url));
     });

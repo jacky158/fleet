@@ -1,8 +1,10 @@
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
-import { PaletteMode } from "@mui/material";
+import { useApp, useConfig } from "@ikx/core";
+import type { PaletteMode } from "@mui/material";
 import { ThemeOptions } from "@mui/material/styles";
 import MuiThemeProvider from "@mui/material/styles/ThemeProvider";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import createTheme from "@mui/material/styles/createTheme";
 import { ReactNode, useMemo } from "react";
 import rtlPlugin from "stylis-plugin-rtl";
@@ -66,7 +68,7 @@ const _themeOptions: Record<"light" | "dark", ThemeOptions> = {
 
 export default function ThemeProvider({
   children,
-  mode: _mode = "light",
+  mode: _mode,
   direction = "ltr",
 }: {
   mode?: "dark" | "light" | "auto";
@@ -79,15 +81,23 @@ export default function ThemeProvider({
       stylisPlugins: direction == "rtl" ? [rtlPlugin] : [],
     });
   }, [direction]);
+  const app = useApp();
+
+  const _userMode = app.cookies.get("theme.mode");
+  const _configMode = useConfig<"dark" | "light">("theme.mode");
+  const _browserMode = useMediaQuery("(prefers-color-scheme: dark)");
 
   const mode: PaletteMode = useMemo(() => {
-    if (_mode == "light") return _mode;
-    if (_mode == "dark") return _mode;
-    if (_mode == "auto") {
-      return "light";
+    const verify = _mode ?? _userMode ?? _configMode;
+
+    if (verify == "light" || verify == "dark") {
+      return verify as PaletteMode;
     }
-    return _mode;
-  }, [_mode]);
+
+    return _browserMode ? "dark" : "light";
+  }, [_mode, _configMode, _userMode, _browserMode]);
+
+  // console.log({ _mode, _userMode, _configMode, mode });
 
   const themeOptions = _themeOptions[mode];
 

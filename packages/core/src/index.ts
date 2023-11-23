@@ -1,5 +1,6 @@
 import get from "lodash/get";
-import { useContext } from "react";
+import set from "lodash/set";
+import { startTransition, useContext, useEffect, useState } from "react";
 import { createElement } from "react";
 import { ReactNode } from "react";
 import { createContext } from "react";
@@ -41,6 +42,10 @@ export class App {
 
   constructor(config?: Partial<Config>) {
     this._config = config ?? {};
+  }
+
+  get initialConfig() {
+    return this._config;
   }
 
   /**
@@ -145,6 +150,12 @@ export class App {
     return get(this._config, name, defaultValue);
   }
 
+  public setConfig(name: string, value: unknown): void {
+    if (name || value) {
+      // keep interface
+    }
+  }
+
   /**
    *
    * @param services - a dictionary of service
@@ -168,12 +179,55 @@ export function createApp(): App {
   return new App().bootstrap();
 }
 
-export const Context = createContext<App>({} as unknown as App);
+const ConfigContext = createContext<Config>({});
+
+export function useConfig<T = string>(
+  name?: string,
+  value?: T
+): T | undefined | Config {
+  const bag = useContext(ConfigContext);
+  if (name) {
+    return get(bag, name, value) as T;
+  }
+  return bag;
+}
+
+const AppContext = createContext<App>({} as unknown as App);
+
+function ConfigProvider({
+  children,
+  config: initialConfig,
+}: {
+  children: ReactNode;
+  config: Config;
+}) {
+  const app = useApp();
+  const [value, setValue] = useState<Config>(initialConfig);
+
+  function setConfig(name: string, value: unknown): void {
+    startTransition(() =>
+      setValue((prev) => {
+        set(prev, name, value);
+        return { ...prev };
+      })
+    );
+  }
+
+  useEffect(() => {
+    app.extend({ setConfig });
+  }, [value, setValue, app]);
+
+  return createElement(ConfigContext.Provider, { value: value }, children);
+}
 
 export function Provider({ children, app }: { children: ReactNode; app: App }) {
-  return createElement(Context.Provider, { value: app }, children);
+  return createElement(
+    AppContext.Provider,
+    { value: app },
+    createElement(ConfigProvider, { config: app.initialConfig, children })
+  );
 }
 
 export function useApp(): App {
-  return useContext(Context);
+  return useContext(AppContext);
 }

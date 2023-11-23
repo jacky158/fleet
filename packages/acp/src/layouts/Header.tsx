@@ -13,6 +13,7 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { useCallback } from "react";
 
 export function AppBarBranch() {
   return (
@@ -36,6 +37,26 @@ export function AppBarBranch() {
   );
 }
 
+function DarkModeButton() {
+  const app = useApp();
+  const theme = useTheme();
+  const handleDarkMode = useCallback(() => {
+    const mode = theme?.palette.mode == "dark" ? "light" : "dark";
+    app.cookies.set("theme.mode", mode);
+    app.setConfig("theme.mode", mode);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [theme]);
+
+  return (
+    <IconButton size="small" onClick={handleDarkMode}>
+      <MuiIcon
+        name={theme?.palette.mode == "dark" ? "light_mode" : "dark_mode"}
+        style={{ width: 32 }}
+      />
+    </IconButton>
+  );
+}
+
 export default function Header({
   dx,
   toggleDrawer,
@@ -43,7 +64,6 @@ export default function Header({
   dx: string;
   toggleDrawer: () => void;
 }) {
-  const theme = useTheme();
   const app = useApp();
   return (
     <>
@@ -103,12 +123,7 @@ export default function Header({
                 <MuiIcon name="notifications" style={{ width: 32 }} />
               </IconButton>
             </Badge>
-            <IconButton size="small">
-              <MuiIcon
-                name={theme.palette.mode == "dark" ? "light_mode" : "dark_mode"}
-                style={{ width: 32 }}
-              />
-            </IconButton>
+            <DarkModeButton />
             <IconButton
               size="small"
               onClick={(evt) =>
