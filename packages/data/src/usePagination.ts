@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { LoadResult, PagingAction, PagingState, RowValues } from "@ikx/types";
 import { Dispatch, useCallback, useEffect, useReducer, useRef } from "react";
-import { LoadResult, PagingState, PagingAction, RowValues } from "@ikx/types";
 
 const noop = () => {};
 
@@ -61,8 +61,8 @@ export function usePagination<R extends RowValues, Q = Record<string, unknown>>(
         loadMore() {
           dispatch({ type: "loadMore" });
         },
-        removeItem(payload: unknown) {
-          dispatch({ type: "removeItem", payload });
+        remove(payload: unknown) {
+          dispatch({ type: "remove", payload });
         },
         select(id: unknown, checked?: boolean) {
           dispatch({ type: "select", id, checked });
@@ -87,11 +87,15 @@ export function usePagination<R extends RowValues, Q = Record<string, unknown>>(
           draft.rev = draft.rev + 1;
           draft.loading = true;
           break;
-        case "removeItem":
-          return {
-            ...draft,
-            items: draft.items.filter((x: any) => x.id != action.payload),
-          };
+        case "remove": {
+          const id = action.payload;
+          if (Array.isArray(id)) {
+            draft.items = draft.items.filter((x: any) => !id.includes(x.id));
+          } else {
+            draft.items = draft.items.filter((x: any) => x.id != id);
+          }
+          break;
+        }
         case "setQuery":
           draft.items = [];
           draft.query = action.payload;

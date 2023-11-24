@@ -5,31 +5,22 @@ import {
   ListPresenterProps,
   GridCellParams,
   GridColumnDef,
-  GridDefState,
-  PagingState,
   RowValues,
 } from "@ikx/types";
-import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import IconButton from "@mui/material/IconButton";
-import Stack from "@mui/material/Stack";
-import Switch from "@mui/material/Switch";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell, { TableCellProps } from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableFooter from "@mui/material/TableFooter";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import styled from "@mui/material/styles/styled";
 import get from "lodash/get";
 import { ReactNode, useMemo } from "react";
-
-function InitialLoadingHolder() {
-  return <div>Loading</div>;
-}
+import TableFooterHolder from "./Footer";
+import GhostToolbarHolder from "./GhostToolbar";
+import InitialLoadingHolder from "./InitialLoading";
 
 function renderHeaderCheck<T extends RowValues>(
   c: GridCellParams<T>
@@ -116,124 +107,17 @@ const Container = styled("div")(({ theme }) => ({
   position: "relative",
 }));
 
-const ToolbarRoot = styled("div")<{ size?: string }>(() => ({
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  // background: `${theme.palette.background.paper}`,
-  //color: `${theme.palette.success.contrastText}`,
-  zIndex: 1,
-}));
-
-const ToolbarPresent = styled("div")<{ size?: string }>(({ theme, size }) => ({
-  padding: "0 8px 0 8px",
-  display: "flex",
-  alignItems: "center",
-  background: theme.palette.background.paper,
-  height: size == "small" ? 38 : 54,
-}));
-
-function TableFooterHolder<R extends RowValues>({
-  paging,
-  grid,
-}: {
-  paging: PagingState<R>;
-  grid: GridDefState<R>;
-}) {
-  console.log("handle render footer");
-
-  if (!(paging.items.length > 0)) {
-    return null;
-  }
-
-  return (
-    <TableFooter>
-      <TableRow>
-        <TableCell style={{ padding: "0 8pt 0 24px" }}>
-          <FormControlLabel
-            onChange={(_, checked) =>
-              grid.setSize(checked ? "small" : "medium")
-            }
-            control={
-              <Switch
-                checked={grid.size === "small"}
-                aria-label="dense"
-                size="small"
-              />
-            }
-            label={"Compact"}
-          />
-        </TableCell>
-        <TablePagination
-          page={paging.page}
-          colSpan={grid.columns.length - 1}
-          count={paging.count ?? paging.items?.length ?? 0}
-          rowsPerPage={paging.limit}
-          rowsPerPageOptions={grid.rowsPerPageOptions}
-          onPageChange={(_e, value) => paging.setPage(value)}
-          onRowsPerPageChange={(limit) =>
-            paging.setLimit(limit.target.value as unknown as number)
-          }
-        />
-      </TableRow>
-    </TableFooter>
-  );
-}
-
-function Toolbar<R extends RowValues>({
-  grid,
-  paging,
-}: {
-  grid: GridDefState<R>;
-  paging: PagingState<R>;
-  columns: GridColumnDef<R>[];
-}) {
-  return (
-    <ToolbarRoot>
-      <ToolbarPresent size={grid.size}>
-        <Checkbox
-          disableRipple
-          size="small"
-          indeterminate={paging.selectStatus == "indeterminate"}
-          checked={paging.selectStatus == "all"}
-          onClick={() => paging.selectAll()}
-        />
-        <small style={{ paddingRight: "2em" }}>
-          {paging.selected.length} selected
-        </small>
-        <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-          <Button
-            size="small"
-            sx={{ textTransform: "none" }}
-            startIcon={<MuiIcon name="delete" />}
-          >
-            Delete
-          </Button>
-          <Button size="small" sx={{ textTransform: "none" }}>
-            Send Mail
-          </Button>
-          <Button size="small" sx={{ textTransform: "none" }}>
-            Trash
-          </Button>
-          <Button size="small" sx={{ textTransform: "none" }}>
-            Block
-          </Button>
-          <Button size="small" sx={{ textTransform: "none" }}>
-            Un-Block
-          </Button>
-        </Stack>
-      </ToolbarPresent>
-    </ToolbarRoot>
-  );
-}
-
-export default function AsTable<T extends RowValues>({
-  grid,
-  paging,
-  initLoadingComponent: InitialLoading = InitialLoadingHolder,
-  footerComponent: Footer = TableFooterHolder,
-}: ListPresenterProps<T>) {
+export default function AsTable<T extends RowValues>(
+  props: ListPresenterProps<T>
+) {
+  const {
+    grid,
+    paging,
+    initLoadingComponent: InitialLoading = InitialLoadingHolder,
+    footerComponent: Footer = TableFooterHolder,
+    ghostToolbar: GhostToolbar = GhostToolbarHolder,
+    ghostMenu: GhostMenu,
+  } = props;
   const columns: GridColumnDef<T>[] = useMemo(() => {
     if (!grid) return [];
     return grid.columns.map((x) => {
@@ -321,7 +205,7 @@ export default function AsTable<T extends RowValues>({
         <Footer paging={paging} grid={grid} />
       </Table>
       {paging.selected.length > 0 ? (
-        <Toolbar paging={paging} columns={columns} grid={grid} />
+        <GhostToolbar paging={paging} grid={grid} menu={GhostMenu} />
       ) : null}
     </TableContainer>
   );

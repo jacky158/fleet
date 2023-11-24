@@ -56,7 +56,7 @@ function Actions({
 }: PopoverProps & { passProps: GridCellParams; close?(): void }) {
   const handleDelete = async () => {
     Promise.resolve(true)
-      .then(() => passProps.paging.removeItem(passProps.row?.id))
+      .then(() => passProps.paging.remove(passProps.row?.id))
       .catch(void 0);
   };
   return (

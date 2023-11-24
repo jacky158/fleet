@@ -145,7 +145,7 @@ export type PagingAction<R extends RowValues, Q> =
   | { type: "setPage"; payload: number }
   | { type: "setQuery"; payload: Q }
   | { type: "setResult"; payload: LoadResult<R[]> }
-  | { type: "removeItem"; payload: unknown }
+  | { type: "remove"; payload: unknown }
   | { type: "select"; id: unknown; checked?: boolean }
   | { type: "selectAll"; payload?: boolean }
   | { type: "refresh" }
@@ -171,7 +171,7 @@ export interface PagingState<R extends RowValues, Q = Record<string, unknown>> {
   query: Q;
   loader: Loader<R[], unknown>;
   dispatch: Dispatch<PagingAction<R, Q>>;
-  removeItem(id: unknown): void;
+  remove(id: unknown): void;
   loadMore(): void;
   setPage(page: number): void;
   setLimit(limit: number): void;
@@ -229,6 +229,8 @@ export interface SharedListPresenterProps {
   errorComponent?: ElementType;
   emptyResultComponent?: ElementType;
   footerComponent?: ElementType;
+  ghostToolbar?: ElementType;
+  ghostMenu?: ElementType;
 }
 
 export interface ListPresenterProps<R extends RowValues>
