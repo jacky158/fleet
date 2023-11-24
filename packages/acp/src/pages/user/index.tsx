@@ -8,12 +8,16 @@ import PageHeader from "@ikx/acp/src/ui/PageHeader";
 import { AsTable, Pagination, useGridDef, usePagination } from "@ikx/data";
 import { Layout } from "@ikx/jsx";
 import { Link } from "@ikx/router";
-import { GridCellParams, LoadResult } from "@ikx/types";
+import { GridCellParams, ListPresenterProps, LoadResult } from "@ikx/types";
 import delay from "@ikx/utils/dist/delay";
-import { Menu, MenuItem, PopoverProps } from "@mui/material";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { PopoverProps } from "@mui/material/Popover";
 import Box from "@mui/material/Box";
 import dayjs from "dayjs";
 import FilterUser from "./Filter";
+import { useApp } from "@ikx/core";
 
 const createData = (p: number = 0, n: number) => {
   const ret = [];
@@ -76,6 +80,23 @@ function Actions({
   );
 }
 
+function GhostActions({ paging }: ListPresenterProps) {
+  const app = useApp();
+  function handleDelete() {
+    app
+      .confirm({ message: "Are  you sure" })
+      .then(() => paging.remove(paging.selected))
+      .catch(void 0);
+  }
+  return (
+    <>
+      <Button size="small" onClick={handleDelete}>
+        delete
+      </Button>
+    </>
+  );
+}
+
 function Content() {
   const grid = useGridDef<ItemShape>({
     columns: [
@@ -114,6 +135,7 @@ function Content() {
       grid={grid}
       paging={paging}
       presenter={AsTable}
+      ghostActions={GhostActions}
     />
   );
 }

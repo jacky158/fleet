@@ -117,7 +117,7 @@ export default function AsTable<T extends RowValues>(
     initLoadingComponent: InitialLoading = InitialLoadingHolder,
     footerComponent: Footer = TableFooterHolder,
     ghostToolbar: GhostToolbar = GhostToolbarHolder,
-    ghostMenu: GhostMenu,
+    ghostActions,
     loadingComponent: Loading = LoadingHolder,
   } = props;
   const columns: GridColumnDef<T>[] = useMemo(() => {
@@ -207,7 +207,7 @@ export default function AsTable<T extends RowValues>(
         <Footer paging={paging} grid={grid} />
       </Table>
       {paging.selected.length > 0 ? (
-        <GhostToolbar paging={paging} grid={grid} menu={GhostMenu} />
+        <GhostToolbar paging={paging} grid={grid} menu={ghostActions} />
       ) : null}
       {data?.length && paging.loading ? <Loading /> : null}
     </TableContainer>

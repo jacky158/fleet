@@ -1,11 +1,11 @@
 import { MuiIcon } from "@ikx/mui";
-import { FilterProps } from "@ikx/types";
+import { GridFilterProps } from "@ikx/types";
 import { IconButton } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { useFormik } from "formik";
 
-export function FilterUser({ value, onSubmit }: FilterProps) {
+export function FilterUser({ value, onSubmit, paging }: GridFilterProps) {
   const formik = useFormik({
     initialValues: value,
     onSubmit(values, helpers) {
@@ -53,6 +53,9 @@ export function FilterUser({ value, onSubmit }: FilterProps) {
         <Grid item>
           <IconButton type="submit" color="inherit">
             <MuiIcon name="search" />
+          </IconButton>
+          <IconButton onClick={paging.refresh}>
+            <MuiIcon name="refresh" />
           </IconButton>
           <IconButton
             color="inherit"

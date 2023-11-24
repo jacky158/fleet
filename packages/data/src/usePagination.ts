@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { LoadResult, PagingAction, PagingState, RowValues } from "@ikx/types";
 import { Dispatch, useCallback, useEffect, useReducer, useRef } from "react";
-
 const noop = () => {};
 
 export interface CreatePagingProps<
@@ -90,9 +89,11 @@ export function usePagination<R extends RowValues, Q = Record<string, unknown>>(
         case "remove": {
           const id = action.payload;
           if (Array.isArray(id)) {
-            draft.items = draft.items.filter((x: any) => !id.includes(x.id));
+            draft.items = draft.items.filter((x) => !id.includes(x.id));
+            draft.selected = draft.selected.filter((x) => !id.includes(x));
           } else {
-            draft.items = draft.items.filter((x: any) => x.id != id);
+            draft.items = draft.items.filter((x) => x.id != id);
+            draft.selected = draft.selected.filter((x: any) => x != id);
           }
           break;
         }

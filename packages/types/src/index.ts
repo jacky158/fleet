@@ -230,16 +230,16 @@ export interface SharedListPresenterProps {
   emptyResultComponent?: ElementType;
   footerComponent?: ElementType;
   ghostToolbar?: ElementType;
-  ghostMenu?: ElementType;
+  ghostActions?: ElementType;
 }
 
-export interface ListPresenterProps<R extends RowValues>
+export interface ListPresenterProps<R extends RowValues = RowValues>
   extends SharedListPresenterProps {
   grid?: GridDefState<R>;
   paging: PagingState<R>;
 }
 
-export type ListingProps<R extends RowValues> = {
+export type ListingProps<R extends RowValues = RowValues> = {
   grid?: GridDefState<R>;
   filter?: FC<FilterProps>;
   presenter: FC<ListPresenterProps<R>>;

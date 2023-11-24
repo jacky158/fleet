@@ -1,11 +1,11 @@
 import { MuiIcon } from "@ikx/mui";
-import { FilterProps } from "@ikx/types";
+import { GridFilterProps } from "@ikx/types";
 import { IconButton } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import { useFormik } from "formik";
 
-export function GridFilter({ value, onSubmit }: FilterProps) {
+export function GridFilter({ value, onSubmit }: GridFilterProps) {
   const formik = useFormik({
     initialValues: value,
     onSubmit(values, helpers) {

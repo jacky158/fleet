@@ -25,11 +25,11 @@ const ToolbarPresent = styled("div")<{ size?: string }>(({ theme, size }) => ({
 export default function Toolbar<R extends RowValues>({
   grid,
   paging,
-  ghostMenu: GhostMenu,
+  menu: GhostActions,
 }: {
   grid: GridDefState<R>;
   paging: PagingState<R>;
-  ghostMenu: ElementType;
+  menu?: ElementType;
 }) {
   return (
     <ToolbarRoot>
@@ -45,7 +45,7 @@ export default function Toolbar<R extends RowValues>({
           {paging.selected.length} selected
         </small>
         <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-          {GhostMenu ? <GhostMenu grid={grid} paging={paging} /> : null}
+          {GhostActions ? <GhostActions grid={grid} paging={paging} /> : null}
         </Stack>
       </ToolbarPresent>
     </ToolbarRoot>
