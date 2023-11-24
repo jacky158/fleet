@@ -10,13 +10,12 @@ import FormControlLabel, {
 } from "@mui/material/FormControlLabel";
 
 export default function CheckboxField({
-  config: { component, name, label, ...props },
+  name,
+  label,
+  ...props
 }: ElementProps<Omit<CheckboxProps, "children">> &
   Omit<FormControlLabelProps, "children" | "control">) {
   const formik = useFormikContext();
-  if (component) {
-    // skip
-  }
   if (!name) return null;
 
   const value = get(formik.values, name, "");

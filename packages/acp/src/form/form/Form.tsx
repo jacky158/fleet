@@ -8,13 +8,18 @@ import { ElementProps, Element, useFormikContext } from "@ikx/form-builder";
 import map from "lodash/map";
 
 export default function FormContainer({
-  config,
+  elements,
+  role,
+  title,
+  testid,
 }: ElementProps<{
   role: "form";
   title?: string;
 }>) {
-  const { elements, role, title, testid } = config;
   const formik = useFormikContext();
+
+  if (!elements) return null;
+
   return (
     <form
       onSubmit={formik.handleSubmit}
@@ -23,7 +28,7 @@ export default function FormContainer({
       id={testid ?? "form"}
     >
       {map(elements, (config, key) => (
-        <Element key={key.toString()} config={config as unknown as any} />
+        <Element key={key.toString()} {...(config as any)} />
       ))}
     </form>
   );

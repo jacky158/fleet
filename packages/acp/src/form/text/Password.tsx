@@ -10,13 +10,13 @@ import { MuiIcon } from "@ikx/mui";
 import { useState } from "react";
 
 export default function Password({
-  config: { component, name, label, placeholder, ...props },
+  name,
+  label,
+  placeholder,
+  ...props
 }: ElementProps<Omit<TextFieldProps, "children" | "type">>) {
   const formik = useFormikContext();
   const [type, setType] = useState<"text" | "password">("password");
-  if (component) {
-    // skip
-  }
 
   const value = get(formik.values, name, "");
   return (

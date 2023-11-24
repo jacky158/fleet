@@ -8,7 +8,8 @@ import { DateField } from "@mui/x-date-pickers/DateField";
 import dayjs, { Dayjs } from "dayjs";
 
 export default function Date({
-  config: { name, label },
+  name,
+  label,
 }: ElementProps<{ name: string; placeholder: string }>) {
   const formik = useFormikContext();
 

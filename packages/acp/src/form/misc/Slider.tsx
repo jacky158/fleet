@@ -7,12 +7,11 @@ import get from "lodash/get";
 import Slider, { SliderProps } from "@mui/material/Slider";
 
 export default function SliderElement({
-  config: { component, name = "_submit", label = "submit", ...props },
+  name = "_submit",
+  label = "submit",
+  ...props
 }: ElementProps<Omit<SliderProps, "children" | "type">>) {
   const formik = useFormikContext();
-  if (component) {
-    // skip
-  }
 
   const value = get(formik.values, name, 0);
   return (

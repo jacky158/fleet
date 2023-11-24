@@ -10,7 +10,11 @@ import { useCallback } from "react";
 import { TextFieldProps } from "@mui/material";
 
 export default function DatePickerElement({
-  config: { name, label, size, required, variant },
+  name,
+  label,
+  size,
+  required,
+  variant,
 }: ElementProps<
   { name: string; placeholder: string } & Omit<
     TextFieldProps,

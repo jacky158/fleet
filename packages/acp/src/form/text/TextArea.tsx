@@ -7,12 +7,13 @@ import get from "lodash/get";
 import TextField, { TextFieldProps } from "@mui/material/TextField";
 
 export default function TextArea({
-  config: { component, name, type, label, placeholder, ...props },
+  name,
+  type,
+  label,
+  placeholder,
+  ...props
 }: ElementProps<Omit<TextFieldProps, "children">>) {
   const formik = useFormikContext();
-  if (component) {
-    // skip
-  }
 
   const value = get(formik.values, name, "");
   return (

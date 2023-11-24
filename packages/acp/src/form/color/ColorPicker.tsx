@@ -26,7 +26,7 @@ const Trigger = styled(
   },
 }));
 
-export default function ColorPicker({ config: { name, label } }: ElementProps) {
+export default function ColorPicker({ name, label }: ElementProps) {
   const formik = useFormikContext();
   const [open, setOpen] = useState<boolean>(false);
   const controlRef = useRef<HTMLDivElement>(null);

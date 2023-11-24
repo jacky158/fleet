@@ -7,12 +7,10 @@ import get from "lodash/get";
 import Rating, { RatingProps } from "@mui/material/Rating";
 
 export default function RatingField({
-  config: { component, name, ...props },
+  name,
+  ...props
 }: ElementProps<Omit<RatingProps, "children">>) {
   const formik = useFormikContext();
-  if (component) {
-    // skip
-  }
 
   if (!name) return null;
 
