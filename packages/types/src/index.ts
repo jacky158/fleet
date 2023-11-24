@@ -214,12 +214,16 @@ export interface GridColumnDef<R extends RowValues = RowValues> {
 export interface GridCellParams<T extends RowValues = RowValues> {
   row: T | undefined;
   column: GridColumnDef<T>;
-  selected: unknown[];
   paging: PagingState<T>;
+  grid?: GridDefState<T>;
 }
 
-export interface FilterProps<T extends FilterValues = FilterValues> {
+export interface FilterProps<
+  T extends FilterValues = FilterValues,
+  R extends RowValues = RowValues
+> {
   value: T;
+  paging?: PagingState<R, T>;
   onSubmit: FormikConfig<T>["onSubmit"];
 }
 

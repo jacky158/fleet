@@ -15,7 +15,7 @@ export default function ConfirmHandler() {
   const app = useApp();
   const [open, setOpen] = useState<boolean>(false);
   const [data, setData] = useState<ConfirmProps>();
-  const [value, setValue] = useState<boolean>(false);
+  const value = useRef<boolean>(false);
 
   const resolver = useRef<(value: boolean) => void>();
 
@@ -28,27 +28,27 @@ export default function ConfirmHandler() {
     handleCancel();
   };
 
-  const handleSubmit = () => {
-    setValue(true);
+  const handleSubmit = useCallback(() => {
+    value.current = true;
     setOpen(false);
-  };
+  }, []);
 
-  const handleExit = () => {
+  const handleExit = useCallback(() => {
     if (resolver.current) {
-      resolver.current(value);
+      resolver.current(value.current);
     } else {
       console.warn("there are no resolver");
     }
-  };
+  }, []);
 
-  const handleExited = () => {
+  const handleExited = useCallback(() => {
     setData(undefined);
-  };
+  }, []);
 
   const confirm = useCallback((data: ConfirmProps) => {
     setOpen(true);
     setData(data);
-    setValue(false);
+    value.current = false;
 
     return new Promise<boolean>((resolve) => {
       resolver.current = resolve;
@@ -57,7 +57,7 @@ export default function ConfirmHandler() {
 
   useEffect(() => {
     app.extend({ confirm });
-  }, []);
+  }, [app, confirm]);
 
   if (!data) {
     return null;

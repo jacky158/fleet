@@ -157,7 +157,7 @@ export default function AsTable<T extends RowValues>(
                     row={undefined}
                     column={column}
                     paging={paging}
-                    selected={paging.selected}
+                    grid={grid}
                   />
                 </TableCell>
               );

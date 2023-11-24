@@ -56,21 +56,22 @@ export const loader = function ({
   }));
 };
 
-function Actions({
-  passProps,
-  ...props
-}: PopoverProps & { passProps: GridCellParams; close?(): void }) {
-  const handleDelete = async () => {
-    Promise.resolve(true)
-      .then(() => passProps.paging.remove(passProps.row?.id))
+function Actions({ paging, row, ...props }: PopoverProps & GridCellParams) {
+  const app = useApp();
+  const handleDelete = () =>
+    app
+      .confirm({ message: "Are you sure?" })
+      .then(() => {
+        paging.remove(row?.id);
+      })
       .catch(void 0);
-  };
+
   return (
     <Menu {...props}>
-      <Link component={MenuItem} to={`/customer/${passProps.row?.id}`}>
+      <Link component={MenuItem} to={`/user/${row?.id}`}>
         View
       </Link>
-      <Link component={MenuItem} to={`/customer/${passProps.row?.id}/edit`}>
+      <Link component={MenuItem} to={`/user/${row?.id}/edit`}>
         Edit
       </Link>
       <MenuItem color="error" onClick={handleDelete}>

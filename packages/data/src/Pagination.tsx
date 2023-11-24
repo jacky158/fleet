@@ -1,7 +1,9 @@
 import { useLayoutEffect, useState } from "react";
 import { ListingProps, RowValues } from "@ikx/types";
 
-export function Pagination<T extends RowValues>(props: ListingProps<T>) {
+export function Pagination<T extends RowValues = RowValues>(
+  props: ListingProps<T>
+) {
   const { grid, paging, filter: Filter, presenter: List, ...restProps } = props;
   const [mounted, setMounted] = useState<boolean>();
 
@@ -14,7 +16,7 @@ export function Pagination<T extends RowValues>(props: ListingProps<T>) {
   return (
     <>
       {Filter ? (
-        <Filter grid={grid} paging={paging} value={{}} onSubmit={() => {}} />
+        <Filter paging={paging} value={{}} onSubmit={() => {}} />
       ) : null}
       {List ? <List grid={grid} paging={paging} {...restProps} /> : null}
     </>
