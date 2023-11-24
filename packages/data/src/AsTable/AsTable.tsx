@@ -58,20 +58,20 @@ function renderCellCheck<T extends RowValues>(c: GridCellParams<T>): ReactNode {
       disableRipple
       size="small"
       name={c.column.field}
-      checked={c.selected.includes(value)}
+      checked={c.paging.selected.includes(value)}
       onChange={(_, checked) => c.paging.select(value, checked)}
     />
   );
 }
-function Actions<T extends RowValues>(passProps: GridCellParams<T>): ReactNode {
+function Actions<T extends RowValues>(def: GridCellParams<T>): ReactNode {
   const app = useApp();
   return (
     <IconButton
       size="small"
       onClick={(e) =>
         app.openPopover(e, {
-          component: passProps.column.actions ?? "popover.TableActions",
-          passProps,
+          component: def.column.actions ?? "popover.TableActions",
+          def,
           // disablePortal: true,
           // disableScrollLock: true,
           // anchorOrigin: { horizontal: "right", vertical: "bottom" },
@@ -193,7 +193,6 @@ export default function AsTable<T extends RowValues>(
                           <BodyCell<T>
                             row={row}
                             column={column}
-                            selected={paging.selected}
                             paging={paging}
                           />
                         </TableCell>

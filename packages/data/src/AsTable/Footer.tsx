@@ -13,8 +13,6 @@ export default function TableFooterHolder<R extends RowValues>({
   paging: PagingState<R>;
   grid: GridDefState<R>;
 }) {
-  console.log("handle render footer");
-
   if (!(paging.items.length > 0)) {
     return null;
   }

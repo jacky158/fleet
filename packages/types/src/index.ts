@@ -237,15 +237,20 @@ export interface SharedListPresenterProps {
   ghostActions?: ElementType;
 }
 
-export interface ListPresenterProps<R extends RowValues = RowValues>
-  extends SharedListPresenterProps {
+export interface ListPresenterProps<
+  R extends RowValues = RowValues,
+  Q extends FilterValues = FilterValues
+> extends SharedListPresenterProps {
   grid?: GridDefState<R>;
-  paging: PagingState<R>;
+  paging: PagingState<R, Q>;
 }
 
-export type ListingProps<R extends RowValues = RowValues> = {
+export type ListingProps<
+  R extends RowValues = RowValues,
+  Q extends FilterValues = FilterValues
+> = {
   grid?: GridDefState<R>;
-  filter?: FC<FilterProps>;
-  presenter: FC<ListPresenterProps<R>>;
-  paging: PagingState<R>;
+  filter?: FC<FilterProps<Q, R>>;
+  presenter: FC<ListPresenterProps<R, Q>>;
+  paging: PagingState<R, Q>;
 } & SharedListPresenterProps;

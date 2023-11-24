@@ -56,15 +56,16 @@ export const loader = function ({
   }));
 };
 
-function Actions({ paging, row, ...props }: PopoverProps & GridCellParams) {
+function Actions({
+  def: { paging, row },
+  ...props
+}: PopoverProps & { def: GridCellParams }) {
   const app = useApp();
   const handleDelete = () =>
     app
       .confirm({ message: "Are you sure?" })
-      .then(() => {
-        paging.remove(row?.id);
-      })
-      .catch(void 0);
+      .then((ok) => ok && paging.remove(row?.id))
+      .catch(() => 0);
 
   return (
     <Menu {...props}>
@@ -85,9 +86,11 @@ function GhostActions({ paging }: ListPresenterProps) {
   const app = useApp();
   function handleDelete() {
     app
-      .confirm({ message: "Are  you sure" })
-      .then(() => paging.remove(paging.selected))
-      .catch(void 0);
+      .confirm({
+        message: "Are  you sure",
+      })
+      .then((ok) => ok && paging.remove(paging.selected))
+      .catch(() => 0);
   }
   return (
     <>

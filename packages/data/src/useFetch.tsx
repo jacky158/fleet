@@ -28,7 +28,7 @@ export function useFetch<T = unknown>(props: FetchDataConfig<T>) {
         .then((result: FetchDataResult<T>) => {
           return mounted ? setResult(result) : undefined;
         })
-        .catch(void 0);
+        .catch(() => 0);
 
     if (!data || forceReload) {
       fetchData();
