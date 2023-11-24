@@ -1,17 +1,21 @@
 /**
  * @type: route
- * @name: customer
- * @path: /customer
+ * @name: user.browse
+ * @path: /
+ * @parent: user
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import PageHeader from "@ikx/acp/src/ui/PageHeader";
+import { useApp } from "@ikx/core";
 import { AsTable, Pagination, useGridDef, usePagination } from "@ikx/data";
-import { Layout } from "@ikx/jsx";
 import { Link } from "@ikx/router";
-import { GridCellParams, LoadResult } from "@ikx/types";
-import { Menu, MenuItem, PopoverProps } from "@mui/material";
-import Box from "@mui/material/Box";
+import { GridCellParams, ListPresenterProps, LoadResult } from "@ikx/types";
+import delay from "@ikx/utils/dist/delay";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { PopoverProps } from "@mui/material/Popover";
 import dayjs from "dayjs";
+import FilterUser from "./Filter";
 
 const createData = (p: number = 0, n: number) => {
   const ret = [];
@@ -38,7 +42,7 @@ export const loader = function ({
   limit = 20,
   page = 0,
 }): Promise<LoadResult<ItemShape[]>> {
-  return Promise.resolve({
+  return delay(2000).then(() => ({
     data: createData(page, limit),
     meta: {
       pagination: {
@@ -47,28 +51,26 @@ export const loader = function ({
         count: 100,
       },
     },
-  });
+  }));
 };
 
 function Actions({
-  ctx,
+  ctx: { paging, row },
   ...props
-}: PopoverProps & { ctx: GridCellParams; close?(): void }) {
-  const handleDelete = async () => {
-    Promise.resolve(true)
-      .then(() => ctx.paging.remove(ctx.row?.id))
+}: PopoverProps & { ctx: GridCellParams }) {
+  const app = useApp();
+  const handleDelete = () =>
+    app
+      .confirm({ message: "Are you sure?" })
+      .then((ok) => ok && paging.remove(row?.id))
       .catch(() => 0);
-  };
+
   return (
-    <Menu
-      {...props}
-      sx={{ minWidth: 120 }}
-      anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-    >
-      <Link component={MenuItem} to={`/customer/${ctx.row?.id}`}>
+    <Menu {...props}>
+      <Link component={MenuItem} to={`/user/${row?.id}`}>
         View
       </Link>
-      <Link component={MenuItem} to={`/customer/${ctx.row?.id}/edit`}>
+      <Link component={MenuItem} to={`/user/${row?.id}/edit`}>
         Edit
       </Link>
       <MenuItem color="error" onClick={handleDelete}>
@@ -78,7 +80,26 @@ function Actions({
   );
 }
 
-export function Screen() {
+function GhostActions({ paging }: ListPresenterProps) {
+  const app = useApp();
+  function handleDelete() {
+    app
+      .confirm({
+        message: "Are  you sure",
+      })
+      .then((ok) => ok && paging.remove(paging.selected))
+      .catch(() => 0);
+  }
+  return (
+    <>
+      <Button size="small" onClick={handleDelete}>
+        delete
+      </Button>
+    </>
+  );
+}
+
+export default function Route() {
   const grid = useGridDef<ItemShape>({
     columns: [
       { field: "check", type: "selection" },
@@ -108,25 +129,15 @@ export function Screen() {
     rowsPerPageOptions: [20, 50, 100],
   });
 
-  const paging = usePagination<ItemShape>({
-    page: 1,
-    query: {},
-    perPageOptions: [10],
-    loader,
-  });
+  const paging = usePagination<ItemShape>({ loader });
 
   return (
-    <Pagination<ItemShape> grid={grid} paging={paging} presenter={AsTable} />
-  );
-}
-
-export default function ECommerce() {
-  return (
-    <Layout name="layout.master">
-      <PageHeader title="E-Commerce" />
-      <Box sx={{ p: 2 }}>
-        <Screen />
-      </Box>
-    </Layout>
+    <Pagination<ItemShape>
+      filter={FilterUser}
+      grid={grid}
+      paging={paging}
+      presenter={AsTable}
+      ghostActions={GhostActions}
+    />
   );
 }

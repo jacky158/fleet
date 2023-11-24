@@ -63,15 +63,15 @@ function renderCellCheck<T extends RowValues>(c: GridCellParams<T>): ReactNode {
     />
   );
 }
-function Actions<T extends RowValues>(def: GridCellParams<T>): ReactNode {
+function Actions<T extends RowValues>(ctx: GridCellParams<T>): ReactNode {
   const app = useApp();
   return (
     <IconButton
       size="small"
       onClick={(e) =>
         app.openPopover(e, {
-          component: def.column.actions ?? "popover.TableActions",
-          def,
+          component: ctx.column.actions ?? "popover.TableActions",
+          ctx,
           // disablePortal: true,
           // disableScrollLock: true,
           // anchorOrigin: { horizontal: "right", vertical: "bottom" },
