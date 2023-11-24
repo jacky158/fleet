@@ -14,8 +14,8 @@ export default function Text({
   ...props
 }: ElementProps<Omit<TextFieldProps, "children">>) {
   const formik = useFormikContext();
-
   const value = get(formik.values, name, "");
+
   return (
     <TextField
       {...props}

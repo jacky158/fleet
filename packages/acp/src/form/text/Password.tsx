@@ -17,8 +17,8 @@ export default function Password({
 }: ElementProps<Omit<TextFieldProps, "children" | "type">>) {
   const formik = useFormikContext();
   const [type, setType] = useState<"text" | "password">("password");
-
   const value = get(formik.values, name, "");
+
   return (
     <TextField
       {...props}

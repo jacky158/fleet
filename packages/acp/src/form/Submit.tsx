@@ -6,9 +6,13 @@ import { ElementProps } from "@ikx/form-builder";
 import Button, { ButtonProps } from "@mui/material/Button";
 
 export default function SubmitButton({
-  name = "_submit",
   label = "submit",
+  type = "submit",
   ...props
-}: ElementProps<Omit<ButtonProps, "children" | "type">>) {
-  return <Button {...props} type="submit" name={name} children={label} />;
+}: ElementProps<Omit<ButtonProps, "children">>) {
+  return (
+    <Button {...props} type={type}>
+      {label}
+    </Button>
+  );
 }

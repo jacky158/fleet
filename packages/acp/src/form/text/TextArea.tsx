@@ -15,7 +15,10 @@ export default function TextArea({
 }: ElementProps<Omit<TextFieldProps, "children">>) {
   const formik = useFormikContext();
 
+  if (!name) return null;
+
   const value = get(formik.values, name, "");
+
   return (
     <TextField
       {...props}
