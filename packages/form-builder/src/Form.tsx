@@ -37,7 +37,11 @@ export function Form<T extends FormikValues = FormikValues>({
    * transform schema here
    */
   const formSchema: FormBuilderSchema = React.useMemo(() => {
-    const formSchema = transformSchema(formSchemaRaw, values, dialog);
+    const formSchema = transformSchema(
+      formSchemaRaw as unknown as Record<string, unknown>,
+      values,
+      dialog
+    );
 
     if (formName) {
       formSchema.name = formName;
@@ -87,7 +91,7 @@ export function Form<T extends FormikValues = FormikValues>({
         {(props) => (
           <>
             <Element
-              schema={formSchema}
+              config={formSchema}
               formik={props as unknown as FormikProps<FormikValues>}
             />
             {confirm ? (

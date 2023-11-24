@@ -1,44 +1,35 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormikHelpers, FormikProps, FormikValues } from "formik";
-import { FetchDataConfig, RemoteDataSource } from "@ikx/types";
+import { FetchDataConfig, RemoteDataSource, ViewName } from "@ikx/types";
 import React from "react";
 export type BuilderElementType = "field" | "container" | undefined;
 import { ConfirmProps } from "@ikx/types";
+import { WhenProps } from "@ikx/when";
 
-export interface BuilderFieldProps<T = FormikValues> {
-  config: T & BuilderElementShape;
-  name?: string;
+export interface ElementProps<
+  C = object,
+  D extends FormikValues = FormikValues
+> {
+  config: C & BaseElement;
+  formik: FormikProps<D>;
   disabled?: boolean;
   required?: boolean;
-  acceptTypeFile?: unknown;
-  formik?: FormikProps<T>;
-  aspectRatio?: unknown;
-  widthPhoto?: string;
-  onReset?: () => void;
 }
 
-export interface BuilderElementShape {
+export interface BaseElement {
   testid?: string;
-  container?: boolean;
   component?: string;
-  name?: string;
+  name: string;
   label?: string;
-  noFeedback?: boolean;
   description?: string;
   placeholder?: string;
   required?: boolean;
   showWhen?: unknown;
-  enabledWhen?: unknown;
+  enabledWhen?: WhenProps;
+  requiredWhen?: WhenProps;
   tagName?: string;
-  wrapAs?: React.ElementType;
-  template?: string;
-  elements?: Record<string, BuilderElementShape>;
-  variant?: "text" | "outlined" | "contained" | string;
+  elements?: Record<string, BaseElement>;
   labelProps?: { shrink?: boolean; [key: string]: any };
-  margin?: "normal" | "dense" | "none";
-  fullWidth?: boolean;
-  defaultValue?: unknown;
-  prefix?: string;
   [key: string]: unknown;
 }
 
@@ -52,7 +43,7 @@ export interface ResetFormSuccessParams {
   keepValues?: unknown;
 }
 
-export interface FormBuilderSchema extends BuilderElementShape {
+export interface FormBuilderSchema {
   method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH" | string;
   dialog?: boolean;
   noBreadcrumb?: boolean;
@@ -66,6 +57,13 @@ export interface FormBuilderSchema extends BuilderElementShape {
   submitOnValueChanged?: boolean;
   keepPaginationData?: boolean;
   alertPreSubmitError?: string | boolean;
+  elements: Record<string, any>;
+  navigationConfirmWhenDirty?: unknown;
+  validation?: unknown;
+  dialogEmbedItem?: unknown;
+  value?: object;
+  component: ViewName;
+  name?: string;
 }
 
 interface FormBuilderBase<T = FormikValues> {

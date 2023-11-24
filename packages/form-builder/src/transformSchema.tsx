@@ -7,7 +7,7 @@ export default function transformSchema(
   dialog?: boolean
 ): FormBuilderSchema {
   Object.freeze(data);
-  const schema: FormBuilderSchema = { ...data } as FormBuilderSchema;
+  const schema: FormBuilderSchema = { ...data } as unknown as FormBuilderSchema;
 
   const { header, footer, ...elements } = schema.elements || {};
 

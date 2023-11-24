@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { FormikProps, FormikValues, connect } from "formik";
 import React from "react";
 import { FormBuilderSchema } from "./types";
@@ -5,18 +6,18 @@ import Render from "./Render";
 
 type ElementRendererProps = {
   formik: FormikProps<FormikValues>;
-  schema: FormBuilderSchema;
+  config: FormBuilderSchema;
 };
 
-const ElementComponent = ({ schema, formik }: ElementRendererProps) => {
-  return <Render config={schema} formik={formik} />;
+const ElementComponent = ({ config, formik }: ElementRendererProps) => {
+  return <Render config={config as unknown as any} formik={formik} />;
 };
 
 export const Element: React.FC<ElementRendererProps> = connect(
   React.memo(
     ElementComponent,
-    ({ schema, formik }, nextProps) =>
-      schema === nextProps.schema &&
+    ({ config, formik }, nextProps) =>
+      config === nextProps.config &&
       formik.initialValues === nextProps.formik.initialValues &&
       formik.isValidating === nextProps.formik.isValidating &&
       formik.isSubmitting === nextProps.formik.isSubmitting
