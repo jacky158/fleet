@@ -5,11 +5,15 @@ import {
   DataListProps,
   GridCellParams,
   GridColumnDef,
+  GridDefState,
+  PagingState,
   RowValues,
 } from "@ikx/types";
+import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
 import Switch from "@mui/material/Switch";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -28,12 +32,13 @@ function renderHeaderCheck<T extends RowValues>(
 ): ReactNode {
   return (
     <Checkbox
+      disabled={c.paging.loading}
       disableRipple
       size="small"
       name={c.column.field}
       indeterminate={c.paging.selectStatus == "indeterminate"}
       checked={c.paging.selectStatus == "all"}
-      onClick={() => c.paging.api.selectAll()}
+      onClick={() => c.paging.selectAll()}
     />
   );
 }
@@ -58,7 +63,7 @@ function renderCellCheck<T extends RowValues>(c: GridCellParams<T>): ReactNode {
       size="small"
       name={c.column.field}
       checked={c.selected.includes(value)}
-      onChange={(_, checked) => c.paging.api.select(value, checked)}
+      onChange={(_, checked) => c.paging.select(value, checked)}
     />
   );
 }
@@ -103,8 +108,74 @@ function BodyCell<T extends RowValues>(c: GridCellParams<T>) {
 }
 
 const Container = styled("div")(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
+  border: `1pt solid ${theme.palette.divider}`,
+  position: "relative",
 }));
+
+const ToolbarRoot = styled("div")<{ size?: string }>(() => ({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  right: 0,
+  // background: `${theme.palette.background.paper}`,
+  //color: `${theme.palette.success.contrastText}`,
+  zIndex: 1,
+}));
+
+const ToolbarPresent = styled("div")<{ size?: string }>(({ theme, size }) => ({
+  padding: "0 8px 0 8px",
+  display: "flex",
+  alignItems: "center",
+  background: theme.palette.background.paper,
+  height: size == "small" ? 38 : 54,
+}));
+
+function Toolbar<R extends RowValues>({
+  grid,
+  paging,
+}: {
+  grid: GridDefState<R>;
+  paging: PagingState<R>;
+  columns: GridColumnDef<R>[];
+}) {
+  return (
+    <ToolbarRoot>
+      <ToolbarPresent size={grid.size}>
+        <Checkbox
+          disableRipple
+          size="small"
+          indeterminate={paging.selectStatus == "indeterminate"}
+          checked={paging.selectStatus == "all"}
+          onClick={() => paging.selectAll()}
+        />
+        <small style={{ paddingRight: "2em" }}>
+          {paging.selected.length} selected
+        </small>
+        <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
+          <Button
+            size="small"
+            sx={{ textTransform: "none" }}
+            startIcon={<MuiIcon name="delete" />}
+          >
+            Delete
+          </Button>
+          <Button size="small" sx={{ textTransform: "none" }}>
+            Send Mail
+          </Button>
+          <Button size="small" sx={{ textTransform: "none" }}>
+            Trash
+          </Button>
+          <Button size="small" sx={{ textTransform: "none" }}>
+            Block
+          </Button>
+          <Button size="small" sx={{ textTransform: "none" }}>
+            Un-Block
+          </Button>
+        </Stack>
+      </ToolbarPresent>
+    </ToolbarRoot>
+  );
+}
 
 export default function AsTable<T extends RowValues>({
   grid,
@@ -131,13 +202,13 @@ export default function AsTable<T extends RowValues>({
 
   return (
     <TableContainer component={Container}>
-      <Table size={paging.size == "small" ? "small" : "medium"}>
+      <Table size={grid.size == "small" ? "small" : "medium"}>
         <TableHead>
           <TableRow>
             {columns.map((column) => {
               return (
                 <TableCell
-                  size={paging.size as unknown as TableCellProps["size"]}
+                  size={grid.size as unknown as TableCellProps["size"]}
                   width={column.width}
                   align={column.headerAlign ?? column.align}
                   key={column.field}
@@ -164,16 +235,15 @@ export default function AsTable<T extends RowValues>({
             ? data.map((row, index) => {
                 return (
                   <TableRow
+                    // onContextMenu={() => alert(2)}
                     hover
                     key={index.toString()}
-                    className={index % 2 ? "odd" : "even"}
+                    className={index % 2 ? "tableRowOdd" : "tableRowEven"}
                   >
                     {columns.map((column) => {
                       return (
                         <TableCell
-                          size={
-                            paging.size as unknown as TableCellProps["size"]
-                          }
+                          size={grid.size as unknown as TableCellProps["size"]}
                           align={column.align}
                           width={column.width}
                           key={column.field}
@@ -194,36 +264,41 @@ export default function AsTable<T extends RowValues>({
             : null}
         </TableBody>
         <TableFooter>
-          <TableRow>
-            <TableCell style={{ padding: "0 0 0 16px" }}>
-              <FormControlLabel
-                onChange={(_, checked) =>
-                  paging.api.setSize(checked ? "small" : "medium")
+          {paging.page > 0 && data?.length > 0 ? (
+            <TableRow>
+              <TableCell style={{ padding: "0 8pt 0 24px" }}>
+                <FormControlLabel
+                  onChange={(_, checked) =>
+                    grid.setSize(checked ? "small" : "medium")
+                  }
+                  control={
+                    <Switch
+                      checked={grid.size === "small"}
+                      aria-label="dense"
+                      size="small"
+                    />
+                  }
+                  label={"Compact"}
+                />
+              </TableCell>
+              <TablePagination
+                page={paging.page}
+                colSpan={grid.columns.length - 1}
+                count={paging.count ?? data?.length ?? 0}
+                rowsPerPage={paging.limit}
+                rowsPerPageOptions={grid.rowsPerPageOptions}
+                onPageChange={(_e, value) => paging.setPage(value)}
+                onRowsPerPageChange={(limit) =>
+                  paging.setLimit(limit.target.value as unknown as number)
                 }
-                control={
-                  <Switch
-                    checked={paging.size === "small"}
-                    aria-label="dense"
-                    size="small"
-                  />
-                }
-                label={"Dense"}
               />
-            </TableCell>
-            <TablePagination
-              page={paging.page}
-              colSpan={grid.columns.length - 1}
-              count={paging.count ?? data?.length}
-              rowsPerPage={paging.limit}
-              rowsPerPageOptions={grid.rowsPerPageOptions}
-              onPageChange={(_e, value) => paging.api.setPage(value)}
-              onRowsPerPageChange={(limit) =>
-                paging.api.setLimit(limit.target.value as unknown as number)
-              }
-            />
-          </TableRow>
+            </TableRow>
+          ) : null}
         </TableFooter>
       </Table>
+      {paging.selected.length > 0 ? (
+        <Toolbar paging={paging} columns={columns} grid={grid} />
+      ) : null}
     </TableContainer>
   );
 }

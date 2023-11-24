@@ -73,7 +73,7 @@ export function Content() {
   const scrollRef = useScrollRef();
 
   useScrollEnd(() => {
-    paging.api.loadMore();
+    paging.loadMore();
   }, scrollRef);
 
   return <Pagination<ItemShape> paging={paging} presenter={Customers} />;

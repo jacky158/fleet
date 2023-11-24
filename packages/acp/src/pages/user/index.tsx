@@ -5,15 +5,15 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import PageHeader from "@ikx/acp/src/ui/PageHeader";
-import { AsTable, Pagination, usePagination } from "@ikx/data";
+import { AsTable, Pagination, useGridDef, usePagination } from "@ikx/data";
 import { Layout } from "@ikx/jsx";
 import { Link } from "@ikx/router";
-import { GridCellParams, GridDef, LoadResult } from "@ikx/types";
+import { GridCellParams, LoadResult } from "@ikx/types";
+import delay from "@ikx/utils/dist/delay";
 import { Menu, MenuItem, PopoverProps } from "@mui/material";
 import Box from "@mui/material/Box";
 import dayjs from "dayjs";
 import FilterUser from "./Filter";
-import delay from "@ikx/utils/dist/delay";
 
 const createData = (p: number = 0, n: number) => {
   const ret = [];
@@ -58,7 +58,7 @@ function Actions({
 }: PopoverProps & { passProps: GridCellParams; close?(): void }) {
   const handleDelete = async () => {
     Promise.resolve(true)
-      .then(() => passProps.paging.api.removeItem(passProps.row?.id))
+      .then(() => passProps.paging.removeItem(passProps.row?.id))
       .catch(void 0);
   };
   return (
@@ -77,7 +77,7 @@ function Actions({
 }
 
 function Content() {
-  const grid: GridDef<ItemShape> = {
+  const grid = useGridDef<ItemShape>({
     columns: [
       { field: "check", type: "selection" },
       { field: "id", headerName: "ID", width: "100px" },
@@ -104,14 +104,9 @@ function Content() {
     ],
     size: "medium",
     rowsPerPageOptions: [20, 50, 100],
-  };
-
-  const paging = usePagination<ItemShape>({
-    page: 1,
-    query: {},
-    perPageOptions: [10],
-    loader,
   });
+
+  const paging = usePagination<ItemShape>({ loader });
 
   return (
     <Pagination<ItemShape>

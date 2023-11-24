@@ -50,10 +50,45 @@ export type FetchDataConfig<T = unknown> = {
   readonly ttl?: number; // Cache time to life in seconds
 };
 
+type MyMenuProps = Omit<PopoverProps, "children" | "component" | "open">;
+
+export interface OpenPopoverProps extends MyMenuProps {
+  [key: string]: unknown;
+  component: ViewName;
+  open?: boolean;
+}
+
 export interface ToastProps {
   message: ReactNode;
   duration?: number;
   severity?: "success" | "info" | "warning" | "error";
+}
+
+export interface ConfirmProps {
+  title?: ReactNode;
+  message: ReactNode;
+}
+
+export interface AlertProps {
+  title?: ReactNode;
+  message: ReactNode;
+}
+
+type MyModalProps = Omit<ModalProps, "children" | "open">;
+
+export interface OpenModalProps extends MyModalProps {
+  modal: JSX.ElementType;
+  open?: boolean;
+}
+
+export interface ModalApi {
+  open(payload: OpenModalProps): void;
+  push(payload: OpenModalProps): void;
+  replace(payload: OpenModalProps): void;
+  setUserConfirm(shouldConfirm: boolean, params: unknown): void;
+  pop(): void;
+  onClose: ModalProps["onClose"];
+  onTransitionExited: ModalProps["onTransitionExited"];
 }
 
 export interface MenuItemShape {
@@ -78,9 +113,32 @@ export interface LoadResult<R> {
   };
 }
 
+/**********************************
+ * Define Grid & Paging
+ ********************************** */
+
 export interface RowValues {
   id: unknown;
 }
+
+export interface GridDefState<R extends RowValues = RowValues> {
+  columns: GridColumnDef<R>[];
+  size: "small" | "medium";
+  rowsPerPageOptions: number[];
+  setSize(payload: GridDefState<R>["size"]): void;
+  dispatch: Dispatch<GridDefAction<R>>;
+}
+
+export interface CreateGridDefProps<R extends RowValues = RowValues> {
+  size: GridDefState<R>["size"];
+  columns: GridDefState<R>["columns"];
+  rowsPerPageOptions: GridDefState<R>["rowsPerPageOptions"];
+}
+
+export type GridDefAction<R extends RowValues = RowValues> = {
+  type: "setSize";
+  payload: GridDefState<R>["size"];
+};
 
 export type PagingAction<R extends RowValues, Q> =
   | { type: "setUrl"; payload: string }
@@ -128,7 +186,17 @@ export interface PagingState<R extends RowValues, Q = Record<string, unknown>> {
   perPageOptions?: number[];
   query: Q;
   loader: Loader<R[], unknown>;
-  api: PagingApi<R, Q>;
+  dispatch: Dispatch<PagingAction<R, Q>>;
+  removeItem(id: unknown): void;
+  loadMore(): void;
+  setPage(page: number): void;
+  setLimit(limit: number): void;
+  setQuery(query: Q): void;
+  refresh(): void;
+  select(id: unknown, checked?: boolean): void;
+  selectAll(select?: boolean): void;
+  load(q?: unknown): void;
+  setSize(value: string): void;
 }
 
 export type FilterValues = FormikValues;
@@ -172,61 +240,14 @@ export interface FilterProps<T extends FilterValues = FilterValues> {
   onSubmit: FormikConfig<T>["onSubmit"];
 }
 
-export interface GridDef<R extends RowValues> {
-  columns: GridColumnDef<R>[];
-  rowsPerPageOptions: number[];
-  size: "small" | "medium";
-}
-
 export type ListingProps<R extends RowValues> = {
-  grid?: GridDef<R>;
+  grid?: GridDefState<R>;
   filter?: FC<FilterProps>;
   presenter: FC<DataListProps<R>>;
   paging: PagingState<R>;
 };
 
 export interface DataListProps<R extends RowValues> {
-  grid?: GridDef<R>;
+  grid?: GridDefState<R>;
   paging: PagingState<R>;
-}
-
-type MyMenuProps = Omit<PopoverProps, "children" | "component" | "open">;
-
-export interface OpenPopoverProps extends MyMenuProps {
-  [key: string]: unknown;
-  component: ViewName;
-  open?: boolean;
-}
-
-export interface ToastProps {
-  message: ReactNode;
-  duration?: number;
-  severity?: "success" | "info" | "warning" | "error";
-}
-
-export interface ConfirmProps {
-  title?: ReactNode;
-  message: ReactNode;
-}
-
-export interface AlertProps {
-  title?: ReactNode;
-  message: ReactNode;
-}
-
-type MyModalProps = Omit<ModalProps, "children" | "open">;
-
-export interface OpenModalProps extends MyModalProps {
-  modal: JSX.ElementType;
-  open?: boolean;
-}
-
-export interface ModalApi {
-  open(payload: OpenModalProps): void;
-  push(payload: OpenModalProps): void;
-  replace(payload: OpenModalProps): void;
-  setUserConfirm(shouldConfirm: boolean, params: unknown): void;
-  pop(): void;
-  onClose: ModalProps["onClose"];
-  onTransitionExited: ModalProps["onTransitionExited"];
 }

@@ -1,9 +1,11 @@
-import { useTheme, Theme } from "@mui/material/styles";
+import { useTheme, Theme, lighten } from "@mui/material/styles";
 import MuiGlobalStyles from "@mui/material/GlobalStyles";
 
 const converted = (theme: Theme) => ({
   ".srOnly": { display: "none", visibility: "hidden" },
   ".srInvisible": { visibility: "invisible" },
+  ".tableRowEven": {}, // for mui table
+  ".tableRowOdd": { background: lighten(theme.palette.action.hover, 0.7) }, // for mui table
   ".srTransparent": { opacity: 0, transition: "opacity 250ms" },
   ":root": {
     fontFamily:

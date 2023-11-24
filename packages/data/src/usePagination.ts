@@ -1,67 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Dispatch, useEffect, useReducer, useRef } from "react";
-import {
-  LoadResult,
-  PagingState,
-  PagingApi,
-  PagingAction,
-  RowValues,
-} from "@ikx/types";
+import { Dispatch, useCallback, useEffect, useReducer, useRef } from "react";
+import { LoadResult, PagingState, PagingAction, RowValues } from "@ikx/types";
 
-export class Api<R extends RowValues, Q> implements PagingApi<R, Q> {
-  public dispatch?: Dispatch<PagingAction<R, Q>>;
+const noop = () => {};
 
-  d(action: PagingAction<R, Q>) {
-    if (this.dispatch) {
-      this.dispatch(action);
-    }
-  }
-
-  setPage(payload: number) {
-    this.d({ type: "setPage", payload });
-  }
-  setLimit(payload: number) {
-    this.d({ type: "setLimit", payload });
-  }
-
-  setQuery(filter: Q) {
-    this.d({ type: "setQuery", payload: filter });
-  }
-  refresh() {
-    this.d({ type: "refresh" });
-  }
-  loadMore() {
-    this.d({ type: "loadMore" });
-  }
-  removeItem(payload: unknown) {
-    this.d({ type: "removeItem", payload });
-  }
-  select(id: unknown, checked?: boolean) {
-    this.d({ type: "select", id, checked });
-  }
-  selectAll(payload: boolean) {
-    this.d({ type: "selectAll", payload });
-  }
-  setSize(payload: string): void {
-    this.d({ type: "setSize", payload });
-  }
-  load() {
-    this.d({ type: "load" });
-  }
-}
-
-export function usePagination<
-  R extends RowValues,
-  Q = Record<string, unknown>
->({
-  limit,
-  page,
-  size,
-  query,
-  perPageOptions,
-  loader,
-}: {
+export interface CreatePagingProps<
+  R extends RowValues = RowValues,
+  Q = unknown
+> {
   size?: string;
   page?: number;
   limit?: number;
@@ -69,8 +16,72 @@ export function usePagination<
   rev?: number;
   perPageOptions?: number[];
   loader(q?: unknown): Promise<LoadResult<R[]>>;
-}): PagingState<R, Q> {
+}
+
+export function usePagination<R extends RowValues, Q = Record<string, unknown>>(
+  props: CreatePagingProps<R, Q>
+): PagingState<R, Q> {
   const mounted = useRef<boolean>(true);
+  const dispatcher = useRef<Dispatch<PagingAction<R, Q>>>(
+    noop as unknown as Dispatch<PagingAction<R, Q>>
+  );
+  const initPagination = useCallback(
+    (props: CreatePagingProps<R, Q>): PagingState<R, Q> => {
+      const dispatch = (action: PagingAction<R, Q>) => {
+        dispatcher.current(action);
+      };
+      return {
+        loading: true,
+        rev: 0,
+        page: props.page ?? 0,
+        pages: 0,
+        count: undefined,
+        limit: props.limit ?? 20,
+        query: props.query ?? ({} as Q),
+        perPageOptions: props.perPageOptions ?? [20, 50],
+        selectStatus: "none",
+        size: props.size ?? "medium",
+        items: [],
+        selected: [],
+        loadingMore: false,
+        loader: props.loader,
+        dispatch,
+        setPage(payload: number) {
+          dispatch({ type: "setPage", payload });
+        },
+        setLimit(payload: number) {
+          dispatch({ type: "setLimit", payload });
+        },
+        setQuery(filter: Q) {
+          dispatch({ type: "setQuery", payload: filter });
+        },
+        refresh() {
+          dispatch({ type: "refresh" });
+        },
+        loadMore() {
+          dispatch({ type: "loadMore" });
+        },
+        removeItem(payload: unknown) {
+          dispatch({ type: "removeItem", payload });
+        },
+        select(id: unknown, checked?: boolean) {
+          dispatch({ type: "select", id, checked });
+        },
+        selectAll(payload: boolean) {
+          dispatch({ type: "selectAll", payload });
+        },
+        setSize(payload: string): void {
+          dispatch({ type: "setSize", payload });
+        },
+        load() {
+          dispatch({ type: "load" });
+        },
+      } as PagingState<R, Q>;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    []
+  );
+
   const [state, dispatch] = useReducer(
     (draft: PagingState<R, Q>, action: PagingAction<R, Q>) => {
       switch (action.type) {
@@ -194,29 +205,14 @@ export function usePagination<
 
       return { ...draft };
     },
-    {
-      loading: true,
-      rev: 0,
-      page: page ?? 0,
-      pages: 0,
-      count: undefined,
-      limit: limit ?? 20,
-      query: query ?? ({} as Q),
-      perPageOptions: perPageOptions ?? [20, 50],
-      selectStatus: "none",
-      size: size ?? "medium",
-      items: [],
-      selected: [],
-      loadingMore: false,
-      loader,
-      api: new Api(),
-    }
+    props,
+    initPagination
   );
+  // avoid un-initialize function.
+  dispatcher.current = dispatch;
 
   useEffect(() => {
-    state.api.dispatch = dispatch;
-
-    state.api.load();
+    state.load();
     return () => {
       mounted.current = false;
     };

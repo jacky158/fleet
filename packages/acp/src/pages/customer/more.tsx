@@ -81,7 +81,7 @@ export function Screen() {
   const paging = usePagination<ItemShape>({ loader, limit: 20 });
 
   useScrollEnd(() => {
-    paging.api.loadMore();
+    paging.loadMore();
   });
 
   return (
