@@ -1,4 +1,4 @@
-import { FormikProps, FormikValues } from "formik";
+import { FormikProps, FormikValues, useFormikContext } from "formik";
 import debounce from "lodash/debounce";
 import { useEffect, useMemo } from "react";
 
@@ -6,11 +6,8 @@ import { useEffect, useMemo } from "react";
 // it's may be pass as a props of schema.
 const WAIT_DEBOUNCE_SUBMIT: number = 200;
 
-export function HandleSubmitOnChange({
-  formik,
-}: {
-  formik: FormikProps<FormikValues>;
-}) {
+export function HandleSubmitOnChange() {
+  const formik = useFormikContext<FormikValues>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const debounce_fn = useMemo(() => {
     return debounce((mounted, formik: FormikProps<FormikValues>) => {

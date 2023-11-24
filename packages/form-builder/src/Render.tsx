@@ -1,12 +1,12 @@
-import when, { WhenProps } from "@ikx/when";
+import { useApp } from "@ikx/core";
+import when from "@ikx/when";
 import { useFormikContext } from "formik";
 import { createElement, useEffect, useState } from "react";
 import { ElementProps } from "./types";
-import { useApp } from "@ikx/core";
 
-export function Render({ config, formik }: Omit<ElementProps, "name">) {
+export function Render(allProps: Omit<ElementProps, "name">) {
   const app = useApp();
-  const { component, enabledWhen, showWhen, requiredWhen } = config;
+  const { component, enabledWhen, showWhen, requiredWhen, ...props } = allProps;
   const { values } = useFormikContext();
   const [show, setShow] = useState(!showWhen);
   const [enabled, setEnabled] = useState(!enabledWhen);
@@ -15,10 +15,8 @@ export function Render({ config, formik }: Omit<ElementProps, "name">) {
 
   useEffect(() => {
     Promise.all([
-      showWhen
-        ? when({ ...(values as object), mediaScreen }, showWhen as WhenProps)
-        : true,
-      enabledWhen ? when(values, enabledWhen as WhenProps) : true,
+      showWhen ? when({ ...(values as object), mediaScreen }, showWhen) : true,
+      enabledWhen ? when(values, enabledWhen) : true,
       requiredWhen ? when(values, requiredWhen) : false,
     ]).then(([show, enabled, required]) => {
       setShow(show);
@@ -39,10 +37,9 @@ export function Render({ config, formik }: Omit<ElementProps, "name">) {
   }
 
   return createElement(FieldComponent, {
-    config,
     disabled: !enabled,
     required,
-    formik,
+    ...props,
   });
 }
 

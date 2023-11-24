@@ -1,36 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { FormikHelpers, FormikProps, FormikValues } from "formik";
-import { FetchDataConfig, RemoteDataSource, ViewName } from "@ikx/types";
+import {
+  ConfirmProps,
+  FetchDataConfig,
+  RemoteDataSource,
+  ViewName,
+} from "@ikx/types";
+import { WhenProps } from "@ikx/when";
+import { FormikHelpers, FormikValues } from "formik";
 import React from "react";
 export type BuilderElementType = "field" | "container" | undefined;
-import { ConfirmProps } from "@ikx/types";
-import { WhenProps } from "@ikx/when";
 
-export interface ElementProps<
-  C = object,
-  D extends FormikValues = FormikValues
-> {
-  config: C & BaseElement;
-  formik: FormikProps<D>;
-  disabled?: boolean;
-  required?: boolean;
-}
+export type ElementProps<C = object> = BaseElement & C;
 
 export interface BaseElement {
   testid?: string;
-  component?: string;
+  component?: ViewName;
   name: string;
   label?: string;
+  disabled?: boolean;
   description?: string;
   placeholder?: string;
   required?: boolean;
-  showWhen?: unknown;
+  showWhen?: WhenProps;
   enabledWhen?: WhenProps;
   requiredWhen?: WhenProps;
   tagName?: string;
   elements?: Record<string, BaseElement>;
   labelProps?: { shrink?: boolean; [key: string]: any };
-  [key: string]: unknown;
 }
 
 export type BreadcrumbsShape = {

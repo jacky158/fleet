@@ -1,16 +1,16 @@
 import { toYup } from "@ikx/json-to-yup";
-import { Formik, FormikConfig, FormikProps, FormikValues } from "formik";
+import { ConfirmProps } from "@ikx/types";
+import { Formik, FormikConfig, FormikValues } from "formik";
 import { get, isPlainObject, set } from "lodash";
 import React from "react";
+import FormSchemaContext from "./Context";
+import Element from "./Element";
 import HandleAlertError from "./HandleAlertError";
 import { HandleNavigationListener } from "./HandleNavigationListener";
 import HandleSubmitOnChange from "./HandleSubmitOnChange";
 import HandleUpdateCallback from "./HandleUpdateCallback";
 import transformSchema from "./transformSchema";
 import { FormBuilderProps, FormBuilderSchema } from "./types";
-import { ConfirmProps } from "@ikx/types";
-import Element from "./Element";
-import FormSchemaContext from "./Context";
 
 export function Form<T extends FormikValues = FormikValues>({
   schema: formSchemaRaw,
@@ -36,7 +36,7 @@ export function Form<T extends FormikValues = FormikValues>({
   /**
    * transform schema here
    */
-  const formSchema: FormBuilderSchema = React.useMemo(() => {
+  const schema: FormBuilderSchema = React.useMemo(() => {
     const formSchema = transformSchema(
       formSchemaRaw as unknown as Record<string, unknown>,
       values,
@@ -78,51 +78,39 @@ export function Form<T extends FormikValues = FormikValues>({
   }, [formSchemaRaw]);
 
   const confirm =
-    navigationConfirmWhenDirty ?? formSchema.navigationConfirmWhenDirty;
+    navigationConfirmWhenDirty ?? schema.navigationConfirmWhenDirty;
 
   return (
-    <FormSchemaContext.Provider value={formSchema}>
+    <FormSchemaContext.Provider value={schema}>
       <Formik
         validationSchema={validationSchema}
         initialValues={values as T}
         onSubmit={onSubmit as FormikConfig<T>["onSubmit"]}
         enableReinitialize
       >
-        {(props) => (
-          <>
-            <Element
-              config={formSchema}
-              formik={props as unknown as FormikProps<FormikValues>}
+        <>
+          <Element {...schema} />
+          {confirm ? (
+            <HandleNavigationListener
+              schema={schema}
+              confirm={confirm as ConfirmProps}
+              dialog={false}
             />
-            {confirm ? (
-              <HandleNavigationListener
-                schema={formSchema}
-                formik={props as unknown as FormikProps<FormikValues>}
-                confirm={confirm as ConfirmProps}
-                dialog={false}
-              />
-            ) : null}
-            {formSchema.submitOnValueChanged ? (
-              <HandleSubmitOnChange
-                formik={props as unknown as FormikProps<FormikValues>}
-              />
-            ) : null}
-            {formSchema.alertPreSubmitError ? (
-              <HandleAlertError
-                formik={props as unknown as FormikProps<FormikValues>}
-                alertPreSubmitError={formSchema.alertPreSubmitError}
-              />
-            ) : null}
-            {onChange || onUpdate ? (
-              <HandleUpdateCallback
-                formik={props as unknown as FormikProps<FormikValues>}
-                schema={formSchema}
-                onUpdate={onUpdate}
-                onChange={onChange}
-              />
-            ) : null}
-          </>
-        )}
+          ) : null}
+          {schema.submitOnValueChanged ? <HandleSubmitOnChange /> : null}
+          {schema.alertPreSubmitError ? (
+            <HandleAlertError
+              alertPreSubmitError={schema.alertPreSubmitError}
+            />
+          ) : null}
+          {onChange || onUpdate ? (
+            <HandleUpdateCallback
+              schema={schema}
+              onUpdate={onUpdate}
+              onChange={onChange}
+            />
+          ) : null}
+        </>
       </Formik>
     </FormSchemaContext.Provider>
   );

@@ -1,16 +1,16 @@
-import { FormikProps, FormikValues } from "formik";
+import { FormikValues, useFormikContext } from "formik";
 import { useEffect } from "react";
 import { FormBuilderProps, FormBuilderSchema } from "./types";
 
 type Props = {
   schema: FormBuilderSchema;
-  formik: FormikProps<FormikValues>;
   onUpdate?: FormBuilderProps["onUpdate"];
   onChange?: FormBuilderProps["onChange"];
 };
 
 export function HandleUpdateCallback(props: Props) {
-  const { onUpdate, onChange, schema, formik } = props;
+  const { onUpdate, onChange, schema } = props;
+  const formik = useFormikContext<FormikValues>();
 
   /**
    * Callback if provided will be called when form values change

@@ -1,12 +1,11 @@
+import { useApp } from "@ikx/core";
 import { ConfirmProps } from "@ikx/types";
-import { FormikProps, FormikValues } from "formik";
+import { useFormikContext } from "formik";
 import { useEffect } from "react";
 import { FormBuilderSchema } from "./types";
-import { useApp } from "@ikx/core";
 
 type Props = {
   schema: FormBuilderSchema;
-  formik: FormikProps<FormikValues>;
   confirm?: ConfirmProps | boolean;
   dialog: boolean;
   onReset?: () => void;
@@ -14,7 +13,8 @@ type Props = {
 
 export function HandleNavigationListener(props: Props) {
   const app = useApp();
-  const { schema, dialog, formik, confirm } = props;
+  const formik = useFormikContext();
+  const { schema, dialog, confirm } = props;
   const i18n = app.intl;
 
   const confirmInfo = {

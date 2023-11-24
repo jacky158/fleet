@@ -1,5 +1,5 @@
 import { useApp } from "@ikx/core";
-import { FormikProps, FormikValues } from "formik";
+import { FormikValues, useFormikContext } from "formik";
 import isArray from "lodash/isArray";
 import isString from "lodash/isString";
 import { useEffect, useRef } from "react";
@@ -17,12 +17,11 @@ const flatErrors = (errors: Record<string, string[]>): string => {
 };
 
 export function HandleAlertError({
-  formik,
   alertPreSubmitError,
 }: {
-  formik: FormikProps<FormikValues>;
   alertPreSubmitError?: boolean | string;
 }) {
+  const formik = useFormikContext<FormikValues>();
   const submitCount = useRef<number>(0);
   const app = useApp();
 
