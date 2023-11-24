@@ -1,6 +1,6 @@
 /**
  * @type: layout
- * @name: layout.paper
+ * @name: paper
  */
 
 import { ReactNode } from "react";

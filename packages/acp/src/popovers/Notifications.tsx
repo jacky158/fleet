@@ -1,6 +1,6 @@
 /**
  * @type: popover
- * @name: popover.Notifications
+ * @name: Notifications
  */
 import { useApp } from "@ikx/core";
 import {

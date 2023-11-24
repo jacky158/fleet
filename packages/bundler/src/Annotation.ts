@@ -1,5 +1,5 @@
 import fs from "fs";
-import { validTypes } from "./constants";
+import { validTypes, validViewTypes } from "./constants";
 
 export class Annotation {
   private counter = 0;
@@ -61,7 +61,10 @@ export class Annotation {
     }
     if (!candidates.length) return false;
 
-    const result: Record<string, unknown> = {};
+    const result: { [key: string]: unknown; type: string; name: string } = {
+      type: "",
+      name: "",
+    };
 
     for (let i = 0; i < candidates.length; i++) {
       const line = candidates[i];
@@ -82,14 +85,12 @@ export class Annotation {
       return false;
     }
 
-    result["importName"] = this.getKey();
-
-    if (result["name"]) {
-      result["exportName"] = result["name"];
-      // if (/^\w+$/.test(result["exportName"] as string)) {
-      //   result["importName"] = result["exportName"];
-      // }
+    if (result["type"] && validViewTypes.includes(result["type"])) {
+      result["name"] = result["type"] + "." + result["name"];
     }
+
+    result["importName"] = this.getKey();
+    result["exportName"] = result["name"];
 
     return result;
   }

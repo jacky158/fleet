@@ -63,6 +63,8 @@ export function Render({ config, formik }: BuilderFieldProps) {
     acceptWhen,
   ]);
 
+  console.log({ config });
+
   if (!show) {
     return null;
   }

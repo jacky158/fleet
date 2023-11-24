@@ -9,7 +9,7 @@ import {
 import { RemoteDataSource } from "@ikx/types";
 import { useApp } from "@ikx/core";
 
-export default function RemoteForm({
+export function RemoteForm({
   source,
   modal,
   params,
@@ -21,7 +21,7 @@ export default function RemoteForm({
   ...rest
 }: FormBuilderRemoteProps) {
   const app = useApp();
-  const [formSchema, setFormSchema] = useState<FormBuilderSchema>();
+  const [schema, setSchema] = useState<FormBuilderSchema>();
 
   // const Loading =
   //   loadingComponent ?? dialog
@@ -49,22 +49,22 @@ export default function RemoteForm({
 
   useEffect(() => {
     if (data) {
-      setFormSchema(data as FormBuilderSchema);
+      setSchema(data as FormBuilderSchema);
 
       if (onLoaded) {
         onLoaded({ data, meta });
       }
     } else {
-      setFormSchema(undefined);
+      setSchema(undefined);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, params, loading]);
 
   if ((error && hideWhenError) || !source) return null;
 
-  if (!formSchema) return null;
+  if (!schema) return null;
 
-  return <Form {...rest} modal={modal} schema={formSchema} params={params} />;
+  return <Form {...rest} modal={modal} schema={schema} params={params} />;
 }
 export function FormBuilder(props: FormBuilderRemoteProps | FormBuilderProps) {
   if ((props as FormBuilderProps).schema?.elements) {
@@ -73,3 +73,5 @@ export function FormBuilder(props: FormBuilderRemoteProps | FormBuilderProps) {
 
   return <RemoteForm {...props} />;
 }
+
+export default FormBuilder;

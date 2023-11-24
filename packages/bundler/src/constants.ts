@@ -51,7 +51,7 @@ export const validViewTypes: string[] = [
   "siteDock",
   "ui",
   "embedView",
-  "formElement",
+  "form.element",
   "popover",
   "layout",
 ];

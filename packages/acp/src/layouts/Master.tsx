@@ -1,6 +1,6 @@
 /**
  * @type: layout
- * @name: layout.master
+ * @name: master
  */
 
 import { Box } from "@mui/material";

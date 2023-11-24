@@ -1,6 +1,6 @@
 /**
  * @type: popover
- * @name: popover.LanguagePicker
+ * @name: LanguagePicker
  */
 import { Menu, MenuItem, PopoverProps } from "@mui/material";
 

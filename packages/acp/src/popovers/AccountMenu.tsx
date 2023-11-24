@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * @type: popover
- * @name: popover.AccountMenu
+ * @name: AccountMenu
  */
 
 import { Link } from "@ikx/router";

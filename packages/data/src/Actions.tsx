@@ -1,6 +1,6 @@
 /**
  * @type: popover
- * @name: popover.TableActions
+ * @name: TableActions
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MuiIcon } from "@ikx/mui";
