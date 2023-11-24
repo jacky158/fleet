@@ -11,10 +11,8 @@ import { useState } from "react";
 
 export default function Password({
   name,
-  label,
-  placeholder,
   ...props
-}: ElementProps<Omit<TextFieldProps, "children" | "type">>) {
+}: ElementProps<Omit<TextFieldProps, "children" | "type" | "value">>) {
   const formik = useFormikContext();
   const [type, setType] = useState<"text" | "password">("password");
   const value = get(formik.values, name, "");
@@ -23,10 +21,8 @@ export default function Password({
     <TextField
       {...props}
       type={type}
-      label={label}
       name={name}
       value={value}
-      placeholder={placeholder}
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
       InputProps={{
