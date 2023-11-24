@@ -21,6 +21,7 @@ import { ReactNode, useMemo } from "react";
 import TableFooterHolder from "./Footer";
 import GhostToolbarHolder from "./GhostToolbar";
 import InitialLoadingHolder from "./InitialLoading";
+import LoadingHolder from "./Loading";
 
 function renderHeaderCheck<T extends RowValues>(
   c: GridCellParams<T>
@@ -117,6 +118,7 @@ export default function AsTable<T extends RowValues>(
     footerComponent: Footer = TableFooterHolder,
     ghostToolbar: GhostToolbar = GhostToolbarHolder,
     ghostMenu: GhostMenu,
+    loadingComponent: Loading = LoadingHolder,
   } = props;
   const columns: GridColumnDef<T>[] = useMemo(() => {
     if (!grid) return [];
@@ -207,6 +209,7 @@ export default function AsTable<T extends RowValues>(
       {paging.selected.length > 0 ? (
         <GhostToolbar paging={paging} grid={grid} menu={GhostMenu} />
       ) : null}
+      {data?.length && paging.loading ? <Loading /> : null}
     </TableContainer>
   );
 }
