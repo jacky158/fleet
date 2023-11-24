@@ -141,7 +141,6 @@ export type GridDefAction<R extends RowValues = RowValues> = {
 };
 
 export type PagingAction<R extends RowValues, Q> =
-  | { type: "setUrl"; payload: string }
   | { type: "setLimit"; payload: number }
   | { type: "setPage"; payload: number }
   | { type: "setQuery"; payload: Q }
@@ -150,24 +149,9 @@ export type PagingAction<R extends RowValues, Q> =
   | { type: "select"; id: unknown; checked?: boolean }
   | { type: "selectAll"; payload?: boolean }
   | { type: "refresh" }
-  | { type: "setSize"; payload: string }
   | { type: "load" }
   | { type: "setError" }
   | { type: "loadMore" };
-
-export interface PagingApi<R extends RowValues, Q> {
-  dispatch?: Dispatch<PagingAction<R, Q>>;
-  removeItem(id: unknown): void;
-  loadMore(): void;
-  setPage(page: number): void;
-  setLimit(limit: number): void;
-  setQuery(query: Q): void;
-  refresh(): void;
-  select(id: unknown, checked?: boolean): void;
-  selectAll(select?: boolean): void;
-  load(q?: unknown): void;
-  setSize(value: string): void;
-}
 
 export type Loader<R, Q = unknown> = (params: Q) => Promise<LoadResult<R>>;
 
@@ -196,7 +180,6 @@ export interface PagingState<R extends RowValues, Q = Record<string, unknown>> {
   select(id: unknown, checked?: boolean): void;
   selectAll(select?: boolean): void;
   load(q?: unknown): void;
-  setSize(value: string): void;
 }
 
 export type FilterValues = FormikValues;

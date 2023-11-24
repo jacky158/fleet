@@ -70,9 +70,6 @@ export function usePagination<R extends RowValues, Q = Record<string, unknown>>(
         selectAll(payload: boolean) {
           dispatch({ type: "selectAll", payload });
         },
-        setSize(payload: string): void {
-          dispatch({ type: "setSize", payload });
-        },
         load() {
           dispatch({ type: "load" });
         },
@@ -122,9 +119,6 @@ export function usePagination<R extends RowValues, Q = Record<string, unknown>>(
           draft.rev = draft.rev + 1;
           break;
         case "setError":
-          break;
-        case "setSize":
-          draft.size = action.payload ?? "medium";
           break;
 
         case "setResult": {
