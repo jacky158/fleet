@@ -4,7 +4,7 @@ import { useFormikContext } from "formik";
 import { createElement, useEffect, useState } from "react";
 import { RenderProps } from "./types";
 
-export function Render(allProps: RenderProps) {
+export function Render(allProps: Omit<RenderProps, "name">) {
   const app = useApp();
   const { component, enabledWhen, showWhen, requiredWhen, ...props } = allProps;
   const { values } = useFormikContext();
