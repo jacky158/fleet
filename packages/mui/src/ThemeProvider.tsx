@@ -35,13 +35,6 @@ const _themeOptions: Record<"light" | "dark", ThemeOptions> = {
           },
         },
       },
-      MuiTextField: {
-        defaultProps: {
-          fullWidth: true,
-          size: "small",
-          margin: "dense",
-        },
-      },
       MuiFormLabel: {
         styleOverrides: {
           root: {},
@@ -59,6 +52,13 @@ const _themeOptions: Record<"light" | "dark", ThemeOptions> = {
     },
   },
   light: {
+    components: {
+      MuiTextField: {
+        defaultProps: {
+          size: "small",
+        },
+      },
+    },
     palette: {
       mode: "light",
       contrastThreshold: 4.5,

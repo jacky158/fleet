@@ -12,18 +12,23 @@ export type BuilderElementType = "field" | "container" | undefined;
 
 export type ElementProps<C = object> = BaseElement & C;
 
+export type RenderProps<C = object> = {
+  component?: ViewName;
+  showWhen?: WhenProps;
+  enabledWhen?: WhenProps;
+  requiredWhen?: WhenProps;
+} & BaseElement &
+  C;
+
 export interface BaseElement {
   testid?: string;
-  component?: ViewName;
   name: string;
   label?: string;
   disabled?: boolean;
   description?: string;
   placeholder?: string;
   required?: boolean;
-  showWhen?: WhenProps;
-  enabledWhen?: WhenProps;
-  requiredWhen?: WhenProps;
+
   tagName?: string;
   elements?: Record<string, BaseElement>;
   labelProps?: { shrink?: boolean; [key: string]: any };

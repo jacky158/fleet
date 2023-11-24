@@ -8,12 +8,13 @@ import Switch, { SwitchProps } from "@mui/material/Switch";
 import FormControlLabel, {
   FormControlLabelProps,
 } from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
 
 export default function SwitchField({
   name,
   label,
   ...props
-}: ElementProps<Omit<SwitchProps, "children">> &
+}: ElementProps<Omit<SwitchProps, "children" | "onChange" | "checked">> &
   Omit<FormControlLabelProps, "children" | "control">) {
   const formik = useFormikContext();
   if (!name) return null;
@@ -21,15 +22,17 @@ export default function SwitchField({
   const value = get(formik.values, name, "");
 
   return (
-    <FormControlLabel
-      control={
-        <Switch
-          checked={Boolean(value)}
-          {...props}
-          onChange={(_, checked) => formik.setFieldValue(name, checked)}
-        />
-      }
-      label={label}
-    />
+    <FormGroup>
+      <FormControlLabel
+        control={
+          <Switch
+            {...props}
+            checked={Boolean(value)}
+            onChange={(_, checked) => formik.setFieldValue(name, checked)}
+          />
+        }
+        label={label}
+      />
+    </FormGroup>
   );
 }

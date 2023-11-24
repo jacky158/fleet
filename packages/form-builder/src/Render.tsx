@@ -2,9 +2,9 @@ import { useApp } from "@ikx/core";
 import when from "@ikx/when";
 import { useFormikContext } from "formik";
 import { createElement, useEffect, useState } from "react";
-import { ElementProps } from "./types";
+import { RenderProps } from "./types";
 
-export function Render(allProps: Omit<ElementProps, "name">) {
+export function Render(allProps: RenderProps) {
   const app = useApp();
   const { component, enabledWhen, showWhen, requiredWhen, ...props } = allProps;
   const { values } = useFormikContext();
