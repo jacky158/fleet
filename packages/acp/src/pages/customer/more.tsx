@@ -8,7 +8,7 @@ import PageHeader from "@ikx/acp/src/ui/PageHeader";
 import { Pagination, usePagination } from "@ikx/data";
 import { Layout } from "@ikx/jsx";
 import { useScrollEnd } from "@ikx/scroll";
-import { DataListProps, LoadResult, Loader } from "@ikx/types";
+import { ListPresenterProps, LoadResult, Loader } from "@ikx/types";
 import GridFilter from "./Filter";
 
 const createData = (p: number = 0, n: number) => {
@@ -60,7 +60,7 @@ const loader: Loader<ItemShape[], { limit?: number; page?: number }> =
     });
   };
 
-function Customers({ paging }: DataListProps<ItemShape>) {
+function Customers({ paging }: ListPresenterProps<ItemShape>) {
   if (!paging.items) return null;
 
   return (

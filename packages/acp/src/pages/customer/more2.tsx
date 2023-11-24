@@ -8,7 +8,7 @@ import PageHeader from "@ikx/acp/src/ui/PageHeader";
 import { Pagination, usePagination } from "@ikx/data";
 import { Layout } from "@ikx/jsx";
 import { Scrollable, useScrollEnd, useScrollRef } from "@ikx/scroll";
-import { DataListProps, LoadResult, Loader } from "@ikx/types";
+import { ListPresenterProps, LoadResult, Loader } from "@ikx/types";
 import { Box } from "@mui/material";
 import delay from "@ikx/utils/dist/delay";
 
@@ -51,7 +51,7 @@ const loader: Loader<ItemShape[], { limit?: number; page?: number }> =
     });
   };
 
-function Customers({ paging }: DataListProps<ItemShape>) {
+function Customers({ paging }: ListPresenterProps<ItemShape>) {
   if (!paging.items) return null;
 
   return (

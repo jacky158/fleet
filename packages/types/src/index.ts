@@ -223,14 +223,23 @@ export interface FilterProps<T extends FilterValues = FilterValues> {
   onSubmit: FormikConfig<T>["onSubmit"];
 }
 
-export type ListingProps<R extends RowValues> = {
-  grid?: GridDefState<R>;
-  filter?: FC<FilterProps>;
-  presenter: FC<DataListProps<R>>;
-  paging: PagingState<R>;
-};
+export interface SharedListPresenterProps {
+  initLoadingComponent?: ElementType;
+  loadingComponent?: ElementType;
+  errorComponent?: ElementType;
+  emptyResultComponent?: ElementType;
+  footerComponent?: ElementType;
+}
 
-export interface DataListProps<R extends RowValues> {
+export interface ListPresenterProps<R extends RowValues>
+  extends SharedListPresenterProps {
   grid?: GridDefState<R>;
   paging: PagingState<R>;
 }
+
+export type ListingProps<R extends RowValues> = {
+  grid?: GridDefState<R>;
+  filter?: FC<FilterProps>;
+  presenter: FC<ListPresenterProps<R>>;
+  paging: PagingState<R>;
+} & SharedListPresenterProps;

@@ -2,7 +2,7 @@
 import { useApp } from "@ikx/core";
 import { MuiIcon } from "@ikx/mui";
 import {
-  DataListProps,
+  ListPresenterProps,
   GridCellParams,
   GridColumnDef,
   GridDefState,
@@ -26,6 +26,10 @@ import TableRow from "@mui/material/TableRow";
 import styled from "@mui/material/styles/styled";
 import get from "lodash/get";
 import { ReactNode, useMemo } from "react";
+
+function InitialLoadingHolder() {
+  return <div>Loading</div>;
+}
 
 function renderHeaderCheck<T extends RowValues>(
   c: GridCellParams<T>
@@ -130,6 +134,53 @@ const ToolbarPresent = styled("div")<{ size?: string }>(({ theme, size }) => ({
   height: size == "small" ? 38 : 54,
 }));
 
+function TableFooterHolder<R extends RowValues>({
+  paging,
+  grid,
+}: {
+  paging: PagingState<R>;
+  grid: GridDefState<R>;
+}) {
+  console.log("handle render footer");
+
+  if (!(paging.items.length > 0)) {
+    return null;
+  }
+
+  return (
+    <TableFooter>
+      <TableRow>
+        <TableCell style={{ padding: "0 8pt 0 24px" }}>
+          <FormControlLabel
+            onChange={(_, checked) =>
+              grid.setSize(checked ? "small" : "medium")
+            }
+            control={
+              <Switch
+                checked={grid.size === "small"}
+                aria-label="dense"
+                size="small"
+              />
+            }
+            label={"Compact"}
+          />
+        </TableCell>
+        <TablePagination
+          page={paging.page}
+          colSpan={grid.columns.length - 1}
+          count={paging.count ?? paging.items?.length ?? 0}
+          rowsPerPage={paging.limit}
+          rowsPerPageOptions={grid.rowsPerPageOptions}
+          onPageChange={(_e, value) => paging.setPage(value)}
+          onRowsPerPageChange={(limit) =>
+            paging.setLimit(limit.target.value as unknown as number)
+          }
+        />
+      </TableRow>
+    </TableFooter>
+  );
+}
+
 function Toolbar<R extends RowValues>({
   grid,
   paging,
@@ -180,7 +231,9 @@ function Toolbar<R extends RowValues>({
 export default function AsTable<T extends RowValues>({
   grid,
   paging,
-}: DataListProps<T>) {
+  initLoadingComponent: InitialLoading = InitialLoadingHolder,
+  footerComponent: Footer = TableFooterHolder,
+}: ListPresenterProps<T>) {
   const columns: GridColumnDef<T>[] = useMemo(() => {
     if (!grid) return [];
     return grid.columns.map((x) => {
@@ -228,7 +281,9 @@ export default function AsTable<T extends RowValues>({
         <TableBody>
           {!data?.length && paging.loading ? (
             <TableRow>
-              <TableCell colSpan={columns.length}>Loading ...</TableCell>
+              <TableCell colSpan={columns.length}>
+                <InitialLoading />
+              </TableCell>
             </TableRow>
           ) : null}
           {data?.length
@@ -263,38 +318,7 @@ export default function AsTable<T extends RowValues>({
               })
             : null}
         </TableBody>
-        <TableFooter>
-          {paging.page > 0 && data?.length > 0 ? (
-            <TableRow>
-              <TableCell style={{ padding: "0 8pt 0 24px" }}>
-                <FormControlLabel
-                  onChange={(_, checked) =>
-                    grid.setSize(checked ? "small" : "medium")
-                  }
-                  control={
-                    <Switch
-                      checked={grid.size === "small"}
-                      aria-label="dense"
-                      size="small"
-                    />
-                  }
-                  label={"Compact"}
-                />
-              </TableCell>
-              <TablePagination
-                page={paging.page}
-                colSpan={grid.columns.length - 1}
-                count={paging.count ?? data?.length ?? 0}
-                rowsPerPage={paging.limit}
-                rowsPerPageOptions={grid.rowsPerPageOptions}
-                onPageChange={(_e, value) => paging.setPage(value)}
-                onRowsPerPageChange={(limit) =>
-                  paging.setLimit(limit.target.value as unknown as number)
-                }
-              />
-            </TableRow>
-          ) : null}
-        </TableFooter>
+        <Footer paging={paging} grid={grid} />
       </Table>
       {paging.selected.length > 0 ? (
         <Toolbar paging={paging} columns={columns} grid={grid} />

@@ -44,7 +44,7 @@ interface AutoCompactMenuProps {
   >;
 }
 
-const DefaultPopoverMenuItem = ({ item, activeTab }: ItemProps) => {
+const PopoverMenuItemHolder = ({ item, activeTab }: ItemProps) => {
   const { to, label } = item;
   const selected = activeTab === to;
 
@@ -106,7 +106,7 @@ const styles: [CSSProperties, CSSProperties] = [
   { opacity: 1, transition: "opacity 350ms" },
 ];
 
-const DefaultMenuItem = ({ item, activeTab, visible }: ItemProps) => {
+const MenuItemHolder = ({ item, activeTab, visible }: ItemProps) => {
   const { to, label } = item;
   const active = activeTab === to;
 
@@ -163,7 +163,7 @@ function useResizeIndex(
 
 const MORE_BUTTON_WIDTH = 100;
 
-const Root = styled("div", {
+const ContainerHolder = styled("div", {
   name: "AutoCompactMenu",
   slot: "Root",
   overridesResolver(_, styles) {
@@ -191,10 +191,10 @@ const DefaultMoreButton = React.forwardRef(
 function AutoCompactMenuBase({
   items,
   activeTab,
-  menuItem: MenuItem = DefaultMenuItem,
-  popoverMenuItem: PopoverMenuItem = DefaultPopoverMenuItem,
-  moreButton: MoreButton = DefaultMoreButton,
-  container: Container = Root as ElementType,
+  menuItem: MenuItem = MenuItemHolder,
+  popoverMenuItem: PopoverMenuItem = PopoverMenuItemHolder,
+  moreButton: MoreButtonHolder = DefaultMoreButton,
+  container: Container = ContainerHolder as ElementType,
 }: AutoCompactMenuProps) {
   const [open, setOpen] = useState<boolean>(false);
   const btnMoreRef = useRef<HTMLButtonElement>(null);
@@ -226,7 +226,7 @@ function AutoCompactMenuBase({
           );
         })}
         {hasPopover ? (
-          <MoreButton ref={btnMoreRef} onClick={toggleOpen} />
+          <MoreButtonHolder ref={btnMoreRef} onClick={toggleOpen} />
         ) : null}
       </Container>
       <Menu

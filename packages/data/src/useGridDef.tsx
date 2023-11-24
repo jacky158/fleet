@@ -46,7 +46,7 @@ export function useGridDef<R extends RowValues = RowValues>(
     initGridState
   );
 
-  state.dispatch = dispatch;
+  dispatcher.current = dispatch;
 
   return state;
 }
