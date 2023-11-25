@@ -311,6 +311,8 @@ export class Bundler {
       "@ikx/jsx",
       "@ikx/utils",
       "@ikx/data",
+      "@ikx/form-builder",
+      "@ikx/form-elements",
     ];
 
     if (!fs.existsSync(path.join(this.root, "src/bundle"))) {

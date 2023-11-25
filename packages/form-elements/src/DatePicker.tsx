@@ -7,7 +7,7 @@ import get from "lodash/get";
 import { DatePicker, DatePickerProps } from "@mui/x-date-pickers/DatePicker";
 import dayjs, { Dayjs } from "dayjs";
 import { useCallback } from "react";
-import { TextFieldProps } from "@mui/material";
+import type { TextFieldProps } from "@mui/material";
 
 export default function DatePickerElement({
   name,

@@ -24,6 +24,7 @@
     "@ikx/composer": "workspace:^",
     "@ikx/core": "workspace:^",
     "@ikx/data": "workspace:^",
+    "@ikx/form-elements": "workspace:^",
     "@ikx/hook": "workspace:^",
     "@ikx/http": "workspace:^",
     "@ikx/intl": "workspace:^",

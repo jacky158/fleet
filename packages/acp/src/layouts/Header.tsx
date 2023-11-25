@@ -94,7 +94,14 @@ function SearchBox() {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <input type="submit" className="srOnly" />
       <SearchField
         onFocus={() => setFocused(true)}
@@ -106,7 +113,9 @@ function SearchBox() {
         startAdornment={
           <IconButton
             onClick={() => setTimeout(() => inputRef.current?.focus(), 100)}
-            children={<MuiIcon name="search" />}
+            children={
+              <MuiIcon name="search" style={{ width: 24, height: 24 }} />
+            }
           />
         }
       />

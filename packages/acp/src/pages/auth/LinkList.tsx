@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import Stack from "@mui/material/Stack";
 import { useApp } from "@ikx/core";
 import { Link } from "@ikx/mui";
 

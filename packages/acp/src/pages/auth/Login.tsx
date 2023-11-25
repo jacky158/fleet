@@ -3,12 +3,17 @@
  * @name: login
  * @path: /login
  */
-import { Box, Button, Paper, TextField, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
-import { useFormik } from "formik";
-import LinkList from "./LinkList";
 import { useApp } from "@ikx/core";
+import { Formik } from "@ikx/form-builder";
 import { Layout } from "@ikx/jsx";
+import SubmitButton from "@ikx/form-elements/dist/SubmitButton";
+import Password from "@ikx/form-elements/dist/Password";
+import Text from "@ikx/form-elements/dist/Text";
+import LinkList from "./LinkList";
 
 interface FormValues {
   email: string;
@@ -17,22 +22,21 @@ interface FormValues {
 
 export function Content() {
   const app = useApp();
-  const formik = useFormik<FormValues>({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    onSubmit(values, helpers) {},
-  });
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+
+  const onSubmit = () => {};
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <Formik<FormValues> onSubmit={onSubmit} initialValues={initialValues}>
       <Paper sx={{ p: 3, width: { sm: 320, md: 400 } }} elevation={10}>
         <Box sx={{ pb: 2 }}>
           <Typography>{app.t("auth.login")}</Typography>
         </Box>
         <Box sx={{ pb: 1 }}>
-          <TextField
+          <Text
             fullWidth
             autoFocus
             tabIndex={0}
@@ -41,16 +45,12 @@ export function Content() {
             autoComplete="current-email"
             autoCorrect="off"
             autoCapitalize="off"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             InputLabelProps={{ shrink: true }}
             label={app.t("auth.email")}
             placeholder={app.t("auth.enter_your_email")}
           />
-          <TextField
+          <Password
             fullWidth
-            type="password"
             name="password"
             autoComplete="current-password"
             margin="normal"
@@ -58,21 +58,18 @@ export function Content() {
             autoCapitalize="off"
             tabIndex={1}
             InputLabelProps={{ shrink: true }}
-            value={formik.values.password}
             label={app.t("auth.password")}
             placeholder={app.t("auth.enter_your_password")}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
           />
         </Box>
         <Box>
-          <Button variant="contained" fullWidth disableFocusRipple>
+          <SubmitButton fullWidth disableFocusRipple>
             {app.t("auth.login")}
-          </Button>
+          </SubmitButton>
         </Box>
         <LinkList />
       </Paper>
-    </form>
+    </Formik>
   );
 }
 

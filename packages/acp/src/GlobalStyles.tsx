@@ -7,6 +7,10 @@ const converted = (theme: Theme) => ({
   ".tableRowEven": {}, // for mui table
   ".tableRowOdd": { background: lighten(theme.palette.action.hover, 0.7) }, // for mui table
   ".srTransparent": { opacity: 0, transition: "opacity 250ms" },
+  ".material-symbols-outlined": {
+    fontSize: "1.2em",
+    fontVariationSettings: '"FILL" 0, "wght" 400, "GRAD" 0, "opsz" 1.2',
+  },
   ":root": {
     fontFamily:
       'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',

@@ -8,11 +8,14 @@ import Button, { ButtonProps } from "@mui/material/Button";
 export default function SubmitButton({
   label = "submit",
   type = "submit",
+  variant = "contained",
+  color = "primary",
+  children,
   ...props
-}: ElementProps<Omit<ButtonProps, "children">>) {
+}: Omit<ElementProps<ButtonProps>, "name"> & { name?: string }) {
   return (
-    <Button {...props} type={type}>
-      {label}
+    <Button variant={variant} color={color} {...props} type={type}>
+      {children ?? label}
     </Button>
   );
 }

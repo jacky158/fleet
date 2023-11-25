@@ -4,10 +4,15 @@
  * @path: /register
  */
 import { useApp } from "@ikx/core";
-import { Box, Button, Paper, TextField, Typography } from "@mui/material";
-import { useFormik } from "formik";
-import LinkList from "./LinkList";
+import { Formik } from "@ikx/form-builder";
 import { Layout } from "@ikx/jsx";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import Password from "@ikx/form-elements/dist/Password";
+import Text from "@ikx/form-elements/dist/Text";
+import LinkList from "./LinkList";
 
 interface FormValues {
   email: string;
@@ -17,45 +22,37 @@ interface FormValues {
 
 export function Content() {
   const app = useApp();
-  const formik = useFormik<FormValues>({
-    initialValues: {
-      email: "",
-      password: "",
-      reenter_password: "",
-    },
-    onSubmit(values, helpers) {},
-  });
+  const initialValues = {
+    email: "",
+    password: "",
+    reenter_password: "",
+  };
+
+  const handleSubmit = () => {};
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <Formik<FormValues> onSubmit={handleSubmit} initialValues={initialValues}>
       <Paper sx={{ p: 3, width: { sm: 320, md: 400 } }} elevation={10}>
         <Box sx={{ pb: 2 }}>
           <Typography>{app.t("auth.register")}</Typography>
         </Box>
         <Box sx={{ pb: 1 }}>
-          <TextField
+          <Text
             autoFocus
             fullWidth
             name="email"
             margin="normal"
             autoComplete="current-email"
-            value={formik.values.email}
             InputLabelProps={{ shrink: true }}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             label={app.t("auth.email")}
             placeholder={app.t("auth.enter_your_email")}
           />
-          <TextField
+          <Password
             fullWidth
-            type="password"
             name="password"
             margin="dense"
             autoComplete="current-password"
             InputLabelProps={{ shrink: true }}
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
             label={app.t("auth.password")}
             placeholder={app.t("auth.enter_your_password")}
           />
@@ -67,7 +64,7 @@ export function Content() {
         </Box>
         <LinkList />
       </Paper>
-    </form>
+    </Formik>
   );
 }
 
@@ -77,8 +74,4 @@ export default function Register() {
       <Content />
     </Layout>
   );
-}
-
-export function getServerProps(props) {
-  return {};
 }

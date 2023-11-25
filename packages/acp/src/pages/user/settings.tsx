@@ -25,27 +25,33 @@ export default function Route() {
               component: "Text",
               name: "username",
               placeholder: "Nam Nguyen",
+              label: "User Name",
             },
             text2: {
               component: "TextArea",
               name: "biography",
               placeholder: "Nam Nguyen",
+              label: "Description",
             },
             birthday2: {
               component: "Date",
               name: "birthday",
+              label: "Birthday",
             },
             DatePicker: {
               component: "DatePicker",
               name: "birthday2",
+              label: "Date Picker",
             },
             primary_main: {
               component: "ColorPicker",
               name: "primary.main",
+              label: "Color Picker",
             },
             password: {
               component: "Password",
               name: "password",
+              label: "Password",
             },
             switch: {
               component: "Switch",
@@ -59,12 +65,12 @@ export default function Route() {
             },
             voted: {
               component: "Rating",
-              label: "voted",
+              label: "Voted",
               name: "voted",
             },
             slider: {
               component: "Slider",
-              label: "voted",
+              label: "Slider",
               name: "slider",
             },
             btn: {

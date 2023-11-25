@@ -38,7 +38,7 @@ const Icon = styled("span", {
   },
 })(() => ({
   width: 28,
-  fontSize: "1.2em",
+  fontSize: "1.4em",
 }));
 
 const ItemHeader = styled("div", {
