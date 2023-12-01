@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { hexToRgb, rgbToHex } from "@mui/system/colorManipulator";
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { HexAlphaColorPicker } from "react-colorful";
 
 interface Props {
@@ -18,13 +18,13 @@ export default function ColorPopover({
     // color error.
   }
 
-  const [color, setColor] = React.useState<string>(value);
+  const [color, setColor] = useState<string>(value);
 
-  const testColor = React.useCallback((color: string) => {
+  const testColor = useCallback((color: string) => {
     if (/#[0-9a-f]/i.test(color)) setColor(color); // test is valid color
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     try {
       // required to check color is valid
       hexToRgb(color);
@@ -40,7 +40,7 @@ export default function ColorPopover({
       <HexAlphaColorPicker color={color} onChange={setColor} />
       <Box sx={{ pt: 1 }}>
         <input
-          defaultValue={color}
+          value={color}
           name="hex_alpha"
           placeholder="#aa00ccff"
           onChange={(evt) => testColor(evt.currentTarget.value)}

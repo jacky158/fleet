@@ -6,6 +6,7 @@ import IconButton from "@mui/material/IconButton";
 import ListItemButton from "@mui/material/ListItemButton";
 import Menu from "@mui/material/Menu";
 import styled from "@mui/material/styles/styled";
+import { floor } from "lodash";
 import debounce from "lodash/debounce";
 import React, {
   CSSProperties,
@@ -15,6 +16,7 @@ import React, {
   ForwardedRef,
   RefAttributes,
   RefObject,
+  memo,
   useCallback,
   useEffect,
   useMemo,
@@ -33,16 +35,18 @@ export type ItemProps = {
   closeMenu?: () => void;
 };
 
-interface AutoCompactMenuProps {
+export type StackMenuProps = {
   activeTab: string;
   items: MenuItemShape[];
   menuItem?: FC<ItemProps>;
   popoverMenuItem?: FC<ItemProps>;
   container?: ElementType;
+  threshold?: number;
+  divider?: null | ElementType;
   moreButton?: ForwardRefExoticComponent<
     MoreButtonProps & RefAttributes<HTMLButtonElement>
   >;
-}
+};
 
 const PopoverMenuItemHolder = ({ item, activeTab }: ItemProps) => {
   const { to, label } = item;
@@ -129,6 +133,7 @@ const MenuItemHolder = ({ item, activeTab, visible }: ItemProps) => {
 
 function useResizeIndex(
   ref: RefObject<HTMLDivElement>,
+  hasDivider: boolean = true,
   threshold: number
 ): number {
   const widths = useRef<number[]>([]);
@@ -158,10 +163,10 @@ function useResizeIndex(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cc, maxWidth]);
 
-  return resizeIndex;
-}
+  console.log(cc, maxWidth);
 
-const MORE_BUTTON_WIDTH = 100;
+  return hasDivider ? floor(resizeIndex / 2) : resizeIndex;
+}
 
 const ContainerHolder = styled("div", {
   name: "AutoCompactMenu",
@@ -175,9 +180,13 @@ const ContainerHolder = styled("div", {
   flexGrow: 1,
   overflow: "hidden",
   alignItems: "center",
-  justifyContent: "flex-end",
+  // justifyContent: "flex-end",
   flexWrap: "wrap",
 });
+
+function NullDivider() {
+  return null as unknown as Element;
+}
 
 const DefaultMoreButton = React.forwardRef(
   (props: MoreButtonProps, ref: ForwardedRef<HTMLButtonElement>) => {
@@ -188,45 +197,52 @@ const DefaultMoreButton = React.forwardRef(
     );
   }
 );
-function AutoCompactMenuBase({
+function StreetMenuBase({
   items,
   activeTab,
   menuItem: MenuItem = MenuItemHolder,
   popoverMenuItem: PopoverMenuItem = PopoverMenuItemHolder,
   moreButton: MoreButtonHolder = DefaultMoreButton,
   container: Container = ContainerHolder as ElementType,
-}: AutoCompactMenuProps) {
+  divider: MyDivider = NullDivider as unknown as ElementType,
+  threshold = 50,
+}: StackMenuProps) {
   const [open, setOpen] = useState<boolean>(false);
   const btnMoreRef = useRef<HTMLButtonElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
-  const resizeIndex = useResizeIndex(rootRef, MORE_BUTTON_WIDTH);
+  const resizeIndex = useResizeIndex(rootRef, Boolean(NullDivider), threshold);
 
   const toggleOpen = useCallback(() => setOpen((prev: boolean) => !prev), []);
   const closeMenu = useCallback(() => setOpen(false), []);
 
   if (!items?.length) return null;
 
-  const hasPopover = resizeIndex > -1 && resizeIndex < items?.length;
+  const hasPopover = resizeIndex > -1 && resizeIndex < items?.length - 1;
 
   return (
     <>
       <Container ref={rootRef}>
         {items.map((item, index) => {
-          const hidden = resizeIndex > -1 && index >= resizeIndex;
+          const hidden = resizeIndex > -1 && index > resizeIndex;
 
           if (hidden) return null;
 
           return (
-            <MenuItem
-              item={item}
-              activeTab={activeTab}
-              key={index.toString()}
-              visible={index < resizeIndex}
-            />
+            <React.Fragment key={`_d.${index}`}>
+              {index > 0 && MyDivider ? <MyDivider /> : null}
+              <MenuItem
+                item={item}
+                activeTab={activeTab}
+                visible={index <= resizeIndex}
+              />
+            </React.Fragment>
           );
         })}
         {hasPopover ? (
-          <MoreButtonHolder ref={btnMoreRef} onClick={toggleOpen} />
+          <>
+            {MyDivider ? <MyDivider /> : null}
+            <MoreButtonHolder ref={btnMoreRef} onClick={toggleOpen} />
+          </>
         ) : null}
       </Container>
       <Menu
@@ -238,7 +254,7 @@ function AutoCompactMenuBase({
           zIndex: 1200,
         }}
       >
-        {items.slice(resizeIndex).map((item, index) => (
+        {items.slice(resizeIndex + 1).map((item, index) => (
           <PopoverMenuItem
             item={item}
             activeTab={activeTab}
@@ -251,10 +267,9 @@ function AutoCompactMenuBase({
   );
 }
 
-const AutoCompactMenu = React.memo<AutoCompactMenuProps>(
-  AutoCompactMenuBase,
-  (prev: AutoCompactMenuProps, next: AutoCompactMenuProps) =>
-    next.items === prev.items
+const StreetMenu = memo<StackMenuProps>(
+  StreetMenuBase,
+  (prev: StackMenuProps, next: StackMenuProps) => next.items === prev.items
 );
 
-export default AutoCompactMenu;
+export default StreetMenu;

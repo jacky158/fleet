@@ -42,12 +42,12 @@ const toYupString = (
     schema = schema.label(json.label);
   }
 
-  if (json.minLength !== undefined) {
-    schema = schema.max(refValue(json.minLength), errors.minLength);
+  if (json.min !== undefined) {
+    schema = schema.max(refValue(json.min), errors.min);
   }
 
-  if (json.maxLength !== undefined) {
-    schema = schema.max(refValue(json.maxLength), errors.maxLength);
+  if (json.max !== undefined) {
+    schema = schema.max(refValue(json.max), errors.max);
   }
 
   if (json.case === "lowercase") {

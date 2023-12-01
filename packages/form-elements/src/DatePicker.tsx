@@ -23,6 +23,11 @@ export default function DatePickerElement({
 >) {
   const formik = useFormikContext();
   const value = get(formik.values, name, "");
+  const meta = formik.getFieldMeta(name);
+  const error =
+    meta.error && (formik.submitCount || meta.touched || meta.initialTouched)
+      ? meta.error
+      : false;
 
   const handleChange: DatePickerProps<Dayjs>["onChange"] = useCallback(
     (date: Dayjs | null) => {
@@ -37,7 +42,16 @@ export default function DatePickerElement({
       label={label}
       value={value ? dayjs(value) : null}
       onChange={handleChange}
-      slotProps={{ textField: { label, size, required, variant } }}
+      slotProps={{
+        textField: {
+          label,
+          size,
+          required,
+          variant,
+          error: Boolean(error),
+          helperText: error,
+        },
+      }}
     />
   );
 }

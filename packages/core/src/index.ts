@@ -14,7 +14,6 @@ const KEYWORDS = [
   "_allConfig",
   "bootstrap",
   "extend",
-  "manager",
 ];
 
 export interface Config {
@@ -24,9 +23,7 @@ export interface Config {
 export class ViewComponents {}
 
 export class App {
-  [key: string]: any;
-
-  private app?: App;
+  [key: string]: unknown;
 
   /**
    * fallback services is helpful for writing test mock.
@@ -54,10 +51,6 @@ export class App {
    * @returns Manager
    */
   public bootstrap(): App {
-    if (this.app) {
-      return this.app;
-    }
-
     const handler = {
       get(manager: App, name: string) {
         if (manager[name]) {
@@ -70,9 +63,7 @@ export class App {
       },
     };
 
-    this.app = new Proxy(this, handler) as unknown as App;
-
-    return this.app;
+    return new Proxy(this, handler) as unknown as App;
   }
 
   private _isCreator(x: any): boolean {
@@ -175,8 +166,8 @@ export class App {
   }
 }
 
-export function createApp(): App {
-  return new App().bootstrap();
+export function createApp(config: Partial<Config>): App {
+  return new App(config).bootstrap();
 }
 
 const ConfigContext = createContext<Config>({});

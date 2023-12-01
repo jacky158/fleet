@@ -9,62 +9,21 @@ import createTheme from "@mui/material/styles/createTheme";
 import { ReactNode, useMemo } from "react";
 import rtlPlugin from "stylis-plugin-rtl";
 
-const _themeOptions: Record<"light" | "dark", ThemeOptions> = {
-  dark: {
-    palette: {
-      mode: "dark",
-    },
-    components: {
-      MuiButton: {
-        styleOverrides: {
-          text: {
-            textTransform: "none",
-          },
-        },
-      },
-      MuiInputLabel: {
-        styleOverrides: {
-          outlined: {
-            position: "relative",
-            transform: "none",
-            fontSize: "0.9em",
-            lineHeight: 1.5,
-            paddingBottom: "0.5em",
-            fontWeight: "medium",
-            color: "text",
-          },
-        },
-      },
-      MuiFormLabel: {
-        styleOverrides: {
-          root: {},
-        },
-      },
-      MuiOutlinedInput: {
-        styleOverrides: {
-          notchedOutline: {
-            "& legend": {
-              display: "none",
-            },
-          },
-        },
-      },
-    },
-  },
-  light: {
-    components: {
-      MuiTextField: {
-        defaultProps: {
-          size: "small",
-        },
-      },
-    },
-    palette: {
-      mode: "light",
-      contrastThreshold: 4.5,
-    },
-  },
-};
+// right to left language code.
+const RTL_LANG_CODE = [
+  "ar",
+  "arc",
+  "dv",
+  "fa",
+  "ha",
+  "he",
+  "khw",
+  "ks",
+  "ku",
+  "ps",
+  "ur",
+  "yi",
+];
 
 export default function ThemeProvider({
   children,
@@ -99,15 +58,17 @@ export default function ThemeProvider({
 
   // console.log({ _mode, _userMode, _configMode, mode });
 
-  const themeOptions = _themeOptions[mode];
-
-  if (!themeOptions.palette) {
-    themeOptions.palette = {};
+  let options = app.config<ThemeOptions>(`theme.${mode}`, {});
+  if (!options) {
+    options = {};
   }
-  themeOptions.direction = direction;
-  themeOptions.palette.mode = mode;
+  if (!options.palette) {
+    options.palette = {};
+  }
+  options.direction = direction;
+  options.palette.mode = mode;
 
-  const theme = createTheme(themeOptions as ThemeOptions);
+  const theme = createTheme(options as ThemeOptions);
 
   return (
     <CacheProvider value={cache}>

@@ -92,8 +92,8 @@ function GhostActions({ paging }: ListPresenterProps) {
   }
   return (
     <>
-      <Button size="small" onClick={handleDelete}>
-        delete
+      <Button onClick={handleDelete} sx={{ lineHeight: 1 }}>
+        Delete
       </Button>
     </>
   );

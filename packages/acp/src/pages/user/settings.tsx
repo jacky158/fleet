@@ -20,6 +20,38 @@ export default function Route() {
         schema={{
           component: "Form",
           method: "POST",
+          validation: {
+            type: "object",
+            properties: {
+              password: {
+                type: "string",
+                required: true,
+                minLength: 5,
+                maxLength: 64,
+                label: "User Name",
+              },
+              username: {
+                type: "string",
+                required: true,
+                minLength: 5,
+                maxLength: 64,
+                label: "User Name",
+              },
+              biography: {
+                type: "string",
+                required: true,
+                minLength: 5,
+                maxLength: 64,
+                label: "Biography",
+              },
+              date1: {
+                type: "date",
+                required: true,
+                strict: true,
+                label: "Date",
+              },
+            },
+          },
           elements: {
             text: {
               component: "Text",
@@ -33,12 +65,12 @@ export default function Route() {
               placeholder: "Nam Nguyen",
               label: "Description",
             },
-            birthday2: {
+            date2: {
               component: "Date",
               name: "birthday",
               label: "Birthday",
             },
-            DatePicker: {
+            date1: {
               component: "DatePicker",
               name: "birthday2",
               label: "Date Picker",
@@ -80,7 +112,7 @@ export default function Route() {
           },
         }}
       />
-      <pre>{JSON.stringify(values)}</pre>
+      <pre>{JSON.stringify(values, null, " ")}</pre>
     </>
   );
 }

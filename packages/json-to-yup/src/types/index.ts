@@ -176,8 +176,8 @@ export type ObjectTypeSchema = YupTypeSchema & {
 
 export type StringTypeSchema = YupTypeSchema & {
   type: "string";
-  minLength?: number | Reference<number>;
-  maxLength?: number | Reference<number>;
+  min?: number | Reference<number>;
+  max?: number | Reference<number>;
   case?: "lowercase" | "uppercase";
   uppercase?: number;
   matches?: { regex: string; excludeEmptyString?: boolean };
@@ -186,8 +186,8 @@ export type StringTypeSchema = YupTypeSchema & {
   notOneOf?: (string | Reference<string>)[];
   nullable?: boolean;
   errors?: YupTypeErrors & {
-    minLength?: string;
-    maxLength?: string;
+    min?: string;
+    max?: string;
     lowercase?: string;
     uppercase?: string;
     matches?: string;

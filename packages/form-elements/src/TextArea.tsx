@@ -14,10 +14,15 @@ export default function TextArea({
   ...props
 }: ElementProps<Omit<TextFieldProps, "children">>) {
   const formik = useFormikContext();
+  const meta = formik.getFieldMeta(name);
 
   if (!name) return null;
 
   const value = get(formik.values, name, "");
+  const error =
+    meta.error && (formik.submitCount || meta.touched || meta.initialTouched)
+      ? meta.error
+      : false;
 
   return (
     <TextField
@@ -26,6 +31,8 @@ export default function TextArea({
       label={label}
       name={name}
       multiline
+      error={Boolean(error)}
+      helperText={error}
       value={value}
       placeholder={placeholder}
       onChange={formik.handleChange}

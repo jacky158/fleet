@@ -1,6 +1,6 @@
 import { useLocation } from "@ikx/router";
 import type { MenuItemShape } from "@ikx/types";
-import AutoCompactMenu from "./AutoCompactMenu";
+import StreetMenu from "./StreetMenu";
 
 const Menu = ({ items }: { items: MenuItemShape[] }) => {
   const location = useLocation();
@@ -8,7 +8,7 @@ const Menu = ({ items }: { items: MenuItemShape[] }) => {
   if (!items.length) return null;
 
   // auto collapse menu
-  return <AutoCompactMenu items={items} activeTab={location.pathname} />;
+  return <StreetMenu items={items} activeTab={location.pathname} />;
 };
 
 export default Menu;

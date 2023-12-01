@@ -62,9 +62,9 @@ const items: MenuItemShape[] = [
     icon: "\ue894",
     to: "/account",
     items: [
-      { label: "Phrases", to: "/health-check" },
-      { label: "Languages", to: "/" },
-      { label: "Currencies", to: "/" },
+      { label: "Phrases", to: "/localize/phrase" },
+      { label: "Languages", to: "/localize/language" },
+      { label: "Currencies", to: "/localize/currency" },
     ],
   },
   { label: "Pages", type: "header" },

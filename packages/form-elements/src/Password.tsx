@@ -17,6 +17,11 @@ export default function Password({
   const formik = useFormikContext();
   const [type, setType] = useState<"text" | "password">("password");
   const value = get(formik.values, name, "");
+  const meta = formik.getFieldMeta(name);
+  const error =
+    meta.error && (formik.submitCount || meta.touched || meta.initialTouched)
+      ? meta.error
+      : false;
 
   return (
     <TextField
@@ -24,6 +29,8 @@ export default function Password({
       type={type}
       name={name}
       value={value}
+      error={Boolean(error)}
+      helperText={error}
       onChange={formik.handleChange}
       onBlur={formik.handleBlur}
       InputProps={{

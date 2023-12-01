@@ -5,9 +5,10 @@ import views from "./bundle/views";
 import { createApp } from "@ikx/core";
 import Composer from "./Composer";
 import GlobalStyles from "./GlobalStyles";
+import theme from "./theme";
 
 function App() {
-  const app = createApp();
+  const app = createApp({ theme });
   app.extend(services);
   app.jsx.extend(views);
 

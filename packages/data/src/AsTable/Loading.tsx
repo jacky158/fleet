@@ -1,3 +1,12 @@
+import styled from "@mui/material/styles/styled";
+
+const Img = styled("img")({
+  borderRadius: "50%",
+  overflow: "hidden",
+  width: 100,
+  height: 100,
+});
+
 export default function LoadingHolder() {
   return (
     <div
@@ -14,13 +23,7 @@ export default function LoadingHolder() {
         background: "rgba(0,0,0,0.05)",
       }}
     >
-      <img
-        src={"/images/table-initial-loading.svg"}
-        alt="Loading..."
-        width={100}
-        height={100}
-        style={{ borderRadius: "50%" }}
-      />
+      <Img src={"/images/table-initial-loading.svg"} alt="Loading..." />
     </div>
   );
 }

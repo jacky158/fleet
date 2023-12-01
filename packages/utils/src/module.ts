@@ -3,6 +3,7 @@ import compactUrl from "./compactUrl";
 import colorHash from "./colorHash";
 import Cookies from "universal-cookie";
 import LocalStore from "./LocalStore";
+import Colorize from "./colorize";
 
 declare module "@ikx/core" {
   export interface App {
@@ -11,5 +12,6 @@ declare module "@ikx/core" {
     readonly colorHash: typeof colorHash;
     readonly cookies: Cookies;
     readonly localStore: LocalStore;
+    readonly colorize: Colorize;
   }
 }

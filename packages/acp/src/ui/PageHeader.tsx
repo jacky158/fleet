@@ -9,11 +9,27 @@ import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { styled } from "@mui/material/styles";
 // import { MenuItemShape } from "@ikx/types";
 import { Link, useLocation } from "@ikx/router";
+import { MenuItemShape } from "@ikx/types";
+import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";
 import { ReactNode } from "react";
-import Badge from "@mui/material/Badge";
-import { MenuItemShape } from "@ikx/types";
-import ActionMenu from "./ActionMenu";
+import StreetMenu, { ItemProps } from "./StreetMenu";
+
+const MenuItemHolder = ({ item, activeTab, visible }: ItemProps) => {
+  const { to, label } = item;
+  const active = activeTab === to;
+
+  return (
+    <Link
+      to={to}
+      size="small"
+      variant="text"
+      style={visible ? { visibility: "visible" } : { visibility: "hidden" }}
+    >
+      {label}
+    </Link>
+  );
+};
 
 export interface PageHeaderProps {
   title?: ReactNode;
@@ -91,10 +107,13 @@ const RightSide = styled("div", {
     return [styles.rightSide];
   },
 })({
+  lineHeight: "32px",
   display: "flex",
   flexDirection: "row",
   flexGrow: 1,
-  justifyContent: "flex-end",
+  flexWrap: "wrap",
+  fontSize: "0.9em",
+  //justifyContent: "flex-end",
 });
 const Root = styled(Box, {
   name,
@@ -103,8 +122,9 @@ const Root = styled(Box, {
     return [styles.root];
   },
 })({
-  display: "flex",
-  flexDirection: "row",
+  //display: "flex",
+  //flexDirection: "row",
+  // flexGrow: 1,
   padding: "16px",
   fontSize: "1rem",
 });
@@ -188,6 +208,23 @@ export default function PageHeader(props: PageHeaderProps) {
     <>
       <Root>
         <LeftSide>
+          {breadcrumbs?.length ? (
+            <Breadcrumbs
+              // separator="&middot;"
+              aria-label="breadcrumb"
+              sx={{ fontSize: "0.925em" }}
+            >
+              {breadcrumbs.map((x, index) => (
+                <MuiLink
+                  key={index.toString()}
+                  underline="hover"
+                  color="inherit"
+                  to={x.to}
+                  children={x.label}
+                />
+              ))}
+            </Breadcrumbs>
+          ) : null}
           <Heading>
             {back == true ? (
               <Link
@@ -204,28 +241,16 @@ export default function PageHeader(props: PageHeaderProps) {
             {subtitle ? <Subtitle>{subtitle}</Subtitle> : null}
             {badge ? <Badge color="error" badgeContent={badge} /> : null}
           </Heading>
-          {breadcrumbs?.length ? (
-            <Breadcrumbs
-              separator="&middot;"
-              aria-label="breadcrumb"
-              sx={{ fontSize: "0.925em", paddingBottom: 1 }}
-            >
-              {breadcrumbs.map((x, index) => (
-                <MuiLink
-                  key={index.toString()}
-                  underline="hover"
-                  color="inherit"
-                  to={x.to}
-                  children={x.label}
-                />
-              ))}
-            </Breadcrumbs>
-          ) : null}
         </LeftSide>
         {actions?.length ? (
-          <RightSide>
-            <ActionMenu items={actions} />
-          </RightSide>
+          <StreetMenu
+            menuItem={MenuItemHolder}
+            items={actions}
+            container={RightSide}
+            activeTab={"/"}
+            threshold={50}
+            divider={() => <span>&nbsp;&nbsp;</span>}
+          />
         ) : null}
       </Root>
       {tabs ? <Labs labs={tabs} /> : null}

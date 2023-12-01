@@ -19,7 +19,7 @@ const ToolbarPresent = styled("div")<{ size?: string }>(({ theme, size }) => ({
   display: "flex",
   alignItems: "center",
   background: theme.palette.background.paper,
-  height: size == "small" ? 38 : 54,
+  height: size == "small" ? 40 : 56,
 }));
 
 export default function Toolbar<R extends RowValues>({

@@ -16,6 +16,11 @@ export default function Date({
   if (!name) return null;
 
   const value = get(formik.values, name, "");
+  const meta = formik.getFieldMeta(name);
+  const error =
+    meta.error && (formik.submitCount || meta.touched || meta.initialTouched)
+      ? meta.error
+      : false;
 
   const handleChange = function (date: Dayjs | null) {
     formik.setFieldValue(name, date?.toISOString());
@@ -23,6 +28,9 @@ export default function Date({
   return (
     <DateField<Dayjs>
       label={label}
+      slotProps={{
+        textField: { error: Boolean(error), helperText: error },
+      }}
       value={value ? dayjs(value) : null}
       onChange={handleChange}
     />

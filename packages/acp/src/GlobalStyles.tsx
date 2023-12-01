@@ -11,6 +11,15 @@ const converted = (theme: Theme) => ({
     fontSize: "1.2em",
     fontVariationSettings: '"FILL" 0, "wght" 400, "GRAD" 0, "opsz" 1.2',
   },
+  html: {
+    backgroundColor: theme.palette.background.default,
+    color: theme.palette.text.primary,
+    //backgroundImage: "url(/images/pattern-grey.svg)",
+  },
+  body: {
+    margin: 0,
+    padding: 0,
+  },
   ":root": {
     fontFamily:
       'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
@@ -39,10 +48,6 @@ const converted = (theme: Theme) => ({
     "--aside-item-icon-disabled-color": "#6C737F",
     "--aside-item-chevron-color": "#4D5761",
     "--aside-scrollbar-color": "#9DA4AE",
-  },
-  body: {
-    margin: 0,
-    padding: 0,
   },
   ".noScrollBar": {
     msOverflowStyle: "none",

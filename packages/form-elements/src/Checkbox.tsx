@@ -18,6 +18,7 @@ export default function CheckboxField({
   Omit<FormControlLabelProps, "children" | "control"> &
   Omit<FormGroupProps, "children">) {
   const formik = useFormikContext();
+
   if (!name) return null;
 
   const value = get(formik.values, name, "");

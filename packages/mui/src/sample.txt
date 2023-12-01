@@ -1,0 +1,36 @@
+{
+      MuiButton: {
+        styleOverrides: {
+          text: {
+            textTransform: "none",
+          },
+        },
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          outlined: {
+            position: "relative",
+            transform: "none",
+            fontSize: "0.9em",
+            lineHeight: 1.5,
+            paddingBottom: "0.5em",
+            fontWeight: "medium",
+            color: "text",
+          },
+        },
+      },
+      MuiFormLabel: {
+        styleOverrides: {
+          root: {},
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          notchedOutline: {
+            "& legend": {
+              display: "none",
+            },
+          },
+        },
+      },
+    },

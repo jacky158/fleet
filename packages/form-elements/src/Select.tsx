@@ -23,6 +23,11 @@ export default function CheckboxField({
 }: SelectElementProps) {
   const formik = useFormikContext();
   if (!name) return null;
+  const meta = formik.getFieldMeta(name);
+  const error =
+    meta.error && (formik.submitCount || meta.touched || meta.initialTouched)
+      ? meta.error
+      : false;
 
   const value = get(formik.values, name, "");
 
@@ -35,6 +40,7 @@ export default function CheckboxField({
         id={name}
         value={value ?? ""}
         label={label}
+        error={Boolean(error)}
         name={name}
         onChange={formik.handleChange}
       >
