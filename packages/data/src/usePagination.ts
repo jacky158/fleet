@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LoadResult, PagingAction, PagingState, RowValues } from "@ikx/types";
+import {
+  FilterValues,
+  LoadResult,
+  PagingAction,
+  PagingState,
+  RowValues,
+} from "@ikx/types";
 import { Dispatch, useCallback, useEffect, useReducer, useRef } from "react";
 const noop = () => {};
 
@@ -17,9 +23,10 @@ export interface CreatePagingProps<
   loader(q?: unknown): Promise<LoadResult<R[]>>;
 }
 
-export function usePagination<R extends RowValues, Q = Record<string, unknown>>(
-  props: CreatePagingProps<R, Q>
-): PagingState<R, Q> {
+export function usePagination<
+  R extends RowValues = RowValues,
+  Q extends FilterValues = FilterValues
+>(props: CreatePagingProps<R, Q>): PagingState<R, Q> {
   const mounted = useRef<boolean>(true);
   const dispatcher = useRef<Dispatch<PagingAction<R, Q>>>(
     noop as unknown as Dispatch<PagingAction<R, Q>>

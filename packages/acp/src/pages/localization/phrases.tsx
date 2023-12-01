@@ -37,10 +37,9 @@ function loader() {
 }
 
 function Content() {
-  const grid = useGridDef({
+  const grid = useGridDef<Row>({
     columns: [
-      { field: "_check", type: "selection", width: 40 },
-      { field: "id", headerName: "ID", width: 100 },
+      { field: "id", type: "selection", width: 40 },
       { field: "key", headerName: "Key", width: 100 },
       { field: "source", headerName: "Source", width: "20%" },
       { field: "text", headerName: "Translation" },
@@ -50,10 +49,10 @@ function Content() {
   });
 
   const paging = usePagination<Row>({
-    loader: loader as unknown as any,
+    loader,
   });
 
-  return <Pagination grid={grid} paging={paging} presenter={AsTable} />;
+  return <Pagination<Row> grid={grid} paging={paging} presenter={AsTable} />;
 }
 
 export default function Page() {

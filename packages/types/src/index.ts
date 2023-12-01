@@ -9,7 +9,7 @@ import type {
 } from "react";
 import type { ModalProps } from "@mui/material/Modal";
 import type { PopoverProps } from "@mui/material";
-import type { FormikConfig, FormikValues } from "formik";
+import type { FormikConfig } from "formik";
 
 export interface ViewComponents {
   "popover.Notifications": true;
@@ -81,6 +81,8 @@ export interface OpenModalProps extends MyModalProps {
   open?: boolean;
 }
 
+export type FilterValues = Record<string, unknown>;
+
 export interface ModalApi {
   open(payload: OpenModalProps): void;
   push(payload: OpenModalProps): void;
@@ -140,7 +142,10 @@ export type GridDefAction<R extends RowValues = RowValues> = {
   payload: GridDefState<R>["size"];
 };
 
-export type PagingAction<R extends RowValues, Q> =
+export type PagingAction<
+  R extends RowValues = RowValues,
+  Q extends FilterValues = FilterValues
+> =
   | { type: "setLimit"; payload: number }
   | { type: "setPage"; payload: number }
   | { type: "setQuery"; payload: Q }
@@ -153,9 +158,14 @@ export type PagingAction<R extends RowValues, Q> =
   | { type: "setError" }
   | { type: "loadMore" };
 
-export type Loader<R, Q = unknown> = (params: Q) => Promise<LoadResult<R>>;
+export type Loader<T, Q extends FilterValues = FilterValues> = (
+  params: Q
+) => Promise<LoadResult<T>>;
 
-export interface PagingState<R extends RowValues, Q = Record<string, unknown>> {
+export interface PagingState<
+  R extends RowValues = RowValues,
+  Q extends FilterValues = FilterValues
+> {
   loadingMore: boolean;
   selectStatus: "none" | "all" | "indeterminate";
   loading: boolean;
@@ -169,7 +179,7 @@ export interface PagingState<R extends RowValues, Q = Record<string, unknown>> {
   pages: number; // total page
   perPageOptions?: number[];
   query: Q;
-  loader: Loader<R[], unknown>;
+  loader: Loader<R[], Q>;
   dispatch: Dispatch<PagingAction<R, Q>>;
   remove(id: unknown): void;
   loadMore(): void;
@@ -179,10 +189,8 @@ export interface PagingState<R extends RowValues, Q = Record<string, unknown>> {
   refresh(): void;
   select(id: unknown, checked?: boolean): void;
   selectAll(select?: boolean): void;
-  load(q?: unknown): void;
+  load(q?: Q): void;
 }
-
-export type FilterValues = FormikValues;
 
 export type GridColumnType =
   | "string"

@@ -20,7 +20,7 @@ export default function TableFooterHolder<R extends RowValues>({
   return (
     <TableFooter>
       <TableRow>
-        <TableCell style={{ padding: "0 8pt 0 24px" }}>
+        <TableCell style={{ padding: "0 8pt 0 24px", visibility: "hidden" }}>
           <FormControlLabel
             onChange={(_, checked) =>
               grid.setSize(checked ? "small" : "medium")

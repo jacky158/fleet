@@ -2,9 +2,9 @@ import { useLayoutEffect, useState } from "react";
 import { FilterValues, ListingProps, RowValues } from "@ikx/types";
 
 export function Pagination<
-  T extends RowValues = RowValues,
+  R extends RowValues = RowValues,
   Q extends FilterValues = FilterValues
->(props: ListingProps<T, Q>) {
+>(props: ListingProps<R, Q>) {
   const { grid, paging, filter: Filter, presenter: List, ...restProps } = props;
   const [mounted, setMounted] = useState<boolean>();
 
