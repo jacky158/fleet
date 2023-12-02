@@ -28,7 +28,6 @@ export default function ModalHandler() {
 
   const [state, dispatch] = useReducer(
     (draft: State, action: Action) => {
-      // console.log(action);
       switch (action.type) {
         case "open":
           draft.items = draft.items.map((x) => ({

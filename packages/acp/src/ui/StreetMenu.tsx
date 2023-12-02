@@ -163,8 +163,6 @@ function useResizeIndex(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cc, maxWidth]);
 
-  console.log(cc, maxWidth);
-
   return hasDivider ? floor(resizeIndex / 2) : resizeIndex;
 }
 

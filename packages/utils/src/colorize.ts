@@ -3,23 +3,6 @@
  * @name: colorize
  */
 export default class Colorize {
-  public static hexToRgb(color: string) {
-    color = color.slice(1);
-    const re = new RegExp(`.{1,${color.length >= 6 ? 2 : 1}}`, "g");
-    let colors = color.match(re);
-    if (colors && colors[0].length === 1) {
-      colors = colors.map((n) => n + n);
-    }
-    return colors
-      ? `rgb${colors.length === 4 ? "a" : ""}(${colors
-          .map((n, index) => {
-            return index < 3
-              ? parseInt(n, 16)
-              : Math.round((parseInt(n, 16) / 255) * 1000) / 1000;
-          })
-          .join(", ")})`
-      : "";
-  }
   public static darken(col: string, amt: number) {
     let usePound = false;
     if (col[0] == "#") {

@@ -572,7 +572,6 @@ export default class Scrollable extends Component {
       ...props
     } = this.props;
 
-    console.log(props);
     /* eslint-enable no-unused-vars */
 
     const { didMountUniversal } = this.state;

@@ -164,8 +164,6 @@ export function usePagination<
             const id = action.id;
             const checked = action.checked ?? !draft.selected.includes(id);
 
-            console.log(action, checked, id);
-
             if (!checked) {
               draft.selected = draft.selected.filter((x) => x != id);
             } else {
@@ -193,7 +191,6 @@ export function usePagination<
           draft
             .loader(params)
             .then((data) => {
-              console.log("load data", data);
               dispatch({ type: "setResult", payload: data });
             })
             .catch((err) => {

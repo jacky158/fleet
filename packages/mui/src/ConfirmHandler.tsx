@@ -55,7 +55,6 @@ export default function ConfirmHandler() {
           draft.open = false;
           break;
         case "exit":
-          console.log(draft.value === true);
           if (draft.resolver && draft.value === true) {
             draft.resolver(true);
           } else {

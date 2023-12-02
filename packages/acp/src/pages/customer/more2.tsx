@@ -33,7 +33,6 @@ type ItemShape = {
 
 const loader: Loader<ItemShape[], { limit?: number; page?: number }> =
   function (args): Promise<LoadResult<ItemShape[]>> {
-    console.log(args);
     const { limit = 20, page = 0 } = args;
 
     return delay(1000).then(() => {

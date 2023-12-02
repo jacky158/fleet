@@ -167,8 +167,6 @@ export class Router {
       query: {},
       state: {},
     });
-
-    console.log({ push: pathname });
   }
 
   public replace(to?: unknown) {
