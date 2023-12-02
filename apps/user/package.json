@@ -21,6 +21,7 @@
     "@ikx/core": "workspace:^",
     "@ikx/types": "workspace:^",
     "@ikx/redux": "workspace:^",
+    "@ikx/intl": "workspace:^",
     "@ikx/form-builder": "workspace:^",
     "@ikx/form-elements": "workspace:^",
     "@ikx/mui": "workspace:^",

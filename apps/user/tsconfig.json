@@ -4,5 +4,5 @@
     "outDir": "dist",
     "rootDir": "src"
   },
-  "include": ["src", "@ikx/types"]
+  "include": ["src", "@ikx/types", "node_modules/@ikx/**/module.d.ts"]
 }
