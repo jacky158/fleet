@@ -2,6 +2,7 @@
  * @type: route
  * @name: user
  * @path: /user/:tab?
+ * @bundle: admincp
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import PageHeader from "@ikx/acp/src/ui/PageHeader";

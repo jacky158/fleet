@@ -1,6 +1,7 @@
 /**
  * @type: saga
- * name: user.deleteManyUser
+ * @name: user.deleteManyUser
+ * @bundle: admincp
  */
 
 import { getAppContext } from "@ikx/redux";

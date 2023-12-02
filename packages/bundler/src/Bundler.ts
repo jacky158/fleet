@@ -360,6 +360,7 @@ export class Bundler {
       "@ikx/data",
       "@ikx/form-builder",
       "@ikx/form-elements",
+      "@apps/user",
     ];
 
     if (!fs.existsSync(path.join(this.root, "src/bundle"))) {

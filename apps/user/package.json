@@ -1,0 +1,33 @@
+{
+  "name": "@apps/user",
+  "version": "0.0.1",
+  "description": "app container",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "repository": {
+    "type": "github",
+    "directory": "apps/user",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "@ikx/route": "workspace:^",
+    "@ikx/core": "workspace:^",
+    "@ikx/types": "workspace:^",
+    "@ikx/redux": "workspace:^",
+    "@ikx/form-builder": "workspace:^",
+    "@ikx/form-elements": "workspace:^",
+    "@types/react": "^18",
+    "typescript": "^5"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:0": "npx tsc"
+  }
+}

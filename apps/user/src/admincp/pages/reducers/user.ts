@@ -1,6 +1,7 @@
 /**
  * @type: reducer
  * @name: user
+ * @bundle: admincp
  */
 
 import { createReducer } from "@reduxjs/toolkit";

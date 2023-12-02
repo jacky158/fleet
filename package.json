@@ -17,6 +17,7 @@
     "bundle": "(cd packages/bundler && ts-node src/test.ts)"
   },
   "dependencies": {
+    "@apps/user": "workspace:^",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@ikx/acp": "workspace:^",

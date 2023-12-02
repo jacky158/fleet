@@ -29,6 +29,7 @@
     "@ikx/redux": "workspace:^",
     "@ikx/form-builder": "workspace:^",
     "@ikx/form-elements": "workspace:^",
+    "@apps/user": "workspace:^",
     "@ikx/scroll": "workspace:^",
     "@mui/x-date-pickers": "^6",
     "@mui/material": "^5",

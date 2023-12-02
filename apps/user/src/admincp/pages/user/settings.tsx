@@ -3,6 +3,7 @@
  * @name: user.settings
  * @path: /settings
  * @parent: user
+ * @bundle: admincp
  */
 import FormBuilder from "@ikx/form-builder";
 import { FormikValues } from "formik";

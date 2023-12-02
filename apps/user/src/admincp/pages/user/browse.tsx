@@ -1,6 +1,7 @@
 /**
  * @type: route
  * @name: user.browse
+ * @bundle: admincp
  * @path: /
  * @parent: user
  */
