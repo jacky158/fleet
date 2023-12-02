@@ -98,7 +98,7 @@ export interface MenuItemShape {
   icon?: string; // icon name in MuiIcon
   to?: string; // position or action
   selected?: boolean; // selected value
-  ctx?: string[]; // values:  table, row, item, list
+  ctx?: string[]; // values:  item, list
   type?: "divider" | "header" | "item"; //
   color?: string; // primary, secondary
   items?: MenuItemShape[]; // children menu items
@@ -214,15 +214,15 @@ export interface GridColumnDef<R extends RowValues = RowValues> {
   headerName?: string;
   headerAlign?: GridColumnAlign;
   actions?: ViewName;
-  valueGetter?(row: R): unknown;
-  valueFormatter?(row: R): unknown;
+  valueGetter?(item: R): unknown;
+  valueFormatter?(item: R): unknown;
   renderCell?(params: GridCellParams<R>): ReactNode;
   renderHeader?(params: GridColumnDef<R>): ReactNode;
   getActions?(params: GridCellParams<R>): ReactNode;
 }
 
 export interface GridCellParams<T extends RowValues = RowValues> {
-  row: T | undefined;
+  item: T | undefined;
   column: GridColumnDef<T>;
   paging: PagingState<T>;
   grid?: GridDefState<T>;

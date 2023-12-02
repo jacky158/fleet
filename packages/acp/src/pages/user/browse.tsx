@@ -5,15 +5,9 @@
  * @parent: user
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useApp } from "@ikx/core";
 import { AsTable, Pagination, useGridDef, usePagination } from "@ikx/data";
 import { Link } from "@ikx/route";
-import {
-  GridCellParams,
-  ListPresenterProps,
-  LoadResult,
-  MenuItemShape,
-} from "@ikx/types";
+import { GridCellParams, LoadResult, MenuItemShape } from "@ikx/types";
 import delay from "@ikx/utils/dist/delay";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -59,24 +53,24 @@ export const loader = function ({
   }));
 };
 
-export const items: MenuItemShape[] = [
-  { label: "Promote", ctx: ["row", "table"], to: "@user/promote" },
-  { label: "Verify", ctx: ["row", "table"], to: "@user/verify" },
+const items: MenuItemShape[] = [
+  { label: "Promote", ctx: ["item", "list"], to: "@user/promote" },
+  { label: "Verify", ctx: ["item", "list"], to: "@user/verify" },
   {
     label: "Send Verification Email",
-    ctx: ["row", "table"],
+    ctx: ["item", "list"],
     to: "@user/sendVerificationEmail",
   },
-  { label: "Edit", ctx: ["row"], to: "@user/edit" },
+  { label: "Edit", ctx: ["item"], to: "@user/edit" },
   {
     label: "Delete",
-    ctx: ["row", "table"],
+    ctx: ["item", "list"],
     color: "error",
     to: "@user/delete",
   },
-  { label: "Report", ctx: ["row", "table"], to: "@report" },
-  { label: "Ban", ctx: ["row", "table"], to: "@user/ban" },
-  { label: "Un-Ban", ctx: ["row", "table"], to: "@user/UnBan" },
+  { label: "Report", ctx: ["item", "list"], to: "@report" },
+  { label: "Ban", ctx: ["item", "list"], to: "@user/ban" },
+  { label: "Un-Ban", ctx: ["item", "list"], to: "@user/UnBan" },
 ];
 
 function Actions({ ctx, ...props }: PopoverProps & { ctx: GridCellParams }) {
@@ -105,7 +99,7 @@ function GhostActions({ ctx }) {
   return (
     <>
       {items
-        .filter((x) => x.ctx?.includes("table"))
+        .filter((x) => x.ctx?.includes("list"))
         .map((item, index) => {
           return (
             <Link

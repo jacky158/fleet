@@ -52,7 +52,7 @@ function HeaderCell<T extends RowValues>(c: GridCellParams<T>) {
 }
 
 function renderCellCheck<T extends RowValues>(c: GridCellParams<T>): ReactNode {
-  const value = (c.row as any)?.id;
+  const value = c.item?.id;
   return (
     <Checkbox
       disableRipple
@@ -90,11 +90,11 @@ function BodyCell<T extends RowValues>(c: GridCellParams<T>) {
   if (c.column.renderCell) {
     return c.column.renderCell(c);
   }
-  const value = get(c.row, c.column.field) ?? null;
+  const value = get(c.item, c.column.field) ?? null;
 
   switch (c.column.type) {
     case "string":
-      return get(c.row, c.column.field);
+      return get(c.item, c.column.field);
     case "selection":
       return renderCellCheck(c);
     case "actions":
@@ -154,7 +154,7 @@ export default function AsTable<T extends RowValues>(
                   style={column.style}
                 >
                   <HeaderCell<T>
-                    row={undefined}
+                    item={undefined}
                     column={column}
                     paging={paging}
                     grid={grid}
@@ -173,7 +173,7 @@ export default function AsTable<T extends RowValues>(
             </TableRow>
           ) : null}
           {data?.length
-            ? data.map((row, index) => {
+            ? data.map((item, index) => {
                 return (
                   <TableRow
                     // onContextMenu={() => alert(2)}
@@ -191,7 +191,7 @@ export default function AsTable<T extends RowValues>(
                           style={column.style}
                         >
                           <BodyCell<T>
-                            row={row}
+                            item={item}
                             column={column}
                             paging={paging}
                           />
