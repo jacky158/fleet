@@ -102,7 +102,7 @@ function Actions({ ctx, ...props }: PopoverProps & { ctx: GridCellParams }) {
   );
 }
 
-function GhostActions({ ctx }) {
+function GhostActions({ ctx }: { ctx: GridCellParams }) {
   return (
     <>
       {items
@@ -158,7 +158,7 @@ export default function Route() {
 
   return (
     <Pagination<ItemShape>
-      filter={FilterUser}
+      filter={FilterUser as unknown as any}
       grid={grid}
       paging={paging}
       presenter={AsTable}

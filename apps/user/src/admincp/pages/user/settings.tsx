@@ -6,10 +6,9 @@
  * @bundle: admincp
  */
 import FormBuilder from "@ikx/form-builder";
-import { FormikValues } from "formik";
 import { useState } from "react";
 export default function Route() {
-  const [values, setValues] = useState<FormikValues>();
+  const [values, setValues] = useState<Record<string, unknown>>();
   return (
     <>
       User Settings

@@ -3,7 +3,7 @@ import { FilterProps } from "@ikx/types";
 import { IconButton } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import { useFormik } from "formik";
+import { useFormik } from "@ikx/form-builder";
 
 export function FilterUser({ value, onSubmit, paging }: FilterProps) {
   const formik = useFormik({

@@ -8,7 +8,9 @@ import { createReducer } from "@reduxjs/toolkit";
 
 const userReducer = createReducer({}, (builder) => {
   builder.addCase("@user/delete", function (draft, action) {
-    // console.log(action);
+    if (draft || action) {
+      // console.log(action);
+    }
   });
 });
 

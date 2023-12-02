@@ -23,7 +23,9 @@
     "@ikx/redux": "workspace:^",
     "@ikx/form-builder": "workspace:^",
     "@ikx/form-elements": "workspace:^",
+    "@ikx/mui": "workspace:^",
     "@types/react": "^18",
+    "dayjs": "^1",
     "typescript": "^5"
   },
   "scripts": {
