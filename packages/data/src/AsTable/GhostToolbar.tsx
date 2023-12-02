@@ -45,7 +45,7 @@ export default function Toolbar<R extends RowValues>({
           {paging.selected.length} selected
         </small>
         <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
-          {GhostActions ? <GhostActions grid={grid} paging={paging} /> : null}
+          {GhostActions ? <GhostActions ctx={{ grid, paging }} /> : null}
         </Stack>
       </ToolbarPresent>
     </ToolbarRoot>

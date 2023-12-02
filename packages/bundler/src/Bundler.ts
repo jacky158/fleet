@@ -204,6 +204,39 @@ export class Bundler {
 
     return `${imports}\n\nexport const ${constName} = ${data};\nexport default ${constName};\n`;
   }
+  private createSourceAsArray(constName: string, input: Item[]): string {
+    const items: Item[] = uniqBy(input, "name");
+
+    let data = JSON.stringify(
+      items.reduce((acc, x) => {
+        acc.push(`[${x.importName}]`);
+        return acc;
+      }, [] as string[]),
+      null,
+      "  "
+    );
+
+    const imports = this.generateImports(items);
+
+    items.forEach((item) => {
+      if (/^\w+$/.test(item.exportName)) {
+        if (item.importName == item.exportName) {
+          data = data.replace(
+            `"[${item.exportName}]": "[${item.importName}]"`,
+            `${item.exportName}`
+          );
+        } else {
+          data = data.replace(`"[${item.exportName}]"`, `${item.exportName}`);
+          data = data.replace(`"[${item.importName}]"`, `${item.importName}`);
+        }
+      } else {
+        data = data.replace(`"[${item.exportName}]"`, `"${item.exportName}"`);
+        data = data.replace(`"[${item.importName}]"`, `${item.importName}`);
+      }
+    });
+
+    return `${imports}\n\nexport const ${constName} = ${data};\nexport default ${constName};\n`;
+  }
 
   private writeToFile(file: string, source: unknown) {
     if (isPlainObject(source)) {
@@ -302,6 +335,20 @@ export class Bundler {
     this.writeToFile("services.ts", source);
   }
 
+  public exportReducer() {
+    const items = this.collects.filter((x) => x.type == "reducer");
+    const source = this.createSourceAsObject("reducers", items);
+
+    this.writeToFile("reducers.ts", source);
+  }
+
+  public exportSagas() {
+    const items = this.collects.filter((x) => x.type == "saga");
+    const source = this.createSourceAsArray("sagas", items);
+
+    this.writeToFile("sagas.ts", source);
+  }
+
   public bundle() {
     const enablePackages = [
       "@ikx/acp",
@@ -322,6 +369,8 @@ export class Bundler {
     enablePackages.map((packageName) => this.discoverPackage(packageName));
 
     this.exportServices();
+    this.exportReducer();
+    this.exportSagas();
     this.exportMessages();
     this.exportViews();
     this.exportRoutes();

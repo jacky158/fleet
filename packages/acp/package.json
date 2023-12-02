@@ -26,6 +26,7 @@
     "@ikx/types": "workspace:^",
     "@ikx/utils": "workspace:^",
     "@ikx/data": "workspace:^",
+    "@ikx/redux": "workspace:^",
     "@ikx/form-builder": "workspace:^",
     "@ikx/form-elements": "workspace:^",
     "@ikx/scroll": "workspace:^",

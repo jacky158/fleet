@@ -131,8 +131,8 @@ export default function Route() {
       {
         field: "date",
         headerName: "Date",
-        renderCell({ row }) {
-          return dayjs(row?.date).format("LLL");
+        renderCell({ item }) {
+          return dayjs(item?.date).format("LLL");
         },
       },
       {
