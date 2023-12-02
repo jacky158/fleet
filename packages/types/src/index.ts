@@ -11,6 +11,21 @@ import type { ModalProps } from "@mui/material/Modal";
 import type { PopoverProps } from "@mui/material";
 import type { FormikConfig } from "formik";
 
+export type RAction<P = Record<string, unknown>, M = never> = {
+  type: string;
+  payload: P;
+  meta: M;
+};
+
+export type RListAction<R extends RowValues = RowValues> = RAction<{
+  paging: PagingState<R>;
+}>;
+
+export type RItemAction<R extends RowValues = RowValues> = RAction<{
+  item: R;
+  paging: PagingState<R>;
+}>;
+
 export interface ViewComponents {
   "popover.Notifications": true;
 }
@@ -102,6 +117,7 @@ export interface MenuItemShape {
   type?: "divider" | "header" | "item"; //
   color?: string; // primary, secondary
   items?: MenuItemShape[]; // children menu items
+  stopPropagation?: boolean;
   _xpath?: string; // calculate path to selected.
 }
 

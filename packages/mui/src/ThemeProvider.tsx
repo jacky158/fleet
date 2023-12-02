@@ -11,20 +11,20 @@ import rtlPlugin from "stylis-plugin-rtl";
 
 // right to left language code.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const RTL_LANG_CODE = [
-  "ar",
-  "arc",
-  "dv",
-  "fa",
-  "ha",
-  "he",
-  "khw",
-  "ks",
-  "ku",
-  "ps",
-  "ur",
-  "yi",
-];
+// const RTL_LANG_CODE = [
+//   "ar",
+//   "arc",
+//   "dv",
+//   "fa",
+//   "ha",
+//   "he",
+//   "khw",
+//   "ks",
+//   "ku",
+//   "ps",
+//   "ur",
+//   "yi",
+// ];
 
 export default function ThemeProvider({
   children,

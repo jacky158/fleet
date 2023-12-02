@@ -9,6 +9,7 @@ export const Link = forwardRef(
       to = "",
       ctx,
       component: Component = "a",
+      stopPropagation,
       ...props
     }: RouteLinkProps,
     ref: unknown
@@ -17,7 +18,9 @@ export const Link = forwardRef(
     const handleClick = (evt: MouseEvent) => {
       if (evt) {
         evt.preventDefault();
-        evt.stopPropagation();
+        if (stopPropagation) {
+          evt.stopPropagation();
+        }
       }
       if (typeof onClick == "function") {
         onClick(evt);

@@ -147,6 +147,12 @@ export class App {
     }
   }
 
+  public dispatch(action: unknown) {
+    if (action) {
+      // placeholder
+    }
+  }
+
   /**
    *
    * @param services - a dictionary of service

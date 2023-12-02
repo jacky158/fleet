@@ -7,6 +7,7 @@ export interface LinkProps {
   ctx?: unknown;
   onClick?: unknown;
   component?: ElementType;
+  stopPropagation?: boolean;
 }
 
 export interface LocationShape {
