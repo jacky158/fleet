@@ -7,7 +7,7 @@
 import PageHeader from "@ikx/acp/src/ui/PageHeader";
 import { AsTable, Pagination, useGridDef, usePagination } from "@ikx/data";
 import { Layout } from "@ikx/jsx";
-import { Link } from "@ikx/router";
+import { Link } from "@ikx/route";
 import { GridCellParams, LoadResult } from "@ikx/types";
 import { Menu, MenuItem, PopoverProps } from "@mui/material";
 import Box from "@mui/material/Box";

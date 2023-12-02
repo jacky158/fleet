@@ -4,7 +4,7 @@
  * @name: AccountMenu
  */
 
-import { Link } from "@ikx/router";
+import { Link } from "@ikx/route";
 import { Box, Divider, List, Popover, PopoverProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 

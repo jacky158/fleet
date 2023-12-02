@@ -1,5 +1,5 @@
 import { MuiIcon } from "@ikx/mui";
-import { Link } from "@ikx/router";
+import { Link } from "@ikx/route";
 import { Box, Button, Typography, styled } from "@mui/material";
 
 interface Props {

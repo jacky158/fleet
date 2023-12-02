@@ -1,4 +1,4 @@
-import { Link, useLocation } from "@ikx/router";
+import { Link, useLocation } from "@ikx/route";
 import { MenuItemShape } from "@ikx/types";
 import { Box, Collapse, Popover, Tooltip, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";

@@ -4,6 +4,7 @@ export interface LinkProps {
   [key: string]: unknown;
   to?: string;
   as?: string;
+  ctx?: unknown;
   onClick?: unknown;
   component?: ElementType;
 }

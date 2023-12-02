@@ -7,7 +7,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useApp } from "@ikx/core";
 import { AsTable, Pagination, useGridDef, usePagination } from "@ikx/data";
-import { Link } from "@ikx/router";
+import { Link } from "@ikx/route";
 import {
   GridCellParams,
   ListPresenterProps,
@@ -60,14 +60,23 @@ export const loader = function ({
 };
 
 export const items: MenuItemShape[] = [
-  { label: "Promote", ctx: ["row", "table"] },
-  { label: "Verify", ctx: ["row", "table"] },
-  { label: "Send Verification Email", ctx: ["row", "table"] },
-  { label: "Edit", ctx: ["row"] },
-  { label: "Delete", ctx: ["row", "table"] },
-  { label: "Report", ctx: ["row", "table"] },
-  { label: "Ban", ctx: ["row", "table"] },
-  { label: "Un-Ban", ctx: ["row", "table"] },
+  { label: "Promote", ctx: ["row", "table"], to: "@user/promote" },
+  { label: "Verify", ctx: ["row", "table"], to: "@user/verify" },
+  {
+    label: "Send Verification Email",
+    ctx: ["row", "table"],
+    to: "@user/sendVerificationEmail",
+  },
+  { label: "Edit", ctx: ["row"], to: "@user/edit" },
+  {
+    label: "Delete",
+    ctx: ["row", "table"],
+    color: "error",
+    to: "@user/delete",
+  },
+  { label: "Report", ctx: ["row", "table"], to: "@report" },
+  { label: "Ban", ctx: ["row", "table"], to: "@user/ban" },
+  { label: "Un-Ban", ctx: ["row", "table"], to: "@user/UnBan" },
 ];
 
 function Actions({
@@ -83,6 +92,7 @@ function Actions({
             <Link
               key={index.toString()}
               component={MenuItem}
+              color={item?.color}
               to={`/user/${row?.id}/promote`}
             >
               {item.label}
@@ -100,7 +110,7 @@ function GhostActions() {
         .filter((x) => x.ctx?.includes("table"))
         .map((item, index) => {
           return (
-            <Link key={index.toString()} component={Button}>
+            <Link key={index.toString()} component={Button} color={item.color}>
               {item.label}
             </Link>
           );

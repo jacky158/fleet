@@ -1,4 +1,4 @@
-import { useLocation } from "@ikx/router";
+import { useLocation } from "@ikx/route";
 import type { MenuItemShape } from "@ikx/types";
 import StreetMenu from "./StreetMenu";
 

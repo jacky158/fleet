@@ -1,5 +1,5 @@
 {
-  "name": "@ikx/router",
+  "name": "@ikx/route",
   "version": "0.0.1",
   "description": "ixk material ui integration",
   "main": "dist/index.js",

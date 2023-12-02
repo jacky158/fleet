@@ -6,7 +6,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import PageHeader from "@ikx/acp/src/ui/PageHeader";
 import { Layout } from "@ikx/jsx";
-import { Outlet } from "@ikx/router";
+import { Outlet } from "@ikx/route";
 import Box from "@mui/material/Box";
 
 export default function Route(props: { tab: string }) {

@@ -4,7 +4,7 @@ import { useApp } from "@ikx/core";
 
 export const Link = forwardRef(
   (
-    { onClick, component: Component = "a", to, ...props }: RouteLinkProps,
+    { onClick, component: Component = "a", to, ctx, ...props }: RouteLinkProps,
     ref: unknown
   ) => {
     const app = useApp();
@@ -15,6 +15,8 @@ export const Link = forwardRef(
       }
       if (typeof onClick == "function") {
         onClick(evt);
+      } else if (to?.startsWith("@")) {
+        app.dispatch({ type: to, payload: ctx });
       } else {
         app.router.push(to);
       }

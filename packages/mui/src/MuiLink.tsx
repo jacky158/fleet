@@ -2,7 +2,7 @@
 import MuiLinkBase, { LinkOwnProps } from "@mui/material/Link";
 import { forwardRef } from "react";
 
-import { Link, LinkProps } from "@ikx/router";
+import { Link, LinkProps } from "@ikx/route";
 
 export type MuiLinkProps = LinkOwnProps & LinkProps;
 

@@ -20,7 +20,7 @@ import { ReactNode } from "react";
 // dayjs.extend(localizedFormat);
 import routes from "./bundle/routes";
 import GlobalStyles from "./GlobalStyles";
-import { RouterProvider, Routes } from "@ikx/router";
+import { RouterProvider, Routes } from "@ikx/route";
 
 const Handlers = () => {
   return (

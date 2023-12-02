@@ -1,5 +1,5 @@
 import { MuiIcon } from "@ikx/mui";
-import { Link } from "@ikx/router";
+import { Link } from "@ikx/route";
 import type { MenuItemShape } from "@ikx/types";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";

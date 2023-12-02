@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import { styled } from "@mui/material/styles";
 // import { MenuItemShape } from "@ikx/types";
-import { Link, useLocation } from "@ikx/router";
+import { Link, useLocation } from "@ikx/route";
 import { MenuItemShape } from "@ikx/types";
 import Badge from "@mui/material/Badge";
 import Button from "@mui/material/Button";

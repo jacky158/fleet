@@ -4,7 +4,7 @@
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MuiIcon } from "@ikx/mui";
-import { Link } from "@ikx/router";
+import { Link } from "../../route/dist";
 import { List, Popover, PopoverProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 

@@ -95,13 +95,14 @@ export interface ModalApi {
 
 export interface MenuItemShape {
   label: string;
-  icon?: string;
-  to?: string;
-  selected?: boolean;
-  ctx?: string[];
-  type?: "divider" | "header";
-  items?: MenuItemShape[];
-  _xpath?: string;
+  icon?: string; // icon name in MuiIcon
+  to?: string; // position or action
+  selected?: boolean; // selected value
+  ctx?: string[]; // values:  table, row, item, list
+  type?: "divider" | "header" | "item"; //
+  color?: string; // primary, secondary
+  items?: MenuItemShape[]; // children menu items
+  _xpath?: string; // calculate path to selected.
 }
 
 export interface LoadResult<R> {

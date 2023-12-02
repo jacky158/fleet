@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@ikx/core": "workspace:^",
-    "@ikx/router": "workspace:^",
+    "@ikx/route": "workspace:^",
     "@ikx/helmet": "workspace:^",
     "@ikx/intl": "workspace:^",
     "@ikx/mui": "workspace:^",

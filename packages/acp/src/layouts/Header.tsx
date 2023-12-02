@@ -1,6 +1,6 @@
 import { useApp } from "@ikx/core";
 import { MuiIcon } from "@ikx/mui";
-import { Link } from "@ikx/router";
+import { Link } from "@ikx/route";
 import AppBar from "@mui/material/AppBar";
 import InputBase from "@mui/material/InputBase";
 import Avatar from "@mui/material/Avatar";

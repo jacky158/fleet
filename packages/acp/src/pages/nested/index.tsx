@@ -6,7 +6,7 @@
 
 import { Layout } from "@ikx/jsx";
 import PageHeader from "../../ui/PageHeader";
-import { Outlet } from "@ikx/router";
+import { Outlet } from "@ikx/route";
 
 interface Props {
   tab: string;
