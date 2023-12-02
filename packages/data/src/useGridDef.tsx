@@ -22,8 +22,8 @@ export function useGridDef<R extends RowValues = RowValues>(
       };
       return {
         columns: props.columns,
-        rowsPerPageOptions: props.rowsPerPageOptions ?? 20,
-        size: props.size ?? 20,
+        rowsPerPageOptions: props.rowsPerPageOptions ?? [20, 40, 60],
+        size: props.size ?? "medium",
         dispatch,
         setSize(payload: GridDefState<R>["size"]) {
           dispatch({ type: "setSize", payload });

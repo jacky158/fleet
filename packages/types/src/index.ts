@@ -132,9 +132,9 @@ export interface GridDefState<R extends RowValues = RowValues> {
 }
 
 export interface CreateGridDefProps<R extends RowValues = RowValues> {
-  size: GridDefState<R>["size"];
+  size?: GridDefState<R>["size"];
   columns: GridDefState<R>["columns"];
-  rowsPerPageOptions: GridDefState<R>["rowsPerPageOptions"];
+  rowsPerPageOptions?: GridDefState<R>["rowsPerPageOptions"];
 }
 
 export type GridDefAction<R extends RowValues = RowValues> = {

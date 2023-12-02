@@ -44,8 +44,6 @@ function Content() {
       { field: "source", headerName: "Source", width: "20%" },
       { field: "text", headerName: "Translation" },
     ],
-    size: "medium",
-    rowsPerPageOptions: [10, 20],
   });
 
   const paging = usePagination<Row>({
