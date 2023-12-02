@@ -1,7 +1,7 @@
 import messages from "./bundle/messages.json";
 import services from "./bundle/services";
 import views from "./bundle/views";
-import { createStore, ReduxProvider, combineReducers } from "@ikx/redux";
+import { createStore, ReduxProvider } from "@ikx/redux";
 
 import { createApp } from "@ikx/core";
 import Composer from "./Composer";
@@ -13,12 +13,14 @@ import sagas from "./bundle/sagas";
 function App() {
   const app = createApp({ theme });
   const store = createStore({
+    app,
     reducers,
     sagas,
   });
   app.extend(services);
   app.extend({ dispatch: store.dispatch });
   app.jsx.extend(views);
+  window.APP = app;
 
   return (
     <ReduxProvider store={store}>

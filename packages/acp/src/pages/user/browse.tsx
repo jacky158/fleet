@@ -64,9 +64,9 @@ const items: MenuItemShape[] = [
   { label: "Edit", ctx: ["item"], to: "@user/edit" },
   {
     label: "Delete",
-    ctx: ["item", "list"],
+    ctx: ["list"],
     color: "error",
-    to: "@user/delete",
+    to: "@user/deleteMany",
   },
   { label: "Report", ctx: ["item", "list"], to: "@report" },
   { label: "Ban", ctx: ["item", "list"], to: "@user/ban" },

@@ -10,6 +10,7 @@ import { ReactNode, useMemo } from "react";
 import rtlPlugin from "stylis-plugin-rtl";
 
 // right to left language code.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const RTL_LANG_CODE = [
   "ar",
   "arc",

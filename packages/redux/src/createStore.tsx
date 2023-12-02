@@ -6,15 +6,20 @@ import {
 } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { all } from "redux-saga/effects";
+import { App } from "@ikx/core";
 
 export default function createStore({
   reducers,
   sagas,
+  app,
 }: {
   reducers: ReducersMapObject<unknown, any>;
   sagas: any[];
+  app: App;
 }) {
-  const sagaMiddleware = createSagaMiddleware();
+  const sagaMiddleware = createSagaMiddleware({
+    context: { APP: app },
+  });
 
   const rootSaga = function* () {
     try {

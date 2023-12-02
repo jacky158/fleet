@@ -17,6 +17,7 @@
   "license": "MIT",
   "peerDependencies": {
     "react": "^18.2.0",
+    "@ikx/core": "workspace:^",
     "@types/react": "^18",
     "typescript": "^5",
     "react-redux": "^8",
