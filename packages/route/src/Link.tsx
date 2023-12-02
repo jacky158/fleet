@@ -4,7 +4,13 @@ import { useApp } from "@ikx/core";
 
 export const Link = forwardRef(
   (
-    { onClick, component: Component = "a", to, ctx, ...props }: RouteLinkProps,
+    {
+      onClick,
+      to = "",
+      ctx,
+      component: Component = "a",
+      ...props
+    }: RouteLinkProps,
     ref: unknown
   ) => {
     const app = useApp();

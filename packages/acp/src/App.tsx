@@ -10,6 +10,7 @@ import theme from "./theme";
 function App() {
   const app = createApp({ theme });
   app.extend(services);
+  app.extend({ dispatch: () => 0 });
   app.jsx.extend(views);
 
   return (

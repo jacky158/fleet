@@ -79,10 +79,7 @@ export const items: MenuItemShape[] = [
   { label: "Un-Ban", ctx: ["row", "table"], to: "@user/UnBan" },
 ];
 
-function Actions({
-  ctx: { row },
-  ...props
-}: PopoverProps & { ctx: GridCellParams }) {
+function Actions({ ctx, ...props }: PopoverProps & { ctx: GridCellParams }) {
   return (
     <Menu {...props}>
       {items
@@ -92,8 +89,9 @@ function Actions({
             <Link
               key={index.toString()}
               component={MenuItem}
-              color={item?.color}
-              to={`/user/${row?.id}/promote`}
+              color={item.color}
+              ctx={ctx}
+              to={item.to}
             >
               {item.label}
             </Link>
@@ -103,14 +101,20 @@ function Actions({
   );
 }
 
-function GhostActions() {
+function GhostActions({ ctx }) {
   return (
     <>
       {items
         .filter((x) => x.ctx?.includes("table"))
         .map((item, index) => {
           return (
-            <Link key={index.toString()} component={Button} color={item.color}>
+            <Link
+              key={index.toString()}
+              to={item.to}
+              ctx={ctx}
+              component={Button}
+              color={item.color}
+            >
               {item.label}
             </Link>
           );
