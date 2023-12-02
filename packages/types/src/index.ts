@@ -98,6 +98,7 @@ export interface MenuItemShape {
   icon?: string;
   to?: string;
   selected?: boolean;
+  ctx?: string[];
   type?: "divider" | "header";
   items?: MenuItemShape[];
   _xpath?: string;

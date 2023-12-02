@@ -1,7 +1,7 @@
 /**
  * @type: route
- * name: localize.phrase.browse
- * path: /localize/phrase
+ * name: localize.currency.browse
+ * path: /localize/currency
  */
 import { Layout } from "@ikx/jsx";
 import PageHeader from "../../ui/PageHeader";
@@ -11,24 +11,29 @@ import delay from "@ikx/utils/dist/delay";
 import { useApp } from "@ikx/core";
 
 interface Row extends RowValues {
-  key: string;
-  origin: string;
-  text: string;
+  code: string;
+  name: string;
+  symbol: string;
+  active: boolean;
 }
 
 function fakeData(): Row[] {
-  const ret: Row[] = [];
-
-  for (let i = 0; i < 10; ++i) {
-    ret.push({
-      id: i + 1,
-      key: `phrase.key.${i}`,
-      origin: `Some text ${i}`,
-      text: `Some text ${i}`,
-    });
-  }
-
-  return ret;
+  return [
+    {
+      id: 1,
+      code: "USD",
+      symbol: "$",
+      name: "U.S. Dollars",
+      active: true,
+    },
+    {
+      id: 2,
+      code: "EUR",
+      symbol: "€",
+      name: "Euros",
+      active: true,
+    },
+  ];
 }
 
 function loader() {
@@ -41,10 +46,9 @@ function Content() {
   const app = useApp();
   const grid = useGridDef<Row>({
     columns: [
-      { field: "id", type: "selection", width: 40 },
-      { field: "key", headerName: app.t("phrase.key"), width: 100 },
-      { field: "origin", headerName: app.t("phrase.origin"), width: "20%" },
-      { field: "text", headerName: app.t("phrase.text") },
+      { field: "code", headerName: app.t("currency.code"), width: 100 },
+      { field: "symbol", headerName: app.t("currency.symbol"), width: 100 },
+      { field: "name", headerName: app.t("currency.name") },
     ],
   });
 
@@ -55,7 +59,7 @@ function Content() {
   return <Pagination<Row> grid={grid} paging={paging} presenter={AsTable} />;
 }
 
-export default function Page() {
+export default function Language() {
   return (
     <Layout name="layout.master">
       <PageHeader title="Localization" />

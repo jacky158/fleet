@@ -8,7 +8,12 @@
 import { useApp } from "@ikx/core";
 import { AsTable, Pagination, useGridDef, usePagination } from "@ikx/data";
 import { Link } from "@ikx/router";
-import { GridCellParams, ListPresenterProps, LoadResult } from "@ikx/types";
+import {
+  GridCellParams,
+  ListPresenterProps,
+  LoadResult,
+  MenuItemShape,
+} from "@ikx/types";
 import delay from "@ikx/utils/dist/delay";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
@@ -54,47 +59,52 @@ export const loader = function ({
   }));
 };
 
+export const items: MenuItemShape[] = [
+  { label: "Promote", ctx: ["row", "table"] },
+  { label: "Verify", ctx: ["row", "table"] },
+  { label: "Send Verification Email", ctx: ["row", "table"] },
+  { label: "Edit", ctx: ["row"] },
+  { label: "Delete", ctx: ["row", "table"] },
+  { label: "Report", ctx: ["row", "table"] },
+  { label: "Ban", ctx: ["row", "table"] },
+  { label: "Un-Ban", ctx: ["row", "table"] },
+];
+
 function Actions({
-  ctx: { paging, row },
+  ctx: { row },
   ...props
 }: PopoverProps & { ctx: GridCellParams }) {
-  const app = useApp();
-  const handleDelete = () =>
-    app
-      .confirm({ message: "Are you sure?" })
-      .then((ok) => ok && paging.remove(row?.id))
-      .catch(() => 0);
-
   return (
     <Menu {...props}>
-      <Link component={MenuItem} to={`/user/${row?.id}`}>
-        View
-      </Link>
-      <Link component={MenuItem} to={`/user/${row?.id}/edit`}>
-        Edit
-      </Link>
-      <MenuItem color="error" onClick={handleDelete}>
-        Delete
-      </MenuItem>
+      {items
+        .filter((x) => x.ctx?.includes("row"))
+        .map((item, index) => {
+          return (
+            <Link
+              key={index.toString()}
+              component={MenuItem}
+              to={`/user/${row?.id}/promote`}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
     </Menu>
   );
 }
 
-function GhostActions({ paging }: ListPresenterProps) {
-  const app = useApp();
-  function handleDelete() {
-    app
-      .confirm({
-        message: "Are  you sure",
-      })
-      .then((ok) => ok && paging.remove(paging.selected))
-      .catch(() => 0);
-  }
+function GhostActions() {
   return (
     <>
-      <Button onClick={handleDelete} sx={{ lineHeight: 1 }}>
-        Delete
-      </Button>
+      {items
+        .filter((x) => x.ctx?.includes("table"))
+        .map((item, index) => {
+          return (
+            <Link key={index.toString()} component={Button}>
+              {item.label}
+            </Link>
+          );
+        })}
     </>
   );
 }
