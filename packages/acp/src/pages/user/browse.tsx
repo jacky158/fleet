@@ -77,7 +77,7 @@ function Actions({ ctx, ...props }: PopoverProps & { ctx: GridCellParams }) {
   return (
     <Menu {...props}>
       {items
-        .filter((x) => x.ctx?.includes("row"))
+        .filter((x) => x.ctx?.includes("item"))
         .map((item, index) => {
           return (
             <Link
