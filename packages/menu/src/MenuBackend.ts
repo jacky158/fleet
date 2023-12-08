@@ -19,13 +19,11 @@ class MenuBackend {
     loc: { resource?: string; loc: string },
     data: unknown
   ): MenuItemShape[] {
-    const allItems = this.app.config<MenuItemShape[]>("menuItems", []);
+    const items = this.app.config<MenuItemShape[]>("menuItems", []);
 
-    if (!allItems) return [];
+    if (!items) return [];
 
-    const items = filterMenuItems(allItems.flat(), loc, data);
-
-    return items.map((x) => x);
+    return filterMenuItems(items.flat(), loc, data).map((x) => x);
   }
 }
 
