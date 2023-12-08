@@ -342,6 +342,13 @@ export class Bundler {
     this.writeToFile("reducers.ts", source);
   }
 
+  public exportMenuItems() {
+    const items = this.collects.filter((x) => x.type == "menu.items");
+    const source = this.createSourceAsArray("menuItems", items);
+
+    this.writeToFile("menu.items.ts", source);
+  }
+
   public exportSagas() {
     const items = this.collects.filter((x) => x.type == "saga");
     const source = this.createSourceAsArray("sagas", items);
@@ -356,6 +363,7 @@ export class Bundler {
       "@ikx/mui",
       "@ikx/http",
       "@ikx/jsx",
+      "@ikx/menu",
       "@ikx/utils",
       "@ikx/data",
       "@ikx/form-builder",
@@ -372,6 +380,7 @@ export class Bundler {
     this.exportServices();
     this.exportReducer();
     this.exportSagas();
+    this.exportMenuItems();
     this.exportMessages();
     this.exportViews();
     this.exportRoutes();

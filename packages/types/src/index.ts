@@ -108,16 +108,22 @@ export interface ModalApi {
   onTransitionExited: ModalProps["onTransitionExited"];
 }
 
+export interface MenuItemScope {
+  loc?: string[];
+  resource?: string[]; // user, *, item
+}
+
 export interface MenuItemShape {
   label: string;
   icon?: string; // icon name in MuiIcon
   to?: string; // position or action
   selected?: boolean; // selected value
-  ctx?: string[]; // values:  item, list
+  scope?: MenuItemScope; // values:  item, list
   type?: "divider" | "header" | "item"; //
   color?: string; // primary, secondary
   items?: MenuItemShape[]; // children menu items
   stopPropagation?: boolean;
+  showWhen?: unknown;
   _xpath?: string; // calculate path to selected.
 }
 

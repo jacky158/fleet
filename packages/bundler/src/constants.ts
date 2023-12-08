@@ -73,6 +73,7 @@ export const validTypes = [
   "mockService",
   "theme.style.editor",
   "theme.styles",
+  "menu.items",
 ];
 
 // loadable by type component.

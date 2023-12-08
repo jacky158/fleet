@@ -9,9 +9,10 @@ import GlobalStyles from "./GlobalStyles";
 import theme from "./theme";
 import reducers from "./bundle/reducers";
 import sagas from "./bundle/sagas";
+import menuItems from "./bundle/menu.items";
 
 function App() {
-  const app = createApp({ theme });
+  const app = createApp({ theme, menuItems });
   const store = createStore({
     app,
     reducers,

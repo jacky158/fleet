@@ -31,6 +31,7 @@
     "@ikx/intl": "workspace:^",
     "@ikx/json-to-yup": "workspace:^",
     "@ikx/jsx": "workspace:^",
+    "@ikx/menu": "workspace:^",
     "@ikx/mui": "workspace:^",
     "@ikx/scroll": "workspace:^",
     "@ikx/utils": "workspace:^",

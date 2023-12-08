@@ -1,0 +1,31 @@
+{
+  "name": "@ikx/menu",
+  "version": "0.0.1",
+  "description": "ikx view extension",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "repository": {
+    "type": "github",
+    "directory": "packages/menu",
+    "url": "https://github.com/jacky158/fleet"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "nam.ngvan@gmail.com",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18",
+    "@types/react": "^18",
+    "react-is": "^18",
+    "typescript": "^5",
+    "@types/react-is": "^18",
+    "@ikx/types": "workspace:^",
+    "@ikx/core": "workspace:^",
+    "@ikx/when": "workspace:^"
+  },
+  "scripts": {
+    "clean": "rm -rf ./dist",
+    "types:1": "npx tsc"
+  }
+}
