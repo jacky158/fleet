@@ -7,7 +7,7 @@ import { MenuItemShape } from "@ikx/types";
 import filterMenuItems from "./filterMenuItems";
 
 class MenuBackend {
-  app: App;
+  private app: App;
 
   constructor(app: App) {
     this.app = app;
